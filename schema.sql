@@ -1,6 +1,8 @@
-drop database if exists highfashion;
-create database highfashion;
-use highfashion;
+--drop database if exists lowphashion;
+--create database lowphashion;
+--use lowphashion;
+
+--GRANT ALL ON lowphashion.* TO 'lowphashion'@'localhost' IDENTIFIED BY 'password'
 
 drop table if exists message;
 create table message (
