@@ -29,12 +29,12 @@ $app->post('/logmessage/:type', function($type) use ($app) {
   $message = $app->request()->post('message');
 
   $parms = array(
-    'app_name' => 'highphasion',
+    'app_name' => 'lowphashion',
     'message' => $message,
     'message_type' => $type
   );
 
-  $pdo = new PDO('mysql:host=127.0.0.1;dbname=highfashion', 'highfashion', 'password');
+  $pdo = new PDO('mysql:host=127.0.0.1;dbname=lowphashion', 'lowphashion', 'password');
   $sql = 'INSERT INTO message
             (app_name, message, message_type)
             VALUES
@@ -55,11 +55,11 @@ $app->get('/messages/:type', function($type) use ($app) {
   );
 
   $parms = array(
-    'app_name' => 'highphasion',
+    'app_name' => 'lowphashion',
     'message_type' => $type
   );
 
-  $pdo = new PDO('mysql:host=127.0.0.1;dbname=highfashion', 'highfashion', 'password');
+  $pdo = new PDO('mysql:host=127.0.0.1;dbname=lowphashion', 'lowphashion', 'password');
   $sql = 'SELECT app_name, message, posted
           FROM message
           WHERE app_name = :app_name
