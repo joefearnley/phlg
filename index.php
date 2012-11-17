@@ -28,6 +28,11 @@ $app->post('/logmessage/:type', function($type) use ($app) {
 
   $message = $app->request()->post('message');
 
+  // TODO: got log type from config here
+  // $log_type = 'database';
+  // $message_handler = new MessageHandler($log_type, 'lowphasion', $type, $message);
+  // $response['message_id'] = $message_handler->getMessageId();
+
   $parms = array(
     'app_name' => 'lowphashion',
     'message' => $message,
