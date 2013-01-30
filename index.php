@@ -2,6 +2,8 @@
 
 require 'vendor/autoload.php';
 
+RedBean_Facade::setup('mysql:host=127.0.0.1;dbname=lowphashion','lowphashion','password');
+
 $app = new \Slim\Slim(
   array(
     'debug' => false,
@@ -32,27 +34,19 @@ $app->post('/message/:type', function($type) use ($app) {
 
   $message = $app->request()->post('message');
 
-  // TODO: got log type from config here
-  // $log_type = 'database';
-  // $message_handler = new MessageHandler($log_type, 'lowphasion', $type, $message);
-  // $response['message_id'] = $message_handler->getMessageId();
-
   $parms = array(
-    'app_name' => 'lowphashion',
-    'message' => $message,
-    'message_type' => $type
+    ':app_name' => 'lowphashion',
+    ':message' => $message,
+    ':type' => $type
   );
 
-  $pdo = new PDO('mysql:host=127.0.0.1;dbname=lowphashion', 'lowphashion', 'password');
-  $sql = 'INSERT INTO message
-            (app_name, message, message_type)
-            VALUES
-            (:app_name, :message, :message_type)';
-
-  $stmt = $pdo->prepare($sql);
-  $stmt->execute($parms);
-  $response['message_id'] = $pdo->lastInsertId();
-  $pdo = null;
+  $response['message_id'] = RedBean_Facade::getAll(
+      'insert into message
+            (app_name, message, type)
+            values
+            (:app_name, :message, :type)', 
+      $parms
+    );
 
   $app->response()->header('Content-Type', 'application/json');
   $app->response()->write(json_encode($response));
@@ -66,18 +60,13 @@ $app->get('/message/', function() use ($app) {
   );
 
   $parms = array(
-    'app_name' => 'lowphashion'
+    ':app_name' => 'lowphashion'
   );
 
-  $pdo = new PDO('mysql:host=127.0.0.1;dbname=lowphashion', 'lowphashion', 'password');
-  $sql = 'SELECT app_name, message, posted
-          FROM message
-          WHERE app_name = :app_name';
-
-  $stmt = $pdo->prepare($sql);
-  $pdo = null;
-  $stmt->execute($parms);
-  $response['messages'] = $stmt->fetchAll(PDO::FETCH_CLASS);
+  $response['messages'] = RedBean_Facade::getAll(
+      'select * from message where app_name = :app_name', 
+      $parms
+    );
 
   $app->response()->header('Content-Type', 'application/json');
   $app->response()->write(json_encode($response));
@@ -91,20 +80,14 @@ $app->get('/message/:type', function($type) use ($app) {
   );
 
   $parms = array(
-    'app_name' => 'lowphashion',
-    'message_type' => $type
+    ':app_name' => 'lowphashion',
+    ':type' => $type
   );
 
-  $pdo = new PDO('mysql:host=127.0.0.1;dbname=lowphashion', 'lowphashion', 'password');
-  $sql = 'SELECT app_name, message, posted
-          FROM message
-          WHERE app_name = :app_name
-          AND message_type = :message_type';
-
-  $stmt = $pdo->prepare($sql);
-  $pdo = null;
-  $stmt->execute($parms);
-  $response['messages'] = $stmt->fetchAll(PDO::FETCH_CLASS);
+  $response['messages'] = RedBean_Facade::getAll(
+      'select * from message where app_name = :app_name and type = :type', 
+      $parms
+    );
 
   $app->response()->header('Content-Type', 'application/json');
   $app->response()->write(json_encode($response));
