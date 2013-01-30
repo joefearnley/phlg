@@ -9,6 +9,10 @@ $app = new \Slim\Slim(
   )
 );
 
+$app->post('/test', function() use ($app) {
+  echo 'asdfasdf';
+});
+
 $app->get('/', function() use ($app) {
   $app->render('view_messages.html');
 });
@@ -19,7 +23,7 @@ $app->get('/', function() use ($app) {
  *    - app name
  *    - db stuff
  */
-$app->post('/logmessage/:type', function($type) use ($app) {
+$app->post('/message/:type', function($type) use ($app) {
 
   $response = array(
     'status' => 'ok',
@@ -54,7 +58,34 @@ $app->post('/logmessage/:type', function($type) use ($app) {
   $app->response()->write(json_encode($response));
 });
 
-$app->get('/messages/:type', function($type) use ($app) {
+
+$app->get('/message/', function() use ($app) {
+
+  $response = array(
+    'status' => 'ok',
+  );
+
+  $parms = array(
+    'app_name' => 'lowphashion'
+  );
+
+  $pdo = new PDO('mysql:host=127.0.0.1;dbname=lowphashion', 'lowphashion', 'password');
+  $sql = 'SELECT app_name, message, posted
+          FROM message
+          WHERE app_name = :app_name';
+
+  $stmt = $pdo->prepare($sql);
+  $pdo = null;
+  $stmt->execute($parms);
+  $response['messages'] = $stmt->fetchAll(PDO::FETCH_CLASS);
+
+  $app->response()->header('Content-Type', 'application/json');
+  $app->response()->write(json_encode($response));
+});
+
+
+$app->get('/message/:type', function($type) use ($app) {
+
   $response = array(
     'status' => 'ok',
   );

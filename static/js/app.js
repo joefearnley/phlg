@@ -9,7 +9,7 @@
 
   var MessageList = Backbone.Collection.extend({
     model: Message,
-    url: 'http://localhost/highphasion/messages/test',
+    url: 'http://localhost/lowphashion/message',
     parse: function(response) {
       return response;
     }
@@ -27,6 +27,7 @@
       var that = this;
       this.collection.fetch({
         success: function(response) {
+          console.log(response);
           if(response.models.length > 0) {
             that.renderMessages(response.models);
           } else {

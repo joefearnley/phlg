@@ -1,14 +1,21 @@
---drop database if exists lowphashion;
---create database lowphashion;
---use lowphashion;
+/*
+  This script creates the lowphashion database.
 
---GRANT ALL ON lowphashion.* TO 'lowphashion'@'localhost' IDENTIFIED BY 'password'
+  Run the following from the mysql prompt to create a user 
+  to access the database:
+
+  GRANT ALL ON lowphashion.* TO 'lowphashion'@'localhost' IDENTIFIED BY 'password'
+*/
+
+drop database if exists lowphashion;
+create database lowphashion;
+use lowphashion;
 
 drop table if exists message;
 create table message (
-    id int primary key not null auto_increment,
-    app_name varchar(50),
-    message varchar(250),
-    message_type varchar(20),
-    posted timestamp
+  id int primary key not null auto_increment,
+  app_name varchar(50),
+  message varchar(250),
+  message_type varchar(20),
+  posted timestamp
 );
