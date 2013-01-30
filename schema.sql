@@ -16,6 +16,6 @@ create table message (
   id int primary key not null auto_increment,
   app_name varchar(50),
   message varchar(250),
-  message_type varchar(20),
+  type varchar(20),
   posted timestamp
 );
