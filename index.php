@@ -1,8 +1,19 @@
 <?php
 
+/*
+ * TODO:
+ *  - Config
+ *    - app name
+ *    - Database credentials
+ *  - make db stuff more 'ORMy'
+ */
+
 require 'vendor/autoload.php';
 
-RedBean_Facade::setup('mysql:host=127.0.0.1;dbname=lowphashion','lowphashion','password');
+RedBean_Facade::setup(
+    'mysql:host=127.0.0.1;dbname=lowphashion',
+    'lowphashion','password'
+  );
 
 $app = new \Slim\Slim(
   array(
@@ -19,12 +30,6 @@ $app->get('/', function() use ($app) {
   $app->render('view_messages.html');
 });
 
-/*
- * TODO:
- *  - Config
- *    - app name
- *    - db stuff
- */
 $app->post('/message/:type', function($type) use ($app) {
 
   $response = array(
@@ -40,6 +45,7 @@ $app->post('/message/:type', function($type) use ($app) {
     ':type' => $type
   );
 
+  // this doesn't return an id. 
   $response['message_id'] = RedBean_Facade::getAll(
       'insert into message
             (app_name, message, type)
