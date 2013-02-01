@@ -1,7 +1,8 @@
 {
   "require": {
     "slim/slim": "2.*",
-    "gabordemooij/redbean": "dev-master",
-    "phpunit/phpunit": "3.7.*"
+    "gabordemooij/redbean": "v3.3.6",
+    "phpunit/phpunit": "3.7.*",
+    "guzzle/http": "v3.1.2"
   }
 }
