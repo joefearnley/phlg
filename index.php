@@ -22,10 +22,6 @@ $app = new \Slim\Slim(
   )
 );
 
-$app->post('/test', function() use ($app) {
-  echo 'asdfasdf';
-});
-
 $app->get('/', function() use ($app) {
   $app->render('view_messages.html');
 });

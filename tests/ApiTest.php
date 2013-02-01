@@ -1,12 +1,16 @@
 <?php
 
 require '../vendor/autoload.php';
+use Guzzle\Http\Client;
 
 class ApiText extends PHPUnit_Framework_TestCase
 {
+  private $httpClient;
 
   protected function setUp()
   {
+    $this->httpClient = new Client('http://localhost/lowphashion');
+
     RedBean_Facade::setup(
         'mysql:host=127.0.0.1;dbname=lowphashion',
         'lowphashion',
@@ -21,9 +25,40 @@ class ApiText extends PHPUnit_Framework_TestCase
     RedBean_Facade::nuke();
   }
 
-  public function testIndex()
+  private function doGet($path, $data = array())
   {
-    $this->assertFalse(false);
+    $request = $this->httpClient->get($path);
+    $response = $request->send();
+    return $response;
+  }
+
+  private function doPost($path, $data = array())
+  {
+    $request = $this->httpClient->post($path, $data);
+    $response = $request->send();
+    return $response;
+  }
+
+  public function testIndexGet()
+  {
+    $response = $this->doGet('/');
+    $status = $response->getStatusCode();
+    $contentType = $response->getHeader('Content-Type');
+
+    $this->assertEquals(200, $status);
+    $this->assertEquals('text/html', $contentType);
+  }
+
+  public function testIndexPost()
+  {
+    $data = array('message' => 'test');
+    $response = $this->doPost('/', $data);
+    $status = $response->getStatusCode();
+    $contentType = $response->getHeader('Content-Type');
+
+    // This is returning a 200 ??? Why??
+    $this->assertEquals(404, $status);
+    $this->assertEquals('text/html', $contentType);
   }
 
   public function testPostMessage()
