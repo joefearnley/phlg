@@ -1,11 +1,8 @@
 <?php
 
-class ProdConfig implements IConfig
-{
-  const URL = 'http://localhost';
+require 'Config.php';
 
-  const DBHOST = 'localhost';
-  const DBNAME = 'lowphashion';
-  const DBUSER = 'lowphashion';
-  const DBPASS = 'password';
+class TestConfig extends Config
+{
+  const DBNAME = 'lowphashion_test';
 }

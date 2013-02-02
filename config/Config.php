@@ -1,12 +1,14 @@
 <?php
 
-interface IConfig
+class Config
 {
-  const URL;
+  const HOST = 'http://localhost';
+  const URI = '/lowphashion';
 
-  const DBHOST;
-  const DBNAME;
-  const DBUSER;
-  const DBPASS;
+  const APPNAME = 'lowphashion';
+
+  const DBHOST = '127.0.0.1';
+  const DBNAME = 'lowphashion';
+  const DBUSER = 'lowphashion';
+  const DBPASS = 'password';
 }
-

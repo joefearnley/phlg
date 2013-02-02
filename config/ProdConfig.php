@@ -1,11 +1,7 @@
 <?php
 
-class ProdConfig implements IConfig
-{
-  const URL;
+require 'Config.php';
 
-  const DBHOST;
-  const DBNAME;
-  const DBUSER;
-  const DBPASS;
+class ProdConfig extends Config
+{
 }
