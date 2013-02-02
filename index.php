@@ -41,12 +41,12 @@ $app->post('/message/:type', function($type) use ($app) {
     ':type' => $type
   );
 
-  // this doesn't return an id. 
+  // this doesn't return an id.
   $response['message_id'] = RedBean_Facade::getAll(
       'insert into message
             (app_name, message, type)
             values
-            (:app_name, :message, :type)', 
+            (:app_name, :message, :type)',
       $parms
     );
 
@@ -55,7 +55,7 @@ $app->post('/message/:type', function($type) use ($app) {
 });
 
 
-$app->get('/message/', function() use ($app) {
+$app->get('/message', function() use ($app) {
 
   $response = array(
     'status' => 'ok',
@@ -87,7 +87,9 @@ $app->get('/message/:type', function($type) use ($app) {
   );
 
   $response['messages'] = RedBean_Facade::getAll(
-      'select * from message where app_name = :app_name and type = :type', 
+      'select * from message
+       where app_name = :app_name
+       and type = :type',
       $parms
     );
 
@@ -96,10 +98,12 @@ $app->get('/message/:type', function($type) use ($app) {
 });
 
 $app->error(function(\Exception $e) use ($app) {
+
   $response = array(
     'status' => 'fail',
     'error' => $e->getMessage()
   );
+
   $app->response()->header('Content-Type', 'application/json');
   $app->response()->write(json_encode($response));
 });

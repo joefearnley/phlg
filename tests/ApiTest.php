@@ -5,7 +5,7 @@ use Guzzle\Http\Client;
 
 class ApiText extends PHPUnit_Framework_TestCase
 {
-  private $httpClient;
+  protected $httpClient;
 
   protected function setUp()
   {
@@ -51,24 +51,43 @@ class ApiText extends PHPUnit_Framework_TestCase
 
   public function testIndexPost()
   {
-    $data = array('message' => 'test');
-    $response = $this->doPost('/', $data);
-    $status = $response->getStatusCode();
-    $contentType = $response->getHeader('Content-Type');
+    $this->setExpectedException('Guzzle\Http\Exception\ClientErrorResponseException');
 
-    // This is returning a 200 ??? Why??
-    $this->assertEquals(404, $status);
-    $this->assertEquals('text/html', $contentType);
+    $data = array('message' => 'test');
+    $response = $this->doPost('/lowphashion/', $data);
   }
 
   public function testPostMessage()
   {
-    $this->assertFalse(false);
+    $this->setExpectedException('Guzzle\Http\Exception\ClientErrorResponseException');
+
+    $data = array('message' => 'test');
+    $response = $this->doPost('/lowphashion/message', $data);
   }
 
   public function testPostInfoMessage()
   {
-    $this->assertFalse(false);
+    $response = $this->doPost('/lowphashion/message/info',
+      array(
+        'message' => 'test',
+        'app_name' => 'testapp'
+      )
+    );
+
+    $response = $this->doPost('/lowphashion/message/info',
+      array(
+        'message' => 'test2',
+        'app_name' => 'testapp'
+      )
+    );
+
+    $messages = RedBean_Facade::getAll('select * from message');
+
+    var_dump($messages);
+    die();
+
+    $this->assertEquals('test', $messages[0]['message']);
+    $this->assertEquals('test2', $messages[1]['message']);
   }
 
   public function testPostErrorMessage()
