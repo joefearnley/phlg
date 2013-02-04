@@ -9,11 +9,7 @@
  */
 
 require 'vendor/autoload.php';
-
-RedBean_Facade::setup(
-    'mysql:host=127.0.0.1;dbname=lowphashion',
-    'lowphashion','password'
-  );
+require 'config/config.php';
 
 $app = new \Slim\Slim(
   array(
@@ -22,11 +18,19 @@ $app = new \Slim\Slim(
   )
 );
 
+$cfg = $config['test'];
+
+RedBean_Facade::setup(
+    $cfg['connection'],
+    $cfg['db_user'],
+    $cfg['db_pass']
+  );
+
 $app->get('/', function() use ($app) {
   $app->render('view_messages.html');
 });
 
-$app->post('/message/:type', function($type) use ($app) {
+$app->post('/message/:type', function($type) use ($app, $cfg) {
 
   $response = array(
     'status' => 'ok',
@@ -36,7 +40,7 @@ $app->post('/message/:type', function($type) use ($app) {
   $message = $app->request()->post('message');
 
   $parms = array(
-    ':app_name' => 'lowphashion',
+    ':app_name' => $cfg['app_name'],
     ':message' => $message,
     ':type' => $type
   );
@@ -55,14 +59,14 @@ $app->post('/message/:type', function($type) use ($app) {
 });
 
 
-$app->get('/message', function() use ($app) {
+$app->get('/message', function() use ($app, $cfg) {
 
   $response = array(
     'status' => 'ok',
   );
 
   $parms = array(
-    ':app_name' => 'lowphashion'
+    ':app_name' => $cfg['app_name']
   );
 
   $response['messages'] = RedBean_Facade::getAll(
@@ -74,15 +78,14 @@ $app->get('/message', function() use ($app) {
   $app->response()->write(json_encode($response));
 });
 
-
-$app->get('/message/:type', function($type) use ($app) {
+$app->get('/message/:type', function($type) use ($app, $cfg) {
 
   $response = array(
     'status' => 'ok',
   );
 
   $parms = array(
-    ':app_name' => 'lowphashion',
+    ':app_name' => $cfg['app_name'],
     ':type' => $type
   );
 

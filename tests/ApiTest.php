@@ -1,23 +1,34 @@
 <?php
 
 require '../vendor/autoload.php';
+require '../config/TestConfig.php';
+
 use Guzzle\Http\Client;
 
 class ApiText extends PHPUnit_Framework_TestCase
 {
-  protected $httpClient;
+  private $httpClient;
 
   protected function setUp()
   {
-    $this->httpClient = new Client('http://localhost/lowphashion');
+    $host = TestConfig::HOST;
+    $uri = TestConfig::URI;
+
+    $this->httpClient = new Client($host);
+
+    $host = TestConfig::DBHOST;
+    $db_name = TestConfig::DBNAME;
+    $db_user = TestConfig::DBUSER;
+    $db_pass = TestConfig::DBPASS;
 
     RedBean_Facade::setup(
-        'mysql:host=127.0.0.1;dbname=lowphashion',
-        'lowphashion',
-        'password'
+        'mysql:host='.$host.';dbname='.$db_name,
+        $db_user,
+        $db_pass
       );
 
-    $messages = RedBean_Facade::dispense('message', 3);
+    $message = RedBean_Facade::dispense('message');
+    RedBean_Facade::store($message);
   }
 
   protected function tearDown()
@@ -74,6 +85,11 @@ class ApiText extends PHPUnit_Framework_TestCase
       )
     );
 
+    $status = $response->getStatusCode();
+    $contentType = $response->getHeader('Content-Type');
+    $this->assertEquals(200, $status);
+    $this->assertEquals('application/json', $contentType);
+
     $response = $this->doPost('/lowphashion/message/info',
       array(
         'message' => 'test2',
@@ -81,10 +97,14 @@ class ApiText extends PHPUnit_Framework_TestCase
       )
     );
 
+    $status = $response->getStatusCode();
+    $contentType = $response->getHeader('Content-Type');
+    $this->assertEquals(200, $status);
+    $this->assertEquals('application/json', $contentType);
+
     $messages = RedBean_Facade::getAll('select * from message');
 
     var_dump($messages);
-    die();
 
     $this->assertEquals('test', $messages[0]['message']);
     $this->assertEquals('test2', $messages[1]['message']);
