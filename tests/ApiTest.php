@@ -33,7 +33,6 @@ class ApiText extends PHPUnit_Framework_TestCase
     $message->body = '';
     $message->type = '';
     $message->posted = RedBean_Facade::$f->now();
-
     RedBean_Facade::store($message);
   }
 
@@ -45,6 +44,13 @@ class ApiText extends PHPUnit_Framework_TestCase
     RedBean_Facade::nuke();
   }
 
+  /**
+   * Perform a GET against the API
+   *
+   * @param string $path - Endpoint to test.
+   * @param string $data - Parameters
+   * 
+   */
   private function doGet($path, $data = array())
   {
     $path = $this->uri . $path;
@@ -79,6 +85,10 @@ class ApiText extends PHPUnit_Framework_TestCase
     $response = $this->doPost('/', $data);
   }
 
+  /**
+   * Test an attempt to post to the /messgae endpoint. This should
+   * result in a 404 which throws an exception.
+   */
   public function testPostMessage()
   {
     $this->setExpectedException('Guzzle\Http\Exception\ClientErrorResponseException');
@@ -87,19 +97,32 @@ class ApiText extends PHPUnit_Framework_TestCase
     $response = $this->doPost('/message', $data);
   }
 
+  /**
+   * Test the /message/info endpoint. Two calls are made to the 
+   * endpoint, one with an app_name and one without. Check the 
+   * http status and content type of the response then the body,
+   * app_name and type is stored in the database correctly.
+   */
   public function testPostInfoMessage()
   {
     $response = $this->doPost('/message/info', array('body' => 'test'));
 
     $status = $response->getStatusCode();
     $contentType = $response->getHeader('Content-Type');
+
     $this->assertEquals(200, $status);
     $this->assertEquals('application/json', $contentType);
 
-    $response = $this->doPost('/message/info', array('body' => 'test2'));
+    $response = $this->doPost('/message/info', 
+          array(
+             'body' => 'test2',
+             'app_name' => 'test_app'
+           )
+         );
 
     $status = $response->getStatusCode();
     $contentType = $response->getHeader('Content-Type');
+
     $this->assertEquals(200, $status);
     $this->assertEquals('application/json', $contentType);
 
@@ -108,20 +131,75 @@ class ApiText extends PHPUnit_Framework_TestCase
     $message1 = $messages[2];
     $message2 = $messages[3];
 
-    $this->assertEquals('test', $messages[2]->body);
-    $this->assertEquals('lowphashion', $me
-    $this->assertEquals('test2', $messages[3]->body);
-    
+    $this->assertEquals('test', $message1->body);
+    $this->assertEquals('lowphashion_test', $message1->app_name);
+    $this->assertEquals('info', $message1->type);
+
+    $this->assertEquals('test2', $message2->body);
+    $this->assertEquals('test_app', $message2->app_name);
+    $this->assertEquals('info', $message2->type);
   }
 
+  /**
+   * Same test as testPostInfoMessage() on the endpooint is /message/error.
+   */
   public function testPostErrorMessage()
   {
-    $this->assertFalse(false);
+    $response = $this->doPost('/message/error', array('body' => 'test'));
+
+    $status = $response->getStatusCode();
+    $contentType = $response->getHeader('Content-Type');
+
+    $this->assertEquals(200, $status);
+    $this->assertEquals('application/json', $contentType);
+
+    $response = $this->doPost('/message/error', 
+          array(
+             'body' => 'test2',
+             'app_name' => 'test_app'
+           )
+         );
+
+    $status = $response->getStatusCode();
+    $contentType = $response->getHeader('Content-Type');
+
+    $this->assertEquals(200, $status);
+    $this->assertEquals('application/json', $contentType);
+
+    $messages = RedBean_Facade::find('message', 'app_name is not null');
+
+    $message1 = $messages[2];
+    $message2 = $messages[3];
+
+    $this->assertEquals('error', $message1->type);
+    $this->assertEquals('error', $message2->type);
   }
 
   public function testGetAllMessages()
   {
-    $this->assertFalse(false);
+    $message = RedBean_Facade::dispense('message');
+    $message->app_name = null;
+    $message->body = '';
+    $message->type = '';
+    $message->posted = RedBean_Facade::$f->now();
+    RedBean_Facade::store($message);
+
+    $message->app_name = null;
+    $message->body = '';
+    $message->type = '';
+    $message->posted = RedBean_Facade::$f->now();
+    RedBean_Facade::store($message);
+
+    $response = $this->doPost('/message/error', array('body' => 'test'));
+
+    var_dump($response);
+    $status = $response->getStatusCode();
+    $contentType = $response->getHeader('Content-Type');
+
+    $this->assertEquals(200, $status);
+    $this->assertEquals('application/json', $contentType);
+
+
   }
 
   public function testGetMessage()
