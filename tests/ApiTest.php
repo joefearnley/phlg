@@ -29,9 +29,9 @@ class ApiText extends PHPUnit_Framework_TestCase
     RedBean_Facade::setup($connection, $db_user, $db_pass);
 
     $message = RedBean_Facade::dispense('message');
-    $message->app_name = null;
-    $message->body = '';
-    $message->type = '';
+    $message->app_name = 'lowphashion_test';
+    $message->body = 'setting up database for tests';
+    $message->type = 'info';
     $message->posted = RedBean_Facade::$f->now();
     RedBean_Facade::store($message);
   }
@@ -107,11 +107,9 @@ class ApiText extends PHPUnit_Framework_TestCase
   {
     $response = $this->doPost('/message/info', array('body' => 'test'));
 
-    $status = $response->getStatusCode();
-    $contentType = $response->getHeader('Content-Type');
-
-    $this->assertEquals(200, $status);
-    $this->assertEquals('application/json', $contentType);
+    $this->assertEquals(200, $response->getStatusCode());
+    $this->assertEquals('application/json', $response->getHeader('Content-Type'));
+    $this->assertEquals('OK', $response->getReasonPhrase());
 
     $response = $this->doPost('/message/info', 
           array(
@@ -120,11 +118,9 @@ class ApiText extends PHPUnit_Framework_TestCase
            )
          );
 
-    $status = $response->getStatusCode();
-    $contentType = $response->getHeader('Content-Type');
-
-    $this->assertEquals(200, $status);
-    $this->assertEquals('application/json', $contentType);
+    $this->assertEquals(200, $response->getStatusCode());
+    $this->assertEquals('application/json', $response->getHeader('Content-Type'));
+    $this->assertEquals('OK', $response->getReasonPhrase());
 
     $messages = RedBean_Facade::find('message', 'app_name is not null');
 
@@ -147,11 +143,9 @@ class ApiText extends PHPUnit_Framework_TestCase
   {
     $response = $this->doPost('/message/error', array('body' => 'test'));
 
-    $status = $response->getStatusCode();
-    $contentType = $response->getHeader('Content-Type');
-
-    $this->assertEquals(200, $status);
-    $this->assertEquals('application/json', $contentType);
+    $this->assertEquals(200, $response->getStatusCode());
+    $this->assertEquals('application/json', $response->getHeader('Content-Type'));
+    $this->assertEquals('OK', $response->getReasonPhrase());
 
     $response = $this->doPost('/message/error', 
           array(
@@ -160,11 +154,9 @@ class ApiText extends PHPUnit_Framework_TestCase
            )
          );
 
-    $status = $response->getStatusCode();
-    $contentType = $response->getHeader('Content-Type');
-
-    $this->assertEquals(200, $status);
-    $this->assertEquals('application/json', $contentType);
+    $this->assertEquals(200, $response->getStatusCode());
+    $this->assertEquals('application/json', $response->getHeader('Content-Type'));
+    $this->assertEquals('OK', $response->getReasonPhrase());
 
     $messages = RedBean_Facade::find('message', 'app_name is not null');
 
@@ -175,36 +167,106 @@ class ApiText extends PHPUnit_Framework_TestCase
     $this->assertEquals('error', $message2->type);
   }
 
+  /**
+   * Test for the /message/all endpoint. Create 2 records 
+   * and confirm they can be retrieve. The total count is 
+   * 3 because of the initial record created in the set up.
+   */
   public function testGetAllMessages()
   {
     $message = RedBean_Facade::dispense('message');
-    $message->app_name = null;
-    $message->body = '';
-    $message->type = '';
+    $message->app_name = 'test_app';
+    $message->body = 'This is a test message.';
+    $message->type = 'info';
     $message->posted = RedBean_Facade::$f->now();
     RedBean_Facade::store($message);
 
-    $message->app_name = null;
-    $message->body = '';
-    $message->type = '';
+    $message = RedBean_Facade::dispense('message');
+    $message->app_name = 'lowphashion';
+    $message->body = 'This a second test.';
+    $message->type = 'info';
     $message->posted = RedBean_Facade::$f->now();
     RedBean_Facade::store($message);
 
-    $response = $this->doPost('/message/error', array('body' => 'test'));
+    $response = $this->doGet('/message/all');
 
-    var_dump($response);
-    $status = $response->getStatusCode();
-    $contentType = $response->getHeader('Content-Type');
+    $body = json_decode($response->getBody());
+    $messages = $body->messages;
 
-    $this->assertEquals(200, $status);
-    $this->assertEquals('application/json', $contentType);
-
-
+    $this->assertEquals('ok', $body->status);
+    $this->assertEquals(3, count($messages));
+    $this->assertEquals(200, $response->getStatusCode());
+    $this->assertEquals('application/json', $response->getHeader('Content-Type'));
   }
 
-  public function testGetMessage()
+  /**
+   * Test for the /message/:id endpoint. Create a record 
+   * and fetch it by its id generated from the ORM. 
+   */
+  public function testGetMessageById()
   {
-    $this->assertFalse(false);
+    $message = RedBean_Facade::dispense('message');
+    $message->app_name = 'test_app';
+    $message->body = 'This is a test message.';
+    $message->type = 'info';
+    $message->posted = RedBean_Facade::$f->now();
+    RedBean_Facade::store($message);
+
+    $response = $this->doGet('/message/' . $message->id);
+
+    $body = json_decode($response->getBody());
+    $message = $body->message;
+
+    $this->assertEquals('ok', $body->status);
+    $this->assertEquals('This is a test message.', $message->body);
+    $this->assertEquals(200, $response->getStatusCode());
+    $this->assertEquals('application/json', $response->getHeader('Content-Type'));
+  }
+
+  /**
+   * Test for the /message/type/info endpoint. 
+   */
+  public function testGetInfoMessage()
+  {
+    $message = RedBean_Facade::dispense('message');
+    $message->app_name = 'test_app';
+    $message->body = 'This is an INFO message.';
+    $message->type = 'info';
+    $message->posted = RedBean_Facade::$f->now();
+    RedBean_Facade::store($message);
+
+    $response = $this->doGet('/message/type/info');
+
+    $body = json_decode($response->getBody());
+    $message = $body->messages[1];
+
+    $this->assertEquals('ok', $body->status);
+    $this->assertEquals('This is an INFO message.', $message->body);
+    $this->assertEquals(200, $response->getStatusCode());
+    $this->assertEquals('application/json', $response->getHeader('Content-Type'));
+  }
+
+  /**
+   * Test for the /message/type/error endpoint. 
+   */
+  public function testGetErrorMessage()
+  {
+    $message = RedBean_Facade::dispense('message');
+    $message->app_name = 'test_app';
+    $message->body = 'This is an ERROR message.';
+    $message->type = 'error';
+    $message->posted = RedBean_Facade::$f->now();
+    RedBean_Facade::store($message);
+
+    $response = $this->doGet('/message/type/error');
+
+    $body = json_decode($response->getBody());
+    $message = $body->messages[0];
+
+    $this->assertEquals('ok', $body->status);
+    $this->assertEquals('This is an ERROR message.', $message->body);
+    $this->assertEquals(200, $response->getStatusCode());
+    $this->assertEquals('application/json', $response->getHeader('Content-Type'));
   }
 
   public function testError()
