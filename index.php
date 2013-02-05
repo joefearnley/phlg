@@ -26,11 +26,6 @@ $app->get('/', function() use ($app) {
  */
 $app->post('/message/:type', function($type) use ($app, $cfg) {
 
-  $response = array(
-    'status' => 'ok',
-    'message_id' => 0
-  );
-
   $body = $app->request()->post('body');
   $app_name = $app->request()->post('app_name'); 
   $app_name = (isset($app_name) == true) ? $app_name : $cfg['app_name'];
@@ -42,45 +37,30 @@ $app->post('/message/:type', function($type) use ($app, $cfg) {
   $message->posted = RedBean_Facade::$f->now();
   RedBean_Facade::store($message);
 
-  $app->response()->header('Content-Type', 'application/json');
-  $app->response()->write(json_encode($response));
+  writeOkResponse($app, $message->id);
 });
 
 /**
  * Get all messages from the database.
  */
 $app->get('/message/all', function() use ($app, $cfg) {
-  $response = array(
-    'status' => 'ok',
-  );
 
-  $beans = RedBean_Facade::findAll('message');
   $messages = array();
+  $beans = RedBean_Facade::findAll('message');
 
   foreach($beans as $bean) {
     array_push($messages, $bean->getProperties());
   }
-
-  $response['messages'] = $messages;
-
-  $app->response()->header('Content-Type', 'application/json');
-  $app->response()->write(json_encode($response));
+  writeOkResponse($app, 0, $messages);
 });
 
 /**
  * Find a message with the given id.
  */
 $app->get('/message/:id', function($id) use ($app, $cfg) {
-
-  $response = array(
-    'status' => 'ok'
-  );
-
   $bean = RedBean_Facade::load('message', $id);
-  $response['message'] = $bean->getProperties();
-
-  $app->response()->header('Content-Type', 'application/json');
-  $app->response()->write(json_encode($response));
+  $messages = array($bean->getProperties());
+  writeOkResponse($app, 0, $messages);
 });
 
 /**
@@ -88,25 +68,17 @@ $app->get('/message/:id', function($id) use ($app, $cfg) {
  */
 $app->get('/message/type/:type', function($type) use ($app, $cfg) {
 
-  $response = array(
-    'status' => 'ok',
-  );
-
-  $parms = array(
-    ':type' => $type
-  );
-
-  $beans = RedBean_Facade::findAll('message', 'where type = :type', $parms);
   $messages = array();
+  $beans = RedBean_Facade::findAll(
+      'message', 
+      'where type = :type', 
+      array( ':type' => $type)
+    );
 
   foreach($beans as $bean) {
     array_push($messages, $bean->getProperties());
   }
-
-  $response['messages'] = $messages;
-
-  $app->response()->header('Content-Type', 'application/json');
-  $app->response()->write(json_encode($response));
+  writeOkResponse($app, 0, $messages);
 });
 
 /**
@@ -124,3 +96,18 @@ $app->error(function(\Exception $e) use ($app) {
 });
 
 $app->run();
+
+function writeOkResponse($app, $messageId = 0, $messages = array()) {
+  $response['status'] = 'ok';
+
+  if($messageId > 0) {
+    $response['message_id'] = $messageId;
+  }
+
+  if(count($messages) > 0) {
+    $response['messages'] = $messages;
+  }
+
+  $app->response()->header('Content-Type', 'application/json');
+  $app->response()->write(json_encode($response));
+}

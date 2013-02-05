@@ -109,7 +109,6 @@ class ApiText extends PHPUnit_Framework_TestCase
 
     $this->assertEquals(200, $response->getStatusCode());
     $this->assertEquals('application/json', $response->getHeader('Content-Type'));
-    $this->assertEquals('OK', $response->getReasonPhrase());
 
     $response = $this->doPost('/message/info', 
           array(
@@ -120,7 +119,6 @@ class ApiText extends PHPUnit_Framework_TestCase
 
     $this->assertEquals(200, $response->getStatusCode());
     $this->assertEquals('application/json', $response->getHeader('Content-Type'));
-    $this->assertEquals('OK', $response->getReasonPhrase());
 
     $messages = RedBean_Facade::find('message', 'app_name is not null');
 
@@ -145,7 +143,6 @@ class ApiText extends PHPUnit_Framework_TestCase
 
     $this->assertEquals(200, $response->getStatusCode());
     $this->assertEquals('application/json', $response->getHeader('Content-Type'));
-    $this->assertEquals('OK', $response->getReasonPhrase());
 
     $response = $this->doPost('/message/error', 
           array(
@@ -156,7 +153,6 @@ class ApiText extends PHPUnit_Framework_TestCase
 
     $this->assertEquals(200, $response->getStatusCode());
     $this->assertEquals('application/json', $response->getHeader('Content-Type'));
-    $this->assertEquals('OK', $response->getReasonPhrase());
 
     $messages = RedBean_Facade::find('message', 'app_name is not null');
 
@@ -215,7 +211,7 @@ class ApiText extends PHPUnit_Framework_TestCase
     $response = $this->doGet('/message/' . $message->id);
 
     $body = json_decode($response->getBody());
-    $message = $body->message;
+    $message = $body->messages[0];
 
     $this->assertEquals('ok', $body->status);
     $this->assertEquals('This is a test message.', $message->body);
