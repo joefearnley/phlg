@@ -15,7 +15,7 @@ drop table if exists message;
 create table message (
   id int primary key not null auto_increment,
   app_name varchar(50),
-  message varchar(250),
+  body varchar(250),
   type varchar(20),
   posted timestamp
 );

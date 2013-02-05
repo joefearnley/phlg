@@ -20,11 +20,7 @@ $app = new \Slim\Slim(
 
 $cfg = $config['test'];
 
-RedBean_Facade::setup(
-    $cfg['connection'],
-    $cfg['db_user'],
-    $cfg['db_pass']
-  );
+RedBean_Facade::setup($cfg['connection'], $cfg['db_user'], $cfg['db_pass']);
 
 $app->get('/', function() use ($app) {
   $app->render('view_messages.html');
@@ -37,22 +33,23 @@ $app->post('/message/:type', function($type) use ($app, $cfg) {
     'message_id' => 0
   );
 
-  $message = $app->request()->post('message');
+  $body = $app->request()->post('body');
+  $app_name = $app->request()->post('app_name'); 
+  $app_name = (isset($app_name) == true) ? $app_name : $cfg['app_name'];
 
   $parms = array(
-    ':app_name' => $cfg['app_name'],
-    ':message' => $message,
+    ':app_name' => $app_name,
+    ':body' => $body,
     ':type' => $type
   );
 
   // this doesn't return an id.
-  $response['message_id'] = RedBean_Facade::getAll(
-      'insert into message
-            (app_name, message, type)
-            values
-            (:app_name, :message, :type)',
-      $parms
-    );
+  $message = RedBean_Facade::dispense('message');
+  $message->app_name = $app_name;
+  $message->body = $body;
+  $message->type = $type;
+  $message->posted = RedBean_Facade::$f->now();
+  RedBean_Facade::store($message);
 
   $app->response()->header('Content-Type', 'application/json');
   $app->response()->write(json_encode($response));
@@ -65,6 +62,9 @@ $app->get('/message', function() use ($app, $cfg) {
     'status' => 'ok',
   );
 
+  // TODO: 
+  // app name should probably be a parameter here
+  //
   $parms = array(
     ':app_name' => $cfg['app_name']
   );
