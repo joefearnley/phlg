@@ -1,28 +1,30 @@
 <?php
 
 require '../vendor/autoload.php';
-require '../config/TestConfig.php';
 
 use Guzzle\Http\Client;
 
 class ApiText extends PHPUnit_Framework_TestCase
 {
   private $httpClient;
+  private $uri;
+  private $cfg;
 
   protected function setUp()
   {
-    $host = TestConfig::HOST;
-    $uri = TestConfig::URI;
+    require '../config/config.php';
 
-    $this->httpClient = new Client($host);
+    $this->cfg = $config['test'];
+    $this->httpClient = new Client($this->cfg['host']);
+    $this->uri = $this->cfg['uri'];
 
-    $host = TestConfig::DBHOST;
-    $db_name = TestConfig::DBNAME;
-    $db_user = TestConfig::DBUSER;
-    $db_pass = TestConfig::DBPASS;
+    $db_host = $this->cfg['db_host'];
+    $db_name = $this->cfg['db_name'];
+    $db_user = $this->cfg['db_user'];
+    $db_pass = $this->cfg['db_pass'];
 
-    RedBean_Facade::setup(
-        'mysql:host='.$host.';dbname='.$db_name,
+     RedBean_Facade::setup(
+        'mysql:host='.$db_host.';dbname='.$db_name,
         $db_user,
         $db_pass
       );
@@ -33,11 +35,12 @@ class ApiText extends PHPUnit_Framework_TestCase
 
   protected function tearDown()
   {
-    RedBean_Facade::nuke();
+    //RedBean_Facade::nuke();
   }
 
   private function doGet($path, $data = array())
   {
+    $path = $this->cfg['uri'] . $path;
     $request = $this->httpClient->get($path);
     $response = $request->send();
     return $response;
@@ -45,6 +48,7 @@ class ApiText extends PHPUnit_Framework_TestCase
 
   private function doPost($path, $data = array())
   {
+    $path = $this->cfg['uri'] . $path;
     $request = $this->httpClient->post($path, $data);
     $response = $request->send();
     return $response;
@@ -65,7 +69,7 @@ class ApiText extends PHPUnit_Framework_TestCase
     $this->setExpectedException('Guzzle\Http\Exception\ClientErrorResponseException');
 
     $data = array('message' => 'test');
-    $response = $this->doPost('/lowphashion/', $data);
+    $response = $this->doPost('/', $data);
   }
 
   public function testPostMessage()
@@ -73,12 +77,12 @@ class ApiText extends PHPUnit_Framework_TestCase
     $this->setExpectedException('Guzzle\Http\Exception\ClientErrorResponseException');
 
     $data = array('message' => 'test');
-    $response = $this->doPost('/lowphashion/message', $data);
+    $response = $this->doPost('/message', $data);
   }
 
   public function testPostInfoMessage()
   {
-    $response = $this->doPost('/lowphashion/message/info',
+    $response = $this->doPost('/message/info',
       array(
         'message' => 'test',
         'app_name' => 'testapp'
@@ -90,7 +94,7 @@ class ApiText extends PHPUnit_Framework_TestCase
     $this->assertEquals(200, $status);
     $this->assertEquals('application/json', $contentType);
 
-    $response = $this->doPost('/lowphashion/message/info',
+    $response = $this->doPost('/message/info',
       array(
         'message' => 'test2',
         'app_name' => 'testapp'
@@ -102,9 +106,9 @@ class ApiText extends PHPUnit_Framework_TestCase
     $this->assertEquals(200, $status);
     $this->assertEquals('application/json', $contentType);
 
-    $messages = RedBean_Facade::getAll('select * from message');
+    //$messages = RedBean_Facade::getAll('select * from message');
 
-    var_dump($messages);
+    //var_dump($messages);
 
     $this->assertEquals('test', $messages[0]['message']);
     $this->assertEquals('test2', $messages[1]['message']);
