@@ -28,12 +28,7 @@ class ApiText extends PHPUnit_Framework_TestCase
 
     RedBean_Facade::setup($connection, $db_user, $db_pass);
 
-    $message = RedBean_Facade::dispense('message');
-    $message->app_name = 'lowphashion_test';
-    $message->body = 'setting up database for tests';
-    $message->type = 'info';
-    $message->posted = RedBean_Facade::$f->now();
-    RedBean_Facade::store($message);
+    $this->createMessageBean('lowphashion_test', 'setting up database for tests', 'info');
   }
 
   /**
@@ -47,8 +42,8 @@ class ApiText extends PHPUnit_Framework_TestCase
   /**
    * Perform a GET against the API
    *
-   * @param string $path - Endpoint to test.
-   * @param string $data - Parameters
+   * @param string path - Endpoint to test.
+   * @param string data - Parameters
    * 
    */
   private function doGet($path, $data = array())
@@ -59,6 +54,13 @@ class ApiText extends PHPUnit_Framework_TestCase
     return $response;
   }
 
+  /**
+   * Perform a POST against the API
+   *
+   * @param string path - Endpoint to test.
+   * @param string data - Parameters
+   * 
+   */
   private function doPost($path, $data = array())
   {
     $path = $this->uri . $path;
@@ -67,16 +69,20 @@ class ApiText extends PHPUnit_Framework_TestCase
     return $response;
   }
 
+  /**
+   * Test the index endpoint. Should return an html document.
+   */
   public function testIndexGet()
   {
     $response = $this->doGet('/');
-    $status = $response->getStatusCode();
-    $contentType = $response->getHeader('Content-Type');
 
-    $this->assertEquals(200, $status);
-    $this->assertEquals('text/html', $contentType);
+    $this->assertEquals(200, $response->getStatusCode());
+    $this->assertEquals('text/html', $response->getHeader('Content-Type'));
   }
 
+  /**
+   * A POST attempt to the index endpoint should be an error.
+  */
   public function testIndexPost()
   {
     $this->setExpectedException('Guzzle\Http\Exception\ClientErrorResponseException');
@@ -170,19 +176,8 @@ class ApiText extends PHPUnit_Framework_TestCase
    */
   public function testGetAllMessages()
   {
-    $message = RedBean_Facade::dispense('message');
-    $message->app_name = 'test_app';
-    $message->body = 'This is a test message.';
-    $message->type = 'info';
-    $message->posted = RedBean_Facade::$f->now();
-    RedBean_Facade::store($message);
-
-    $message = RedBean_Facade::dispense('message');
-    $message->app_name = 'lowphashion';
-    $message->body = 'This a second test.';
-    $message->type = 'info';
-    $message->posted = RedBean_Facade::$f->now();
-    RedBean_Facade::store($message);
+    $this->createMessageBean('test_app', 'This is a test message.', 'error');
+    $this->createMessageBean('low_phashion', 'This is a second test message.', 'error');
 
     $response = $this->doGet('/message/all');
 
@@ -201,14 +196,9 @@ class ApiText extends PHPUnit_Framework_TestCase
    */
   public function testGetMessageById()
   {
-    $message = RedBean_Facade::dispense('message');
-    $message->app_name = 'test_app';
-    $message->body = 'This is a test message.';
-    $message->type = 'info';
-    $message->posted = RedBean_Facade::$f->now();
-    RedBean_Facade::store($message);
+    $message_id = $this->createMessageBean('test_app', 'This is a test message.', 'info');
 
-    $response = $this->doGet('/message/' . $message->id);
+    $response = $this->doGet('/message/' . $message_id);
 
     $body = json_decode($response->getBody());
     $message = $body->messages[0];
@@ -224,12 +214,7 @@ class ApiText extends PHPUnit_Framework_TestCase
    */
   public function testGetInfoMessage()
   {
-    $message = RedBean_Facade::dispense('message');
-    $message->app_name = 'test_app';
-    $message->body = 'This is an INFO message.';
-    $message->type = 'info';
-    $message->posted = RedBean_Facade::$f->now();
-    RedBean_Facade::store($message);
+    $this->createMessageBean('test_app', 'This is an INFO message.', 'info');
 
     $response = $this->doGet('/message/type/info');
 
@@ -247,12 +232,7 @@ class ApiText extends PHPUnit_Framework_TestCase
    */
   public function testGetErrorMessage()
   {
-    $message = RedBean_Facade::dispense('message');
-    $message->app_name = 'test_app';
-    $message->body = 'This is an ERROR message.';
-    $message->type = 'error';
-    $message->posted = RedBean_Facade::$f->now();
-    RedBean_Facade::store($message);
+    $this->createMessageBean('test_app', 'This is an ERROR message.', 'error');
 
     $response = $this->doGet('/message/type/error');
 
@@ -268,5 +248,22 @@ class ApiText extends PHPUnit_Framework_TestCase
   public function testError()
   {
     $this->assertFalse(false);
+  }
+
+  /**
+   * Create a message bean (record in the database).
+   *
+   * @param string app_name
+   * @param string body
+   * @param string type
+   */
+  public function createMessageBean($app_name = '', $body = '', $type = '') {
+    $message = RedBean_Facade::dispense('message');
+    $message->app_name = $app_name;
+    $message->body = $body;
+    $message->type = $type;
+    $message->posted = RedBean_Facade::$f->now();
+    RedBean_Facade::store($message);
+    return $message->id;
   }
 }
