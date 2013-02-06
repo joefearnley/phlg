@@ -2,14 +2,14 @@
 
   var Message = Backbone.Model.extend({
     defaults: {
-      status: 'highphasion',
+      status: 'ok',
       messages: []
     }
   });
 
   var MessageList = Backbone.Collection.extend({
     model: Message,
-    url: 'http://localhost/lowphashion/message',
+    url: 'http://localhost/lowphashion/message/all',
     parse: function(response) {
       return response;
     }
@@ -55,7 +55,6 @@
   var NoMessagesView = Backbone.View.extend({
     template: $('#noMessagesTemplate').html(),
     render: function() {
-      console.log(this.$el);
       $(this.el).html(this.template);
       return this;
     }
@@ -64,7 +63,6 @@
   var MessageListView = Backbone.View.extend({
     template: $('#messageListTemplate').html(),
     render: function() {
-      console.log(this.model);
       var html = Mustache.to_html(this.template, this.model.toJSON());
       console.log(html);
       $(this.el).html(html);
