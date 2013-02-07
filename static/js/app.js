@@ -1,16 +1,18 @@
 (function ($) {
 
   var Message = Backbone.Model.extend({
-    defaults: {
-      status: 'ok',
-      messages: []
-    }
+    messages: []
   });
 
   var MessageList = Backbone.Collection.extend({
     model: Message,
     url: 'http://localhost/lowphashion/message/all',
     parse: function(response) {
+
+		  //console.log(this.toJSON());
+			//return models
+      //return this.models;
+
       return response;
     }
   });
@@ -25,24 +27,40 @@
 
     render: function() {
       var that = this;
+
       this.collection.fetch({
+
         success: function(response) {
-          console.log(response);
+
           if(response.models.length > 0) {
-            that.renderMessages(response.models);
+            that.renderMessages(response);
+
           } else {
             console.log('rendering no messages');
             that.renderNoMessages();
           }
-        }
+        },
+        error: function (errorResponse) {
+          console.log(errorResponse);
+	      }
       })
     },
 
-    renderMessages: function(messages) {
-      var messageListView = new MessageListView({
-        model: messages
-      });
-      this.$el.append(messageListView.render().el);
+    renderMessages: function(response) {
+      //var messageListView = new MessageListView({
+      //  model: messages
+      //});
+
+      console.log(JSON.stringify(this.models));
+
+      var template = $('#message-list-template').html();
+
+
+      var html = Mustache.to_html(template, response.toJSON());
+
+      console.log(html);
+
+      this.$el.append(html);
     },
 
     renderNoMessages: function() {
@@ -61,12 +79,14 @@
   });
 
   var MessageListView = Backbone.View.extend({
-    template: $('#messageListTemplate').html(),
+    
     render: function() {
-      var html = Mustache.to_html(this.template, this.model.toJSON());
-      console.log(html);
-      $(this.el).html(html);
-      return this;
+
+      console.log(this.model.models);
+
+      var html = Mustache.to_html(this.template, this.model.models.toJSON());
+      //console.log(html);
+      return html;
     }
   });
 
