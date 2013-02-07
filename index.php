@@ -10,7 +10,7 @@ $app = new \Slim\Slim(
   )
 );
 
-$cfg = $config['test'];
+$cfg = $config['prod'];
 
 RedBean_Facade::setup($cfg['connection'], $cfg['db_user'], $cfg['db_pass']);
 
