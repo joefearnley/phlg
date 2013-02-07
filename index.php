@@ -37,7 +37,7 @@ $app->post('/message/:type', function($type) use ($app, $cfg) {
   $message->posted = RedBean_Facade::$f->now();
   RedBean_Facade::store($message);
 
-  writeOkResponse($app, $message->id);
+  writeSuccessfulResposne($app, $message->id);
 });
 
 /**
@@ -51,7 +51,7 @@ $app->get('/message/all', function() use ($app, $cfg) {
   foreach($beans as $bean) {
     array_push($messages, $bean->getProperties());
   }
-  writeOkResponse($app, 0, $messages);
+  writeSuccessfulResposne($app, 0, $messages);
 });
 
 /**
@@ -60,7 +60,7 @@ $app->get('/message/all', function() use ($app, $cfg) {
 $app->get('/message/:id', function($id) use ($app, $cfg) {
   $bean = RedBean_Facade::load('message', $id);
   $messages = array($bean->getProperties());
-  writeOkResponse($app, 0, $messages);
+  writeSuccessfulResposne($app, 0, $messages);
 });
 
 /**
@@ -78,7 +78,7 @@ $app->get('/message/type/:type', function($type) use ($app, $cfg) {
   foreach($beans as $bean) {
     array_push($messages, $bean->getProperties());
   }
-  writeOkResponse($app, 0, $messages);
+  writeSuccessfulResposne($app, 0, $messages);
 });
 
 /**
@@ -97,14 +97,12 @@ $app->error(function(\Exception $e) use ($app) {
 
 $app->run();
 
-function writeOkResponse($app, $messageId = 0, $messages = array()) {
+function writeSuccessfulResposne($app, $messageId = 0, $messages = array()) {
   $response['status'] = 'ok';
 
   if($messageId > 0) {
     $response['message_id'] = $messageId;
-  }
-
-  if(count($messages) > 0) {
+  } else {
     $response['messages'] = $messages;
   }
 
