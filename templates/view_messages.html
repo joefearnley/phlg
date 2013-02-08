@@ -17,29 +17,29 @@
   </div>
   <div class="container">
     <h3>Messages</h3>
-    <div id="messages"></div>
+    <div id="messages" class="test"></div>
   </div>
 
 <!-- Templates -->
 <script id="message-list-template" type="text/template">
 <table class="table table-striped table-bordered">
-  <caption></caption>
   <thead>
     <tr>
       <th>Application</th>
       <th>Message</th>
+      <th>Type</th>
       <th>Time Posted</th>
     </tr>
   </thead>
   <tbody>
-{{#messages}}
+{{ #messages }}
     <tr>
-      <td>{{app_name}}</td>
-      <td>{{body}}</td>
-      <td>{{type}}</td>
-      <td>{{posted}}</td>
+      <td>{{ app_name }}</td>
+      <td>{{ body }}</td>
+      <td>{{ type }}</td>
+      <td>{{ posted }}</td>
     </tr>
-{{/messages}}
+{{ /messages }}
   </tbody>
 </table>
 </script>
@@ -48,6 +48,14 @@
 <table class="table table-striped table-bordered">
   <tr>
     <td>No messages logged. Sorry.</td>
+  </tr>
+</table>
+</script>
+
+<script id="error-template" type="text/template">
+<table class="table table-striped table-bordered">
+  <tr>
+    <td>Error encountered fetching data: <strong>{{ status }}</strong></td>
   </tr>
 </table>
 </script>

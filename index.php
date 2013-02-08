@@ -5,7 +5,7 @@ require 'config/config.php';
 
 use RedBean_Facade as R;
 
-$cfg = $config['test'];
+$cfg = $config['prod'];
 R::setup($cfg['connection'], $cfg['db_user'], $cfg['db_pass']);
 
 $app = new \Slim\Slim(
