@@ -3,16 +3,17 @@
 require 'vendor/autoload.php';
 require 'config/config.php';
 
+use RedBean_Facade as R;
+
+$cfg = $config['test'];
+R::setup($cfg['connection'], $cfg['db_user'], $cfg['db_pass']);
+
 $app = new \Slim\Slim(
   array(
     'debug' => false,
     'templates.path' => 'templates'
   )
 );
-
-$cfg = $config['prod'];
-
-RedBean_Facade::setup($cfg['connection'], $cfg['db_user'], $cfg['db_pass']);
 
 /**
  * Return an html view of the messages.
@@ -30,12 +31,12 @@ $app->post('/message/:type', function($type) use ($app, $cfg) {
   $app_name = $app->request()->post('app_name'); 
   $app_name = (isset($app_name) == true) ? $app_name : $cfg['app_name'];
 
-  $message = RedBean_Facade::dispense('message');
+  $message = R::dispense('message');
   $message->app_name = $app_name;
   $message->body = $body;
   $message->type = $type;
-  $message->posted = RedBean_Facade::$f->now();
-  RedBean_Facade::store($message);
+  $message->posted = R::$f->now();
+  R::store($message);
 
   writeSuccessfulResposne($app, $message->id);
 });
@@ -46,7 +47,7 @@ $app->post('/message/:type', function($type) use ($app, $cfg) {
 $app->get('/message/all', function() use ($app, $cfg) {
 
   $messages = array();
-  $beans = RedBean_Facade::findAll('message');
+  $beans = R::findAll('message');
 
   foreach($beans as $bean) {
     array_push($messages, $bean->getProperties());
@@ -58,7 +59,7 @@ $app->get('/message/all', function() use ($app, $cfg) {
  * Find a message with the given id.
  */
 $app->get('/message/:id', function($id) use ($app, $cfg) {
-  $bean = RedBean_Facade::load('message', $id);
+  $bean = R::load('message', $id);
   $messages = array($bean->getProperties());
   writeSuccessfulResposne($app, 0, $messages);
 });
@@ -69,7 +70,7 @@ $app->get('/message/:id', function($id) use ($app, $cfg) {
 $app->get('/message/type/:type', function($type) use ($app, $cfg) {
 
   $messages = array();
-  $beans = RedBean_Facade::findAll(
+  $beans = R::findAll(
       'message', 
       'where type = :type', 
       array( ':type' => $type)

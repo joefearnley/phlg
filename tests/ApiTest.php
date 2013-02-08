@@ -3,6 +3,7 @@
 require '../vendor/autoload.php';
 
 use Guzzle\Http\Client;
+use RedBean_Facade as R;
 
 class ApiText extends PHPUnit_Framework_TestCase
 {
@@ -26,7 +27,7 @@ class ApiText extends PHPUnit_Framework_TestCase
     $db_user = $this->cfg['db_user'];
     $db_pass = $this->cfg['db_pass'];
 
-    RedBean_Facade::setup($connection, $db_user, $db_pass);
+    R::setup($connection, $db_user, $db_pass);
 
     $this->createMessageBean('lowphashion_test', 'setting up database for tests', 'info');
   }
@@ -36,7 +37,7 @@ class ApiText extends PHPUnit_Framework_TestCase
    */
   protected function tearDown()
   {
-    RedBean_Facade::nuke();
+    R::nuke();
   }
 
   /**
@@ -126,7 +127,7 @@ class ApiText extends PHPUnit_Framework_TestCase
     $this->assertEquals(200, $response->getStatusCode());
     $this->assertEquals('application/json', $response->getHeader('Content-Type'));
 
-    $messages = RedBean_Facade::find('message', 'app_name is not null');
+    $messages = R::find('message', 'app_name is not null');
 
     $message1 = $messages[2];
     $message2 = $messages[3];
@@ -160,7 +161,7 @@ class ApiText extends PHPUnit_Framework_TestCase
     $this->assertEquals(200, $response->getStatusCode());
     $this->assertEquals('application/json', $response->getHeader('Content-Type'));
 
-    $messages = RedBean_Facade::find('message', 'app_name is not null');
+    $messages = R::find('message', 'app_name is not null');
 
     $message1 = $messages[2];
     $message2 = $messages[3];
@@ -258,12 +259,12 @@ class ApiText extends PHPUnit_Framework_TestCase
    * @param string type
    */
   public function createMessageBean($app_name = '', $body = '', $type = '') {
-    $message = RedBean_Facade::dispense('message');
+    $message = R::dispense('message');
     $message->app_name = $app_name;
     $message->body = $body;
     $message->type = $type;
-    $message->posted = RedBean_Facade::$f->now();
-    RedBean_Facade::store($message);
+    $message->posted = R::$f->now();
+    R::store($message);
     return $message->id;
   }
 }
