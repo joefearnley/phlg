@@ -14,7 +14,7 @@
 
   var MessageList = Backbone.Collection.extend({
     model: Message,
-    url: 'http://localhost/lowphashion/message/error',
+    url: 'http://localhost/lowphashion/message/all',
     parse: function(response) {
       return response;
     }
@@ -33,27 +33,26 @@
       this.collection.fetch({
         success: function(response) {
 
-          // TODO: parse for status
-
           if(response.models.length > 0) {
-            that.renderMessages(response);
+
+            //TODO: there's got to be a better way to do this...
+            var json = response.toJSON()[0];
+            var status = json.status;
+            var msgs = json.messages;
+
+            that.renderMessages(msgs);
           } else {
             console.log('rendering no messages');
             that.renderNoMessages();
           }
         },
-        error: function (errorResponse, status, xhr) {
-          that.renderErrorMessage(status);
-	      }
+        error: function (errorResponse, errorStatus, xhr) {
+          that.renderErrorMessage(errorStatus);
+        }
       })
     },
 
-    renderMessages: function(response) {
-
-      //TODO: there's got to be a better way to do this...
-      var json = response.toJSON();
-      var msgs = json[0].messages;
-
+    renderMessages: function(msgs) {
       var template = $('#message-list-template').html();
       var html = Mustache.to_html(template, { messages: msgs });
       $(this.el).html(html);
@@ -65,15 +64,14 @@
       $(this.el).html(html);
     },
 
-    renderErrorMessage: function(status) {
-      var errorMessage = "Status: " + status.status 
-                          + " - " + status.statusText;
-      var data = {
-        status: errorMessage
+    renderErrorMessage: function(errorStatus) {
+      var status = {
+        code: errorStatus.status,
+        text: errorStatus.statusText
       };
 
       var template = $('#error-template').html();
-      var html = Mustache.to_html(template, data);
+      var html = Mustache.to_html(template, status);
       $(this.el).html(html);
     }
   });

@@ -86,7 +86,6 @@ $app->get('/message/type/:type', function($type) use ($app, $cfg) {
  * Handle if an exception is thrown.
  */
 $app->error(function(\Exception $e) use ($app) {
-
   $response = array(
     'status' => 'fail',
     'error' => $e->getMessage()
@@ -94,6 +93,10 @@ $app->error(function(\Exception $e) use ($app) {
 
   $app->response()->header('Content-Type', 'application/json');
   $app->response()->write(json_encode($response));
+});
+
+$app->get('/exceptiontest', function() use ($app) {
+  throw new Exception('An exception has been thrown.');
 });
 
 $app->run();
