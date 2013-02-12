@@ -1,23 +1,23 @@
 (function ($) {
 
   var Message = Backbone.Model.extend({
-    status: 'ok',
-    messages: [
-      {
-        id: 0,
-        app_name: 'lowphashion',
-        body: '',
-        type: 'info'
-      }
-    ]
+    url: 'http://localhost/lowphashion/message',
+    defaults: {
+      status: 'ok',
+      messages: [
+        {
+          id: 0,
+          app_name: 'lowphashion',
+          body: '',
+          type: 'info'
+        }
+      ]
+    }
   });
 
   var MessageList = Backbone.Collection.extend({
     model: Message,
-    url: 'http://localhost/lowphashion/message/all',
-    parse: function(response) {
-      return response;
-    }
+    url: 'http://localhost/lowphashion/message/all'
   });
 
   var MessagesView = Backbone.View.extend({
@@ -26,6 +26,21 @@
     initialize: function() {
       this.collection = new MessageList();
       this.render();
+    },
+
+    events: {
+      "click button#addmessage": "addMessage"
+    },
+
+    addMessage: function(){
+      var messageBody = $('input[name=message-body]').val();
+      var messageType = $('input[name=message-type]').val();
+      this.collection.add([
+        {
+          body: messageBody,
+          type: messageType
+        }
+      ]);
     },
 
     render: function() {
@@ -73,7 +88,7 @@
       var template = $('#error-template').html();
       var html = Mustache.to_html(template, status);
       $(this.el).html(html);
-    }
+    },
   });
 
   var messagesView = new MessagesView();
