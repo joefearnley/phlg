@@ -3,4 +3,5 @@ to be used with a shared hosting account.
 
 ###TODO
 * finish front end
-* write tests
+  * Event to add message
+  * Save/sync to backend
