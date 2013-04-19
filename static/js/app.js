@@ -29,10 +29,12 @@
     },
 
     events: {
-      "click button#addmessage": "addMessage"
+      'click input[type=button]': 'addMessage'
     },
 
     addMessage: function(){
+      console.log('adding message');
+
       var messageBody = $('input[name=message-body]').val();
       var messageType = $('input[name=message-type]').val();
       this.collection.add([
