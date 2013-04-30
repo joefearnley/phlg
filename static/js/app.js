@@ -15,6 +15,14 @@
     }
   });
 
+
+  var InfoMessage = Message.extend({
+  }):
+
+  var InfoMessage = Message.extend({
+  }):
+
+
   var MessageList = Backbone.Collection.extend({
     model: Message,
     url: 'http://localhost/lowphashion/message/all'
@@ -28,19 +36,12 @@
       this.render();
     },
 
-    events: {
-      'click input[type=button]': 'addMessage'
-    },
-
-    addMessage: function(){
+    addMessage: function(body, type){
       console.log('adding message');
-
-      var messageBody = $('input[name=message-body]').val();
-      var messageType = $('input[name=message-type]').val();
-      this.collection.add([
+      this.collection.create([
         {
-          body: messageBody,
-          type: messageType
+          body: body,
+          type: type
         }
       ]);
     },
@@ -94,5 +95,12 @@
   });
 
   var messagesView = new MessagesView();
+
+  $('#addmessage').click(function() {
+    console.log('button click!!');
+    var messageBody = $('input[name=message-body]').val();
+    var messageType = $('input[name=message-type]').val();
+    messagesView.addMessage(messageBody, messageType);
+  });
 
 }(jQuery));
