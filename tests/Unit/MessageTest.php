@@ -19,15 +19,15 @@ class MessageTest extends TestCase
         factory(Message::class)->create([ 
             'application_id' => $application->id,
             'body' => 'This is an error',
-            'type' => 'error'
+            'level' => 'error'
         ]);
 
-        $this->get('/messages')
+        $this->get('/api/messages')
             ->assertStatus(200)
             ->assertJsonFragment([ 
                 'application_id' => "$application->id",
                 'body' => 'This is an error',
-                'type' => 'error'
+                'level' => 'error'
             ]);
     }
 
@@ -39,15 +39,15 @@ class MessageTest extends TestCase
         factory(Message::class)->create([ 
             'application_id' => $application->id,
             'body' => 'This is some info',
-            'type' => 'info'
+            'level' => 'info'
         ]);
 
-        $this->get('/messages')
+        $this->get('/api/messages')
             ->assertStatus(200)
             ->assertJsonFragment([
                 'application_id' => "$application->id",
                 'body' => 'This is some info',
-                'type' => 'info'
+                'level' => 'info'
             ]);
     }
 
@@ -59,15 +59,15 @@ class MessageTest extends TestCase
         factory(Message::class)->create([
             'application_id' => $application->id,
             'body' => 'This is a warning',
-            'type' => 'warning'
+            'level' => 'warning'
         ]);
 
-        $this->get('/messages')
+        $this->get('/api/messages')
             ->assertStatus(200)
             ->assertJsonFragment([
                 'application_id' => "$application->id",
                 'body' => 'This is a warning',
-                'type' => 'warning'
+                'level' => 'warning'
             ]);
     }
 }
