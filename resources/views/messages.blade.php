@@ -7,38 +7,45 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
   </head>
   <body>
+    <nav class="navbar navbar-light bg-light">
+      <a class="navbar-brand" href="/">Lowphashion</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div class="navbar-nav">
+            <a class="nav-item nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
+            <a class="nav-item nav-link" href="#">Features</a>
+            <a class="nav-item nav-link" href="#">Pricing</a>
+            <a class="nav-item nav-link disabled" href="#">Disabled</a>
+          </div>
+        </div>
+    </nav>
     <div class="container">
-      <h1>Lowphasion</h1>
-      <table class="table">
-        <thead>
-          <tr>
-            <th scope="col">Application</th>
-            <th scope="col">Message</th>
-            <th scope="col">Level</th>
-            <th scope="col">Date</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
-          </tr>
-          <tr>
-            <th scope="row">2</th>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>@fat</td>
-          </tr>
-          <tr>
-            <th scope="row">3</th>
-            <td>Larry</td>
-            <td>the Bird</td>
-            <td>@twitter</td>
-          </tr>
-        </tbody>
-      </table>
+      @if ($messages->isEmpty())
+        <p>No messages found</p>
+      @else
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Date</th>
+              <th scope="col">Level</th>
+              <th scope="col">Application</th>
+              <th scope="col">Message</th>
+            </tr>
+          </thead>
+          <tbody>
+          @foreach ($messages as $message)
+            <tr>
+              <td>{{ $message->created_at }}</td>
+              <td>{{ $message->level }}</td>
+              <td>{{ $message->application_id }}</td>
+              <td>{{ $message->body }}</td>
+            </tr>
+          @endforeach
+          </tbody>
+        </table>
+      @endif
 
 
     </div>
