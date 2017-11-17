@@ -14,7 +14,7 @@ class IndexTest extends TestCase
     /** @test */
     public function it_shows_messages()
     {
-        $application = factory(Application::class)->create(['name' => 'mobile app']);
+        $application = factory(Application::class)->create(['name' => 'mobile']);
 
         factory(Message::class)->create([ 
             'application_id' => $application->id,
@@ -40,5 +40,22 @@ class IndexTest extends TestCase
             ->assertSee('This is an error')
             ->assertSee('This is some info')
             ->assertSee('This is a warning');
+    }
+
+    /** @test */
+    public function it_shows_messages_for_applications()
+    {
+        $application = factory(Application::class)->create(['name' => 'mobile']);
+
+        factory(Message::class)->create([ 
+            'application_id' => $application->id,
+            'body' => 'This is an error',
+            'level' => 'error'
+        ]);
+
+        $this->get('/messages/application/'.$application->id)
+            ->assertStatus(200)
+            ->assertViewIs('messages')
+            ->assertSee('mobile');
     }
 }

@@ -14,7 +14,7 @@ class MessageTest extends TestCase
     /** @test */
     public function it_shows_an_error_message()
     {
-        $application = factory(Application::class)->create(['name' => 'mobile app']);
+        $application = factory(Application::class)->create();
 
         factory(Message::class)->create([ 
             'application_id' => $application->id,
@@ -34,7 +34,7 @@ class MessageTest extends TestCase
     /** @test */
     public function it_shows_an_info_message()
     {
-        $application = factory(Application::class)->create(['name' => 'mobile app']);
+        $application = factory(Application::class)->create();
 
         factory(Message::class)->create([ 
             'application_id' => $application->id,

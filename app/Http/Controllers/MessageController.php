@@ -19,6 +19,7 @@ class MessageController extends Controller
 
         return view('messages')
             ->withMessages(Message::all())
+            ->withApplication(new Application())
             ->withApplications(Application::all());
     }
 
@@ -33,7 +34,7 @@ class MessageController extends Controller
 
         return view('messages')
             ->withMessages($application->messages)
-            ->withSelectedApplication($application)
+            ->withApplication($application)
             ->withApplications(Application::all());
     }
 }

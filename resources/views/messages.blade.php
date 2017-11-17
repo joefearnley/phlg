@@ -13,9 +13,9 @@
     <div class="container">
       <div class="row mt-5">
         <select id="select-application" class="custom-select">
-          <option value="/" {{ $selected_application ? "selected" : "" }}>All Applications</option>
-          @foreach ($applications as $application)
-            <option value="/messages/application/{{ $application->id }}" {{ $selected_application->id === $application->id ? "selected" : "" }}>{{ $application->name }}</option>
+          <option value="/" {{ $application ? "selected" : "" }}>All Applications</option>
+          @foreach ($applications as $app)
+            <option value="/messages/application/{{ $app->id }}" {{ $application->id === $app->id ? "selected" : "" }}>{{ $app->name }}</option>
           @endforeach
         </select>
       </div>
