@@ -12,6 +12,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $application = factory(App\Application::class)->create(['name' => 'mobile']);
+        $application = factory(App\Application::class)->create(['name' => 'desktop']);
 
         factory(App\Message::class)->create([ 
             'application_id' => $application->id,

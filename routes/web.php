@@ -12,3 +12,5 @@
 */
 
 Route::get('/', 'MessageController@index');
+
+Route::get('/messages/application/{id}', 'MessageController@application');
