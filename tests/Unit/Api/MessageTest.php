@@ -70,4 +70,35 @@ class MessageTest extends TestCase
                 'level' => 'warning'
             ]);
     }
+
+    /** @test */
+    public function it_can_add_a_message()
+    {
+        $application = factory(Application::class)->create();
+        $message = [
+            'application_id' => $application->id,
+            'body' => 'This is another error',
+            'level' => 'error'
+        ];
+
+        try {
+            $response = $this->post('/api/messages', $message);
+        } catch (Exception $e) {
+            echo '<pre>';
+            var_dump($e->getMessage());
+            die();
+        }
+
+        $response->assertStatus(200)
+            ->assertJsonFragment([
+                'application_id' => "$application->id",
+                'body' => 'This is another error',
+                'level' => 'error'
+            ])
+            ->assertDatabaseHas('messages', [
+                'application_id' => "$application->id",
+                'body' => 'This is another error',
+                'level' => 'error'
+            ]);;
+    }
 }

@@ -28,14 +28,16 @@ class MessageApiController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a new message.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        //
+        $message = Message::create($request->all());
+
+        return response()->json($message);
     }
 
     /**
