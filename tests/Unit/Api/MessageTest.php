@@ -81,22 +81,43 @@ class MessageTest extends TestCase
             'level' => 'error'
         ];
 
-        try {
-            $response = $this->post('/api/messages', $message);
-        } catch (Exception $e) {
-            echo '<pre>';
-            var_dump($e->getMessage());
-            die();
-        }
+        $response = $this->post('/api/messages', $message);
 
         $response->assertStatus(200)
             ->assertJsonFragment([
-                'application_id' => "$application->id",
+                'application_id' => $application->id,
                 'body' => 'This is another error',
                 'level' => 'error'
-            ])
-            ->assertDatabaseHas('messages', [
-                'application_id' => "$application->id",
+            ]);
+        
+        $this->assertDatabaseHas('messages', [
+                'application_id' => $application->id,
+                'body' => 'This is another error',
+                'level' => 'error'
+            ]);;
+    }
+
+    /** @test */
+    public function it_should_throw_exception_if_no_body_is_provided()
+    {
+        $application = factory(Application::class)->create();
+        $message = [
+            'application_id' => $application->id,
+            'body' => 'This is another error',
+            'level' => 'error'
+        ];
+
+        $response = $this->post('/api/messages', $message);
+
+        $response->assertStatus(200)
+            ->assertJsonFragment([
+                'application_id' => $application->id,
+                'body' => 'This is another error',
+                'level' => 'error'
+            ]);
+        
+        $this->assertDatabaseHas('messages', [
+                'application_id' => $application->id,
                 'body' => 'This is another error',
                 'level' => 'error'
             ]);;
