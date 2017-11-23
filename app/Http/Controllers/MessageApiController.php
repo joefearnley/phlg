@@ -35,6 +35,11 @@ class MessageApiController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'body' => 'required',
+            'level' => 'required'
+        ]);
+
         $message = Message::create($request->all());
 
         return response()->json($message);

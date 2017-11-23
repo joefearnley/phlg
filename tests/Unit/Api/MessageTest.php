@@ -103,23 +103,12 @@ class MessageTest extends TestCase
         $application = factory(Application::class)->create();
         $message = [
             'application_id' => $application->id,
-            'body' => 'This is another error',
             'level' => 'error'
         ];
 
         $response = $this->post('/api/messages', $message);
 
-        $response->assertStatus(200)
-            ->assertJsonFragment([
-                'application_id' => $application->id,
-                'body' => 'This is another error',
-                'level' => 'error'
-            ]);
-        
-        $this->assertDatabaseHas('messages', [
-                'application_id' => $application->id,
-                'body' => 'This is another error',
-                'level' => 'error'
-            ]);;
+        $response->assertStatus(302)
+            ->assertJsonFragment(['The url format is invalid.']);
     }
 }
