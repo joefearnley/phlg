@@ -106,9 +106,22 @@ class MessageTest extends TestCase
             'level' => 'error'
         ];
 
-        $response = $this->post('/api/messages', $message);
+        $this->json('POST', '/api/messages', $message)
+            ->assertStatus(422)
+            ->assertJsonFragment(['The body field is required.']);
+    }
 
-        $response->assertStatus(302)
-            ->assertJsonFragment(['The url format is invalid.']);
+    /** @test */
+    public function it_should_throw_exception_if_no_level_is_provided()
+    {
+        $application = factory(Application::class)->create();
+        $message = [
+            'application_id' => $application->id,
+            'body' => 'this is a message'
+        ];
+
+        $this->json('POST', '/api/messages', $message)
+            ->assertStatus(422)
+            ->assertJsonFragment(['The level field is required.']);
     }
 }
