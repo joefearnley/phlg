@@ -12,7 +12,7 @@ class MessageTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function it_shows_an_error_message()
+    public function it_shows_all_messages()
     {
         $application = factory(Application::class)->create();
 
@@ -22,39 +22,11 @@ class MessageTest extends TestCase
             'level' => 'error'
         ]);
 
-        $this->get('/api/messages')
-            ->assertStatus(200)
-            ->assertJsonFragment([ 
-                'application_id' => "$application->id",
-                'body' => 'This is an error',
-                'level' => 'error'
-            ]);
-    }
-
-    /** @test */
-    public function it_shows_an_info_message()
-    {
-        $application = factory(Application::class)->create();
-
         factory(Message::class)->create([ 
             'application_id' => $application->id,
             'body' => 'This is some info',
             'level' => 'info'
         ]);
-
-        $this->get('/api/messages')
-            ->assertStatus(200)
-            ->assertJsonFragment([
-                'application_id' => "$application->id",
-                'body' => 'This is some info',
-                'level' => 'info'
-            ]);
-    }
-
-    /** @test */
-    public function it_show_a_warning_message()
-    {
-        $application = factory(Application::class)->create();
 
         factory(Message::class)->create([
             'application_id' => $application->id,
@@ -64,7 +36,15 @@ class MessageTest extends TestCase
 
         $this->get('/api/messages')
             ->assertStatus(200)
-            ->assertJsonFragment([
+            ->assertJsonFragment([ 
+                'application_id' => "$application->id",
+                'body' => 'This is an error',
+                'level' => 'error'
+            ])->assertJsonFragment([
+                'application_id' => "$application->id",
+                'body' => 'This is some info',
+                'level' => 'info'
+            ])->assertJsonFragment([
                 'application_id' => "$application->id",
                 'body' => 'This is a warning',
                 'level' => 'warning'
@@ -81,15 +61,14 @@ class MessageTest extends TestCase
             'level' => 'error'
         ];
 
-        $response = $this->post('/api/messages', $message);
-
-        $response->assertStatus(200)
+        $this->post('/api/messages', $message)
+            ->assertStatus(200)
             ->assertJsonFragment([
                 'application_id' => $application->id,
                 'body' => 'This is another error',
                 'level' => 'error'
             ]);
-        
+
         $this->assertDatabaseHas('messages', [
                 'application_id' => $application->id,
                 'body' => 'This is another error',
@@ -98,7 +77,26 @@ class MessageTest extends TestCase
     }
 
     /** @test */
-    public function it_should_throw_exception_if_no_body_is_provided()
+    public function it_can_show_a_message()
+    {
+        $application = factory(Application::class)->create();
+        $message = factory(Message::class)->create([
+            'application_id' => $application->id,
+            'body' => 'This is another error',
+            'level' => 'error'
+        ]);
+
+        $this->get('/api/messages/' . $message->id)
+            ->assertStatus(200)
+            ->assertJsonFragment([
+                'application_id' => "$application->id",
+                'body' => 'This is another error',
+                'level' => 'error'
+            ]);
+    }
+
+    /** @test */
+    public function when_creating_message_throws_exception_if_no_body_is_provided()
     {
         $application = factory(Application::class)->create();
         $message = [
@@ -112,7 +110,21 @@ class MessageTest extends TestCase
     }
 
     /** @test */
-    public function it_should_throw_exception_if_no_level_is_provided()
+    public function when_creating_message_throws_exception_if_no_level_is_provided()
+    {
+        $application = factory(Application::class)->create();
+        $message = [
+            'application_id' => $application->id,
+            'body' => 'this is a message'
+        ];
+
+        $this->json('POST', '/api/messages', $message)
+            ->assertStatus(422)
+            ->assertJsonFragment(['The level field is required.']);
+    }
+
+    /** @test */
+    public function it_shows_a_message()
     {
         $application = factory(Application::class)->create();
         $message = [
