@@ -10,7 +10,7 @@ class IndexTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_user_is_redirected_if_not_logged_in()
+    public function test_user_is_redirected_to_login_page_if_not_logged_in()
     {
         $response = $this->get('/');
 
