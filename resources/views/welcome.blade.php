@@ -16,8 +16,8 @@
                         <div class="mt-2">
                             <img src="/img/logo.png" alt="Lowphasion Logo" class="w-80">
                             <div class="flex items-top justify-around">
-                                <a href="{{ route('login') }}" class="text-blue-900">Log in</a>
-                                <a href="{{ route('register') }}" class="text-blue-900">Sign up</a>
+                                <a href="{{ route('login') }}" class="text-blue-100">Log in</a>
+                                <a href="{{ route('register') }}" class="text-blue-100">Sign up</a>
                             </div>
                         </div>
                     </div>
