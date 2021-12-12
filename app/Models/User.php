@@ -18,6 +18,7 @@ class User extends Authenticatable
      * @var string[]
      */
     protected $fillable = [
+        'account_id',
         'name',
         'email',
         'password',
@@ -41,4 +42,12 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * Get the account associated with the user.
+     */
+    public function account()
+    {
+        return $this->hasOne(Account::class);
+    }
 }
