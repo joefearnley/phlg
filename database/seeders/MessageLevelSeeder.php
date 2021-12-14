@@ -15,10 +15,8 @@ class MessageLevelSeeder extends Seeder
     public function run()
     {
         MessageLevel::factory()
-            ->create(
-                ['name' => 'INFO'],
-                ['name' => 'ERROR'],
-                ['name' => 'DEBUG']
-            );
+            ->create(['name' => 'INFO'])
+            ->create(['name' => 'ERROR'])
+            ->create(['name' => 'DEBUG']);
     }
 }
