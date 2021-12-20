@@ -9,13 +9,14 @@ use App\Models\User;
 
 class UserApiTest extends TestCase
 {
+    use RefreshDatabase;
 
     public function test_see_user_information()
     {
         $user = User::factory()->create();
 
         $response = $this->actingAs($user, 'api')
-            ->get('post', '/users');
+            ->get('/user');
 
         $response->assertStatus(200);
     }
