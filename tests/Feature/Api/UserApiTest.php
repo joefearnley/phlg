@@ -18,6 +18,8 @@ class UserApiTest extends TestCase
         $response = $this->actingAs($user, 'api')
             ->get('/user');
 
+        dd($response->getContent());
+
         $response->assertStatus(200);
     }
 }
