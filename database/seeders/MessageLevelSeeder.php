@@ -7,11 +7,6 @@ use App\Models\MessageLevel;
 
 class MessageLevelSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
     public function run()
     {
         MessageLevel::factory()
