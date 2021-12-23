@@ -41,4 +41,27 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * Get the application owned by the user.
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function applications()
+    {
+        return $this->hasMany(Application::class);
+    }
+
+    /**
+     * latestMessages
+     *
+     * @param  mixed $amount
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function latestMessages($amount = 10)
+    {
+        return $this->belongsTo(User::class);
+
+        
+    }
 }

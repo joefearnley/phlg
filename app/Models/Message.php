@@ -22,6 +22,8 @@ class Message extends Model
 
     /**
      * Get the applications that owns the message.
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function application()
     {
@@ -30,6 +32,8 @@ class Message extends Model
 
     /**
      * Get the level associated with the message.
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
     public function level()
     {
