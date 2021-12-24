@@ -63,8 +63,8 @@ class DashboardTest extends TestCase
         $response->assertStatus(200)
             ->assertSee('Dashboard')
             ->assertSee('Latest Messages')
+            ->assertSee($messageBodies[0])
             ->assertSee($messageBodies[1])
-            ->assertSee($messageBodies[2])
-            ->assertSee($messageBodies[3]);
+            ->assertSee($messageBodies[2]);
     }
 }

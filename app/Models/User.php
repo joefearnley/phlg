@@ -53,15 +53,15 @@ class User extends Authenticatable
     }
 
     /**
-     * latestMessages
+     * Get the latest messages for the user.
      *
      * @param  mixed $amount
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function latestMessages($amount = 10)
+    public function latestMessages($limit = 10)
     {
-        return $this->belongsTo(User::class);
-
-        
+        return $this->hasManyThrough(Message::class, Application::class)
+            ->orderBy('created_at')
+            ->take($limit);
     }
 }

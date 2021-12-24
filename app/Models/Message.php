@@ -33,10 +33,10 @@ class Message extends Model
     /**
      * Get the level associated with the message.
      * 
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function level()
     {
-        return $this->hasOne(MessageLevel::class);
+        return $this->belongsTo(MessageLevel::class);
     }
 }
