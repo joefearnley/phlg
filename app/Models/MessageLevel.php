@@ -17,4 +17,24 @@ class MessageLevel extends Model
     protected $fillable = [
         'name',
     ];
+
+    /**
+     * Get the color related to the message level
+     *
+     * @return string
+     */
+    public function color()
+    {
+        if ($this->name === 'INFO') {
+            return 'emerald';
+        }
+
+        if ($this->name === 'ERROR') {
+            return 'red';
+        }
+
+        if ($this->name === 'DEBUG') {
+            return 'amber';
+        }
+    }
 }

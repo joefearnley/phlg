@@ -38,7 +38,6 @@ class DashboardTest extends TestCase
 
     public function test_should_see_latest_messages_on_dashboard()
     {
-
         $user = User::factory()->create();
 
         $this->seed([

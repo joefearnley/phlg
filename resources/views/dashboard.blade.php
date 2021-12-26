@@ -1,27 +1,25 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard') }}
-        </h2>
-    </x-slot>
-
-    <div class="pt-8">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 bg-white border-b border-gray-200">
-                    Latest Messages
-                </div>
-            </div>
+        <div class="my-3 max-w-7xl mx-auto">
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                {{ __('Latest Messages') }}
+            </h2>
         </div>
-    </div>
+    </x-slot>
 
     @foreach ($messages as $message)
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-        <div class="my-4 p-6 border-l-4 border-solid border-red-600">
-            <p><strong>Application:</strong> {{ $message->application->name }}</p>
-            <p><strong>Level:</strong> {{ $message->level->name }}</p>
-            <p><strong>Message:</strong> {{ $message->body }}</p>
-            <p><strong>Message:</strong> {{ $message->formattedCreationDate() }}</p>
+        <div class="my-6 p-3 border-l-4 border-solid border-{{ $message->level->color() }}-600">
+            <div class="flex flex-row flex-wrap">
+                <div class="w-full md:w-1/3">
+                    <p><strong>{{ $message->application->name }}</strong></p>
+                    <p>{{ $message->level->name }}</p>
+                    <p>{{ $message->formattedCreationDate() }}</p>
+                </div>
+                <div class="w-full md:w-2/3 mt-6 md:mt-0">
+                    <p>{{ $message->body }}</p>
+                </div>
+            </div>
         </div>
     </div>
     @endforeach

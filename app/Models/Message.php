@@ -48,6 +48,6 @@ class Message extends Model
      */
     public function formattedCreationDate()
     {
-        return Carbon::parse($this->created_at)->format('d/m/Y h:i a');
+        return Carbon::parse($this->created_at)->format('m/d/Y h:i a');
     }
 }
