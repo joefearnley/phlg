@@ -17,13 +17,11 @@
 
     @foreach ($messages as $message)
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-        <div class="overflow-hidden shadow-sm sm:rounded-lg">
-            <div class="p-6 bg-white">
-                <p><strong>Application:</strong> {{ $message->application->name }}</p>
-                <p><strong>Level:</strong> {{ $message->level->name }}</p>
-                <p><strong>Message:</strong> {{ $message->body }}</p>
-                <p><strong>Message:</strong> {{ $message->created_at }}</p>
-            </div>
+        <div class="my-4 p-6 border-l-4 border-solid border-red-600">
+            <p><strong>Application:</strong> {{ $message->application->name }}</p>
+            <p><strong>Level:</strong> {{ $message->level->name }}</p>
+            <p><strong>Message:</strong> {{ $message->body }}</p>
+            <p><strong>Message:</strong> {{ $message->formattedCreationDate() }}</p>
         </div>
     </div>
     @endforeach
