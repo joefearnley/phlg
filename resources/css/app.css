@@ -1,3 +1,15 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
+
+:root {
+    --primary: #2d4053;
+}
+
+h1, h2, h3, h4 {
+    color: var(--primary);
+}
+
+p {
+    color: var(--primary);
+}

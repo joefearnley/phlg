@@ -10,7 +10,7 @@ module.exports = {
 
     theme: {
         colors: {
-            'blue': '#2d4053',
+            blue: '#2d4053',
             transparent: 'transparent',
             current: 'currentColor',
             black: colors.black,
@@ -19,7 +19,8 @@ module.exports = {
             amber: colors.amber,
             emerald: colors.emerald,
             cyan: colors.cyan,
-            white: colors.white
+            white: colors.white,
+            indigo:  colors.indigo
         },
         extend: {
             fontFamily: {

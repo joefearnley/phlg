@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <div class="my-3 max-w-7xl mx-auto">
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            <h2 class="font-semibold text-xl leading-tight">
                 {{ __('Latest Messages') }}
             </h2>
         </div>
@@ -12,7 +12,7 @@
         <div class="my-6 p-3 border-l-4 border-solid border-{{ $message->level->color() }}-600">
             <div class="flex flex-row flex-wrap">
                 <div class="w-full md:w-1/4">
-                    <p class="font-bold">{{ $message->application->name }}</p>
+                    <p class="font-bold text-blue">{{ $message->application->name }}</p>
                     <p>{{ $message->formattedCreationDate() }}</p>
                     <p class="font-bold text-{{ $message->level->color() }}-600">{{ $message->level->name }}</p>
                 </div>
