@@ -74,7 +74,7 @@
 
             <div class="mt-3 space-y-1">
                 <x-responsive-nav-link :href="route('account')">
-                    {{ __('Log Out') }}
+                    {{ __('Account') }}
                 </x-responsive-nav-link>
 
                 <!-- Authentication -->
