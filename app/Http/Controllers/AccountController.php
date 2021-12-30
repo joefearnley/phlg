@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Validation\Rules;
+use Illuminate\Support\Facades\Hash;
 
 class AccountController extends Controller
 {
@@ -39,7 +40,7 @@ class AccountController extends Controller
         ]);
 
         $request->user()->fill([
-            'password' => Hash::make($request->newPassword)
+            'password' => Hash::make($request->new_password)
         ])->save();
 
         return redirect('/account')
