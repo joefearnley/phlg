@@ -7,6 +7,12 @@
         </div>
     </x-slot>
 
+    <div class="max-w-3xl mx-auto sm:px-6 lg:px-8">
+        <div class="my-3 py-3 gap-16">
+            <x-alert type="error" :message="$message ?? ''"/>
+        </div>
+    </div>
+
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="my-6 py-3 grid md:grid-cols-2 gap-16">
             <div>
