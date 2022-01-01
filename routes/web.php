@@ -1,8 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\AccountController;
+use App\Http\Controllers\Web\DashboardController;
+use App\Http\Controllers\Web\AccountController;
 
 Route::get('/', function () {
     return view('welcome');

@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Web;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Validation\Rules;
 use Illuminate\Support\Facades\Hash;
@@ -13,7 +14,7 @@ class AccountController extends Controller
     /**
      * Get the main view for the account section.
      *
-     * @return void
+     * @return \Illuminate\View\View
      */
     public function index()
     {
@@ -21,10 +22,10 @@ class AccountController extends Controller
     }
 
     /**
-     * update
+     * Update the account information.
      *
-     * @param  mixed $request
-     * @return void
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Request $request)
     {
@@ -45,10 +46,10 @@ class AccountController extends Controller
     }
     
     /**
-     * updatePassword
+     * Update the account/user password.
      *
-     * @param  mixed $request
-     * @return void
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function updatePassword(Request $request)
     {
