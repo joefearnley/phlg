@@ -81,7 +81,8 @@ class AccountPageTest extends TestCase
             ]);
 
         $response->assertStatus(302)
-            ->assertSessionHas('status', 'Your account has been updated!');
+            ->assertSessionHas('message_type', 'success')
+            ->assertSessionHas('message', 'Your account has been updated!');
 
         $this->assertDatabaseHas('users', [
             'name' => $updatedUserName,
@@ -150,7 +151,8 @@ class AccountPageTest extends TestCase
             ]);
 
         $response->assertStatus(302)
-            ->assertSessionHas('status', 'Your password has been updated!');
+            ->assertSessionHas('message_type', 'success')
+            ->assertSessionHas('message', 'Your password has been updated!');
 
         $this->assertTrue(Hash::check($newPassword, $user->password));
     }

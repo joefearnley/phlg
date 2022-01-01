@@ -9,12 +9,23 @@ use Illuminate\Validation\Rules;
 use Illuminate\Support\Facades\Hash;
 
 class AccountController extends Controller
-{
+{    
+    /**
+     * Get the main view for the account section.
+     *
+     * @return void
+     */
     public function index()
     {
         return view('account');
     }
 
+    /**
+     * update
+     *
+     * @param  mixed $request
+     * @return void
+     */
     public function update(Request $request)
     {
         $request->validate([
@@ -29,9 +40,16 @@ class AccountController extends Controller
         ]);
 
         return redirect('/account')
-            ->with('status', 'Your account has been updated!');
+            ->with('message_type', 'success')
+            ->with('message', 'Your account has been updated!');
     }
-
+    
+    /**
+     * updatePassword
+     *
+     * @param  mixed $request
+     * @return void
+     */
     public function updatePassword(Request $request)
     {
         $this->validate($request, [
@@ -44,6 +62,7 @@ class AccountController extends Controller
         ])->save();
 
         return redirect('/account')
-            ->with('status', 'Your password has been updated!');
+            ->with('message_type', 'success')
+            ->with('message', 'Your password has been updated!');
     }
 }
