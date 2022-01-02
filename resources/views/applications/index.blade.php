@@ -17,7 +17,7 @@
                     <p><strong>Last Updated:</strong> {{ $application->lastUpdated() }}</p>
                 </div>
                 <div class="w-full md:w-1/4">
-                    <a href="/applications/{{ $application->id}}/edit/">
+                    <a href="/applications/{{ $application->id}}/edit/" class="inline-flex items-center px-4 py-2 bg-blue border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest focus:outline-none focus:ring disabled:opacity-25">
                     {{ __('Edit') }}
                     </a>
                 </div>
