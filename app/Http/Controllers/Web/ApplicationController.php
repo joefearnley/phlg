@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Web;
 
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreApplicationRequest;
 use App\Http\Requests\UpdateApplicationRequest;
 use App\Http\Controllers\Controller;
@@ -10,13 +11,15 @@ use App\Models\Application;
 class ApplicationController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Main applications page.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
     public function index()
     {
-        //
+        $applications = Auth::user()->applications;
+
+        return view('applications.index', ['applications' => $applications]);
     }
 
     /**

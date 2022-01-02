@@ -28,4 +28,14 @@ class Application extends Model
     {
         return $this->hasMany(Message::class);
     }
+
+    /**
+     * Get the time of the last message that was created.
+     * 
+     * @return string
+     */
+    public function lastUpdated()
+    {
+        return $this->messages->last()->formattedCreationDate();
+    }
 }

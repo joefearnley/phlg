@@ -42,9 +42,9 @@ class Message extends Model
     }
     
     /**
-     * formattedCreationDate
+     * Get the formatted ceated date.
      *
-     * @return \Carbon\Carbon
+     * @return string
      */
     public function formattedCreationDate()
     {
