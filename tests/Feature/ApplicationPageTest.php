@@ -17,7 +17,7 @@ class ApplicationPageTest extends TestCase
 
     public function test_cannot_view_applications_page_if_not_authorized()
     {
-        $response = $this->get(route('applications'));
+        $response = $this->get(route('applications.index'));
 
         $response->assertStatus(302)
             ->assertRedirect(route('login'));
@@ -28,7 +28,7 @@ class ApplicationPageTest extends TestCase
         $user = User::factory()->create();
 
         $response = $this->actingAs($user)
-            ->get(route('applications'));
+            ->get(route('applications.index'));
 
         $response->assertStatus(200)
             ->assertSee('Applications');
@@ -47,7 +47,7 @@ class ApplicationPageTest extends TestCase
         $application = Application::first();
 
         $response = $this->actingAs($user)
-            ->get(route('applications'));
+            ->get(route('applications.index'));
 
         $response->assertStatus(200)
             ->assertSee('Applications')

@@ -25,8 +25,7 @@ Route::post('/account/update-password', [AccountController::class, 'updatePasswo
     ->middleware(['auth'])
     ->name('account.update-password');
 
-Route::get('/applications', [ApplicationController::class, 'index'])
-    ->middleware(['auth'])
-    ->name('applications');
+Route::resource('applications', ApplicationController::class)
+    ->middleware(['auth']);
 
 require __DIR__.'/auth.php';
