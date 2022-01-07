@@ -10,7 +10,7 @@ use Illuminate\Validation\Rules;
 use Illuminate\Support\Facades\Hash;
 
 class AccountController extends Controller
-{    
+{
     /**
      * Get the main view for the account section.
      *
@@ -44,7 +44,7 @@ class AccountController extends Controller
             ->with('message_type', 'success')
             ->with('message', 'Your account has been updated!');
     }
-    
+
     /**
      * Update the account/user password.
      *
