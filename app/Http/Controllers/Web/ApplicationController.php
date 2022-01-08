@@ -36,11 +36,17 @@ class ApplicationController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \App\Http\Requests\StoreApplicationRequest  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(StoreApplicationRequest $request)
     {
-        //
+        $application = new Application(['name' => $request->name]);
+
+        $application = Auth::user()->createApplication($application);
+
+        return redirect(route('applications.index'))
+            ->with('message_type', 'success')
+            ->with('message', 'Application - ' . $application->name . ' - has been created!');
     }
 
     /**

@@ -10,6 +10,15 @@ class Application extends Model
     use HasFactory;
 
     /**
+     * The attributes that are mass assignable.
+     *
+     * @var string[]
+     */
+    protected $fillable = [
+        'name',
+    ];
+
+    /**
      * Get the user that owns the application.
      * 
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

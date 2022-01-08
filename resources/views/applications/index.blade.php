@@ -1,19 +1,75 @@
 <x-app-layout>
     <x-slot name="header">
         <div class="my-3 max-w-7xl mx-auto">
-            <div class="flex flex-row flex-wrap items-center">
+            <div class="flex flex-row flex-wrap justify-between items-center">
                 <div class=" w-1/2">
                     <h2 class="font-semibold text-xl leading-tight">
                         {{ __('Applications') }}
                     </h2>
                 </div>
-                <div class="w-1/2 text-right">
-                    <a href="/applications/create" class="inline-flex items-center px-4 py-2 bg-blue border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest focus:outline-none focus:ring disabled:opacity-25">
-                        {{ __('Add New ') }}
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                        </svg>
-                    </a>
+                <div class="w-1/8">
+                    <div x-data="{ open: false }">
+                        <!-- Button -->
+                        <button x-on:click="open = true" type="button" class="inline-flex items-center px-4 py-2 bg-blue border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest focus:outline-none focus:ring disabled:opacity-25">
+                            {{ __('Add New ') }}
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                            </svg>
+                        </button>
+
+                        <!-- Modal -->
+                        <div
+                            x-show="open"
+                            x-on:keydown.escape.prevent.stop="open = false"
+                            role="dialog"
+                            aria-modal="true"
+                            x-id="['modal-title']"
+                            :aria-labelledby="$id('modal-title')"
+                            class="fixed inset-0 overflow-y-auto"
+                        >
+                            <!-- Overlay -->
+                            <div x-show="open" x-transition.opacity class="fixed inset-0 bg-black bg-opacity-50"></div>
+
+                            <!-- Panel -->
+                            <div
+                                x-show="open" x-transition
+                                x-on:click="open = false"
+                                class="relative min-h-screen flex items-center justify-center p-4"
+                            >
+                                <div
+                                    x-on:click.stop
+                                    x-trap.noscroll.inert="open"
+                                    class="relative max-w-2xl w-full bg-white p-8 overflow-y-auto"
+                                >
+                                    <!-- Title -->
+                                    <h2 class="text-xl font-medium border-b" :id="$id('modal-title')">
+                                        {{  __('Add Application') }}
+                                    </h2>
+
+                                    <!-- Content -->
+                                    <form method="POST" action="{{ route('applications.store') }}" class="mt-6">
+                                        @csrf
+
+                                        <div>
+                                            <x-label for="name" :value="__('Name')" />
+                                            <x-input id="name" class="block mt-1 w-full" type="text" name="name" required autofocus />
+                                        </div>
+
+                                        <!-- Buttons -->
+                                        <div class="mt-8 flex space-x-2">
+                                            <x-button class="ml-4">
+                                                {{ __('Save') }}
+                                            </x-button>
+
+                                            <x-button x-on:click="open = false"   class="ml-4">
+                                                {{ __('Cancel') }}
+                                            </x-button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

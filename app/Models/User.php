@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use App\Models\Application;
 
 class User extends Authenticatable
 {
@@ -63,5 +64,16 @@ class User extends Authenticatable
         return $this->hasManyThrough(Message::class, Application::class)
             ->orderBy('created_at')
             ->take($limit);
+    }
+
+    /**
+     * Create an application related to the user.
+     *
+     * @param \App\Models\Application
+     * @return \App\Models\Application
+     */
+    public function createApplication(Application $application)
+    {
+        return $this->applications()->save($application);
     }
 }
