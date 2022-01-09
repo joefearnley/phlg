@@ -40,9 +40,9 @@ class Message extends Model
     {
         return $this->belongsTo(MessageLevel::class);
     }
-    
+
     /**
-     * Get the formatted ceated date.
+     * Get the formatted created_at date.
      *
      * @return string
      */

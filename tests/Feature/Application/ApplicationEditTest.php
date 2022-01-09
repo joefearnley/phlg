@@ -5,12 +5,13 @@ namespace Tests\Feature;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
+use App\Models\User;
 
 class ApplicationEditTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_cannot_create_an_application_without_a_name()
+    public function test_cannot_update_an_application_without_a_name()
     {
         $user = User::factory()->create();
 
@@ -23,23 +24,23 @@ class ApplicationEditTest extends TestCase
             ->assertSessionHasErrors('name');
     }
 
-    // public function test_can_create_an_application()
-    // {
-    //     $user = User::factory()->create();
+    public function test_can_create_an_application()
+    {
+        $user = User::factory()->create();
 
-    //     $applicationName = 'Test Application';
+        $applicationName = 'Test Application';
 
-    //     $response = $this->actingAs($user)
-    //         ->post(route('applications.store'), [
-    //             'name' => $applicationName
-    //         ]);
+        $response = $this->actingAs($user)
+            ->post(route('applications.store'), [
+                'name' => $applicationName
+            ]);
 
-    //     $response->assertStatus(302)
-    //         ->assertSessionHas('message_type', 'success')
-    //         ->assertSessionHas('message', 'Application - ' . $applicationName . ' - has been created!');
+        $response->assertStatus(302)
+            ->assertSessionHas('message_type', 'success')
+            ->assertSessionHas('message', 'Application - ' . $applicationName . ' - has been created!');
 
-    //     $this->assertDatabaseHas('applications', [
-    //         'name' => $applicationName,
-    //     ]);
-    // }
+        $this->assertDatabaseHas('applications', [
+            'name' => $applicationName,
+        ]);
+    }
 }

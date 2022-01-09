@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class Application extends Model
 {
@@ -45,6 +46,30 @@ class Application extends Model
      */
     public function lastUpdated()
     {
-        return $this->messages->last()->formattedCreationDate();
+        if ($this->messages->isNotEmpty()) {
+            return $this->messages->last()->formattedCreationDate();
+        }
+
+        return $this->formattedUpdatedDate();
+    }
+
+    /**
+     * Get the formatted updated_at date.
+     *
+     * @return string
+     */
+    public function formattedUpdatedDate()
+    {
+        return Carbon::parse($this->updated_at)->format('m/d/Y h:i a');
+    }
+
+    /**
+     * Get the formatted created_at date.
+     *
+     * @return string
+     */
+    public function formattedCreationDate()
+    {
+        return Carbon::parse($this->created_at)->format('m/d/Y h:i a');
     }
 }
