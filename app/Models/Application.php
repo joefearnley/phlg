@@ -30,7 +30,7 @@ class Application extends Model
     }
 
     /**
-     * Get the message owned by the application.]
+     * Get the message owned by the application.
      * 
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
@@ -54,16 +54,6 @@ class Application extends Model
     }
 
     /**
-     * Get the formatted updated_at time stamp.
-     *
-     * @return string
-     */
-    public function formattedUpdateTime()
-    {
-        return Carbon::parse($this->updated_at)->format('m/d/Y h:i a');
-    }
-
-    /**
      * Get the formatted created_at time stamp.
      *
      * @return string
@@ -71,5 +61,15 @@ class Application extends Model
     public function formattedCreationTime()
     {
         return Carbon::parse($this->created_at)->format('m/d/Y h:i a');
+    }
+
+    /**
+     * Get the formatted updated_at time stamp.
+     *
+     * @return string
+     */
+    public function formattedUpdateTime()
+    {
+        return Carbon::parse($this->updated_at)->format('m/d/Y h:i a');
     }
 }

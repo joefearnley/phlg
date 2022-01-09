@@ -13,7 +13,7 @@
             <div class="flex flex-row flex-wrap">
                 <div class="w-full md:w-1/4">
                     <p class="font-bold text-blue">{{ $message->application->name }}</p>
-                    <p>{{ $message->formattedCreationDate() }}</p>
+                    <p>{{ $message->formattedCreationTime() }}</p>
                     <p class="font-bold text-{{ $message->level->color() }}-600">{{ $message->level->name }}</p>
                 </div>
                 <div class="w-full md:w-3/4 mt-6 md:mt-0">

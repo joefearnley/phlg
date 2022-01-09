@@ -55,4 +55,25 @@ class ApplicationPageTest extends TestCase
             ->assertSee($application->messages->count())
             ->assertSee($application->lastUpdated());
     }
+
+    public function test_applications_page_data_application_last_updated_when_it_does_not_have_any_messages()
+    {
+        $user = User::factory()->create();
+
+        $this->seed([
+            MessageLevelSeeder::class,
+            ApplicationSeeder::class,
+        ]);
+
+        $application = Application::first();
+
+        $response = $this->actingAs($user)
+            ->get(route('applications.index'));
+
+        $response->assertStatus(200)
+            ->assertSee('Applications')
+            ->assertSee($application->name)
+            ->assertSee($application->messages->count())
+            ->assertSee($application->lastUpdated());
+    }
 }

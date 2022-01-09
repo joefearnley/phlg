@@ -14,17 +14,28 @@ class ApplicationTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_lastupdated_is_appliation_updated_at_when_it_does_not_have_messages()
+    public function test_has_correct_formatted_creation_timestamp()
     {
         $user = User::factory()->create();
-        $this->seed([
-            ApplicationSeeder::class,
-        ]);
+        $this->seed([ ApplicationSeeder::class ]);
 
         $application = Application::first();
 
-        $applicationUpdatedAtFormattedDate = Carbon::parse($application->updated_at)->format('m/d/Y h:i a');
+        $createdAtFormattedTime = Carbon::parse($application->created_at)->format('m/d/Y h:i a');
 
-        $this->assertEquals($applicationUpdatedAtFormattedDate, $application->lastUpdated());
+        $this->assertEquals($createdAtFormattedTime, $application->formattedCreationTime());
+    }
+
+    public function test_has_correct_formatted_updated_timestamp()
+    {
+        $user = User::factory()->create();
+
+        $this->seed([ ApplicationSeeder::class ]);
+
+        $application = Application::first();
+
+        $updatedAtFormattedTime = Carbon::parse($application->updated_at)->format('m/d/Y h:i a');
+
+        $this->assertEquals($updatedAtFormattedTime, $application->formattedUpdateTime());
     }
 }
