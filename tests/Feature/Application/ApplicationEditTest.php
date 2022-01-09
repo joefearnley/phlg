@@ -8,15 +8,38 @@ use Tests\TestCase;
 
 class ApplicationEditTest extends TestCase
 {
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
-    public function test_example()
-    {
-        $response = $this->get('/');
+    use RefreshDatabase;
 
-        $response->assertStatus(200);
+    public function test_cannot_create_an_application_without_a_name()
+    {
+        $user = User::factory()->create();
+
+        $response = $this->actingAs($user)
+            ->post(route('applications.store'), [
+                'name' => ''
+            ]);
+
+        $response->assertStatus(302)
+            ->assertSessionHasErrors('name');
     }
+
+    // public function test_can_create_an_application()
+    // {
+    //     $user = User::factory()->create();
+
+    //     $applicationName = 'Test Application';
+
+    //     $response = $this->actingAs($user)
+    //         ->post(route('applications.store'), [
+    //             'name' => $applicationName
+    //         ]);
+
+    //     $response->assertStatus(302)
+    //         ->assertSessionHas('message_type', 'success')
+    //         ->assertSessionHas('message', 'Application - ' . $applicationName . ' - has been created!');
+
+    //     $this->assertDatabaseHas('applications', [
+    //         'name' => $applicationName,
+    //     ]);
+    // }
 }
