@@ -42,11 +42,11 @@ class Message extends Model
     }
 
     /**
-     * Get the formatted created_at date.
+     * Get the formatted created_at time stamp.
      *
      * @return string
      */
-    public function formattedCreationDate()
+    public function formattedUpdateTime()
     {
         return Carbon::parse($this->created_at)->format('m/d/Y h:i a');
     }

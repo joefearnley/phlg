@@ -47,28 +47,28 @@ class Application extends Model
     public function lastUpdated()
     {
         if ($this->messages->isNotEmpty()) {
-            return $this->messages->last()->formattedCreationDate();
+            return $this->messages->last()->formattedCreationTime();
         }
 
-        return $this->formattedUpdatedDate();
+        return $this->formattedUpdateTime();
     }
 
     /**
-     * Get the formatted updated_at date.
+     * Get the formatted updated_at time stamp.
      *
      * @return string
      */
-    public function formattedUpdatedDate()
+    public function formattedUpdateTime()
     {
         return Carbon::parse($this->updated_at)->format('m/d/Y h:i a');
     }
 
     /**
-     * Get the formatted created_at date.
+     * Get the formatted created_at time stamp.
      *
      * @return string
      */
-    public function formattedCreationDate()
+    public function formattedCreationTime()
     {
         return Carbon::parse($this->created_at)->format('m/d/Y h:i a');
     }
