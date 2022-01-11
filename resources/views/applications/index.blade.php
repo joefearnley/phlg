@@ -9,7 +9,7 @@
                 </div>
                 <div class="w-1/8">
                     <div x-data="{ open: false }">
-                        <!-- Button -->
+
                         <button x-on:click="open = true" type="button" class="inline-flex items-center px-4 py-2 bg-blue border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest focus:outline-none focus:ring disabled:opacity-25">
                             {{ __('Add New ') }}
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -17,7 +17,6 @@
                             </svg>
                         </button>
 
-                        <!-- Modal -->
                         <div
                             x-show="open"
                             x-on:keydown.escape.prevent.stop="open = false"
@@ -27,10 +26,9 @@
                             :aria-labelledby="$id('modal-title')"
                             class="fixed inset-0 overflow-y-auto"
                         >
-                            <!-- Overlay -->
+
                             <div x-show="open" x-transition.opacity class="fixed inset-0 bg-black bg-opacity-50"></div>
 
-                            <!-- Panel -->
                             <div
                                 x-show="open" x-transition
                                 x-on:click="open = false"
@@ -41,12 +39,9 @@
                                     x-trap.noscroll.inert="open"
                                     class="relative max-w-2xl w-full bg-white p-8 overflow-y-auto"
                                 >
-                                    <!-- Title -->
                                     <h2 class="text-xl font-medium border-b" :id="$id('modal-title')">
                                         {{  __('Add Application') }}
                                     </h2>
-
-                                    <!-- Content -->
                                     <form method="POST" action="{{ route('applications.store') }}" class="mt-6">
                                         @csrf
 
@@ -55,7 +50,6 @@
                                             <x-input id="name" class="block mt-1 w-full" type="text" name="name" required autofocus />
                                         </div>
 
-                                        <!-- Buttons -->
                                         <div class="mt-8 flex space-x-2">
                                             <x-button class="ml-4">
                                                 {{ __('Save') }}
@@ -75,6 +69,8 @@
         </div>
     </x-slot>
 
+    <x-alert :type="session('message_type') ?? ''" :message="session('message') ?? ''"/>
+
     @foreach ($applications as $application)
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="my-6 p-3 border-b">
@@ -89,7 +85,16 @@
                             </svg>
                         </a>
                     </h3>
-                    <p><strong>Message Count:</strong> {{ $application->messages->count() }}</p>
+                    <p>
+                        <strong>Message Count:</strong>
+                        @if ($application->messages->isNotEmpty())
+                            <a href="/messages/application/{{ $application->id }}">
+                                {{ $application->messages->count() }}
+                            </a>
+                        @else
+                            {{ $application->messages->count() }}
+                        @endif
+                    </p>
                     <p><strong>Last Updated:</strong> {{ $application->lastUpdated() }}</p>
                 </div>
             </div>
