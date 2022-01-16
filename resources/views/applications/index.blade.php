@@ -42,24 +42,7 @@
                                     <h2 class="text-xl font-medium border-b" :id="$id('modal-title')">
                                         {{  __('Add Application') }}
                                     </h2>
-                                    <form method="POST" action="{{ route('applications.store') }}" class="mt-6">
-                                        @csrf
 
-                                        <div>
-                                            <x-label for="name" :value="__('Name')" />
-                                            <x-input id="name" class="block mt-1 w-full" type="text" name="name" required autofocus />
-                                        </div>
-
-                                        <div class="mt-8 flex space-x-2">
-                                            <x-button class="ml-4">
-                                                {{ __('Save') }}
-                                            </x-button>
-
-                                            <x-button x-on:click="open = false" class="ml-4">
-                                                {{ __('Cancel') }}
-                                            </x-button>
-                                        </div>
-                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -70,7 +53,6 @@
     </x-slot>
 
     <x-alert :type="session('message_type') ?? ''" :message="session('message') ?? ''"/>
-
 
     @if (!$applications->isEmpty())
         @foreach ($applications as $application)
@@ -110,4 +92,52 @@
         </h3>
     </div>
     @endif
+
+    <div class="add-application-form">
+        <h2 class="text-xl font-medium border-b">
+            {{  __('Add Application') }}
+        </h2>
+        <form method="POST" action="{{ route('applications.store') }}" class="mt-6">
+            @csrf
+
+            <div>
+                <x-label for="name" :value="__('Name')" />
+                <x-input id="name" class="block mt-1 w-full" type="text" name="name" required autofocus />
+            </div>
+
+            <div class="mt-8 flex space-x-2">
+                <x-button class="ml-4">
+                    {{ __('Save') }}
+                </x-button>
+
+                <x-button x-on:click="open = false" class="ml-4">
+                    {{ __('Cancel') }}
+                </x-button>
+            </div>
+        </form>
+    </div>
+
+    <div class="edit-application-form">
+        <h2 class="text-xl font-medium border-b">
+            {{  __('Add Application') }}
+        </h2>
+        <form method="POST" action="{{ route('applications.store') }}" class="mt-6">
+            @csrf
+
+            <div>
+                <x-label for="name" :value="__('Name')" />
+                <x-input id="name" class="block mt-1 w-full" type="text" name="name" required autofocus />
+            </div>
+
+            <div class="mt-8 flex space-x-2">
+                <x-button class="ml-4">
+                    {{ __('Save') }}
+                </x-button>
+
+                <x-button x-on:click="open = false" class="ml-4">
+                    {{ __('Cancel') }}
+                </x-button>
+            </div>
+        </form>
+    </div>
 </x-app-layout>

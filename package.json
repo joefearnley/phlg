@@ -21,6 +21,7 @@
     },
     "dependencies": {
         "acorn": "^8.6.0",
-        "alpinejs": "^3.7.1"
+        "alpinejs": "^3.7.1",
+        "sweetalert2": "^11.3.5"
     }
 }
