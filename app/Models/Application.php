@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
+use Hashids\Hashids;
 
 class Application extends Model
 {
@@ -18,6 +19,20 @@ class Application extends Model
     protected $fillable = [
         'name',
     ];
+
+    /**
+     * The "booted" method of the model.
+     *
+     * @return void
+     */
+    protected static function booted()
+    {
+        static::created(function ($application) {
+            $hashids = new Hashids('', 6);
+            $application->app_id = $hashids->encode($application->id);
+            $application->save();
+        });
+    }
 
     /**
      * Get the user that owns the application.

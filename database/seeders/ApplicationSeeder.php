@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use App\Models\Application;
 use App\Models\User;
+use Hashids\Hashids;
 
 class ApplicationSeeder extends Seeder
 {
@@ -22,6 +23,7 @@ class ApplicationSeeder extends Seeder
             ->create([
                 'user_id' => isset($user) ? $user->id : User::factory()->create()->id,
                 'name' => 'Test Application',
+                'app_id' => \Str::random(6),
             ]);
     }
 }

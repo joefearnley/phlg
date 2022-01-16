@@ -17,6 +17,7 @@ class CreateApplicationsTable extends Migration
             $table->id();
             $table->integer('user_id');
             $table->string('name');
+            $table->string('app_id')->nullable();
             $table->timestamps();
         });
     }

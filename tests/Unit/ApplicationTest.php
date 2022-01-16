@@ -38,4 +38,15 @@ class ApplicationTest extends TestCase
 
         $this->assertEquals($updatedAtFormattedTime, $application->formattedUpdateTime());
     }
+
+    public function test_creates_app_id_on_creation()
+    {
+        $user = User::factory()->create();
+
+        $application = new Application(['name' => 'Test Application']);
+        $application->user_id = $user->id;
+        $application->save();
+
+        $this->assertNotNull($application->app_id);
+    }
 }
