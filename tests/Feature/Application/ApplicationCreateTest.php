@@ -43,5 +43,9 @@ class ApplicationCreateTest extends TestCase
         $this->assertDatabaseHas('applications', [
             'name' => $applicationName,
         ]);
+
+        $application = Application::where('name', $applicationName)->first();
+
+        $this->assertNotNull($application->app_id);
     }
 }
