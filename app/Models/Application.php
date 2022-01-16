@@ -18,6 +18,7 @@ class Application extends Model
      */
     protected $fillable = [
         'name',
+        'app_id',
     ];
 
     /**
