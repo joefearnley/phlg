@@ -48,5 +48,6 @@ class ApplicationTest extends TestCase
         $application->save();
 
         $this->assertNotNull($application->app_id);
+        $this->assertEqual(12, strlen($application->app_id));
     }
 }
