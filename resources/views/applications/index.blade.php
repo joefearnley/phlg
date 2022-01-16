@@ -55,7 +55,7 @@
                                                 {{ __('Save') }}
                                             </x-button>
 
-                                            <x-button x-on:click="open = false"   class="ml-4">
+                                            <x-button x-on:click="open = false" class="ml-4">
                                                 {{ __('Cancel') }}
                                             </x-button>
                                         </div>
