@@ -28804,6 +28804,20 @@ p {
   color: var(--primary);
 }
 
+.swal2-title {
+  text-align: left !important;
+}
+
+.swal2-html-container {
+  text-align: left !important;
+}
+
+.swal2-actions {
+  justify-content: flex-end !important;
+  width: 100% !important;
+  padding-right: 2em !important;
+}
+
 @media (min-width: 640px) {
   .sm\:container {
     width: 100%;
@@ -168523,3 +168537,4 @@ p {
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   }
 }
+

@@ -8,45 +8,12 @@
                     </h2>
                 </div>
                 <div class="w-1/8">
-                    <div x-data="{ open: false }">
-
-                        <button x-on:click="open = true" type="button" class="inline-flex items-center px-4 py-2 bg-blue border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest focus:outline-none focus:ring disabled:opacity-25">
-                            {{ __('Add New ') }}
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                            </svg>
-                        </button>
-
-                        <div
-                            x-show="open"
-                            x-on:keydown.escape.prevent.stop="open = false"
-                            role="dialog"
-                            aria-modal="true"
-                            x-id="['modal-title']"
-                            :aria-labelledby="$id('modal-title')"
-                            class="fixed inset-0 overflow-y-auto"
-                        >
-
-                            <div x-show="open" x-transition.opacity class="fixed inset-0 bg-black bg-opacity-50"></div>
-
-                            <div
-                                x-show="open" x-transition
-                                x-on:click="open = false"
-                                class="relative min-h-screen flex items-center justify-center p-4"
-                            >
-                                <div
-                                    x-on:click.stop
-                                    x-trap.noscroll.inert="open"
-                                    class="relative max-w-2xl w-full bg-white p-8 overflow-y-auto"
-                                >
-                                    <h2 class="text-xl font-medium border-b" :id="$id('modal-title')">
-                                        {{  __('Add Application') }}
-                                    </h2>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <button type="button" class="add-application-button inline-flex items-center px-4 py-2 bg-blue border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest focus:outline-none focus:ring disabled:opacity-25">
+                        {{ __('Add New ') }}
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                        </svg>
+                    </button>
                 </div>
             </div>
         </div>
@@ -93,50 +60,22 @@
     </div>
     @endif
 
-    <div class="add-application-form">
-        <h2 class="text-xl font-medium border-b">
-            {{  __('Add Application') }}
-        </h2>
+    <div class="add-application-form hidden">
         <form method="POST" action="{{ route('applications.store') }}" class="mt-6">
             @csrf
-
             <div>
                 <x-label for="name" :value="__('Name')" />
                 <x-input id="name" class="block mt-1 w-full" type="text" name="name" required autofocus />
-            </div>
-
-            <div class="mt-8 flex space-x-2">
-                <x-button class="ml-4">
-                    {{ __('Save') }}
-                </x-button>
-
-                <x-button x-on:click="open = false" class="ml-4">
-                    {{ __('Cancel') }}
-                </x-button>
             </div>
         </form>
     </div>
 
-    <div class="edit-application-form">
-        <h2 class="text-xl font-medium border-b">
-            {{  __('Add Application') }}
-        </h2>
+    <div class="edit-application-form hidden">
         <form method="POST" action="{{ route('applications.store') }}" class="mt-6">
             @csrf
-
             <div>
                 <x-label for="name" :value="__('Name')" />
                 <x-input id="name" class="block mt-1 w-full" type="text" name="name" required autofocus />
-            </div>
-
-            <div class="mt-8 flex space-x-2">
-                <x-button class="ml-4">
-                    {{ __('Save') }}
-                </x-button>
-
-                <x-button x-on:click="open = false" class="ml-4">
-                    {{ __('Cancel') }}
-                </x-button>
             </div>
         </form>
     </div>
