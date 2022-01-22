@@ -68,7 +68,7 @@ class ApplicationController extends Controller
      */
     public function edit(Application $application)
     {
-        return view('applications.edit');
+        return view('applications.edit', ['application' => $application]);
     }
 
     /**
@@ -80,7 +80,10 @@ class ApplicationController extends Controller
      */
     public function update(UpdateApplicationRequest $request, Application $application)
     {
-        //
+        dd($request);
+//        $application = Application(['name' => $request->name]);
+
+        // $application = Auth::user()->createApplication($application);
     }
 
     /**
