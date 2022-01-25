@@ -53,7 +53,9 @@ class ApplicationPolicy
      */
     public function update(User $user, Application $application)
     {
-        //
+        dd('aslfdjaslkdjfsa');
+
+        return $user->id === $application->user_id;
     }
 
     /**

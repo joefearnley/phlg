@@ -12,53 +12,98 @@ class ApplicationEditTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_cannot_update_an_application_when_not_authorized()
+    public function test_cannot_edit_an_application_when_not_authorized()
     {
-        $user = User::factory()->create();
-        $application = Application::factory()->create([
-            'name'=> 'Test Application',
-            'user_id' => $user->id,
-        ]);
+        $user = User::factory()
+            ->hasApplications(1)
+            ->create();
 
-        $formData = [
-            'name'=> 'Test Application Updated',
-        ];
+        $application = $user->applications->first();
 
-        $response = $this->put(route('applications.update', $application), $formData);
+        $response = $this->get(route('applications.edit', $application));
 
         $response->assertStatus(302)
             ->assertRedirect(route('login'));
     }
 
-    public function test_cannot_update_an_application_that_user_does_not_own()
+    public function test_cannot_edit_an_application_that_user_does_not_own()
     {
-        $authUser = User::factory()->create();
-        $unAuthUser  = User::factory()->create();
-        $application = Application::factory()->create([
-            'name'=> 'Test Application',
-            'user_id' => $unAuthUser->id,
-        ]);
+        $user1 = User::factory()
+            ->hasApplications(1)
+            ->create();
 
-        $formData = [
-            '_method' => 'PUT',
-            'name'=> 'Test Application Updated',
-        ];
+        $user2  = User::factory()
+            ->hasApplications(1)
+            ->create();
 
-        $response = $this->actingAs($authUser)
-            ->post(route('applications.update'), $formData);
+        $application = $user2->applications->first();
 
-        $response->assertStatus(302)
-            ->assertSessionHasErrors('name');
+        $response = $this->actingAs($user1)
+            ->get(route('applications.edit', $application));
+
+        $response->assertStatus(403);
     }
+
+    // public function test_cannot_update_an_application_when_not_authorized()
+    // {
+    //     $user = User::factory()
+    //         ->hasApplications(1)
+    //         ->create();
+
+    //     $application = $user->applications->first();
+
+    //     $formData = [
+    //         'name'=> 'Test Application Updated',
+    //     ];
+
+    //     $response = $this->put(route('applications.update', $application), $formData);
+
+    //     $response->assertStatus(302)
+    //         ->assertRedirect(route('login'));
+    // }
+
+    // public function test_cannot_update_an_application_that_user_does_not_own()
+    // {
+    //     $authUser = User::factory()
+    //         ->hasApplications(1)
+    //         ->create();
+
+    //     $unAuthUser  = User::factory()
+    //         ->hasApplications(1)
+    //         ->create();
+
+    //     $application = $unAuthUser->applications->first();
+
+    //     $formData = [
+    //         '_method' => 'PUT',
+    //         'name'=> 'Test Application Updated',
+    //     ];
+
+    //     $response = $this->actingAs($authUser)
+    //         ->post(route('applications.update', $application), $formData);
+
+    //     $response->assertStatus(403);
+
+    //     $this->assertDatabaseHas('applications', [
+    //         'name' => $application->name,
+    //     ]);
+    // }
 
     // public function test_cannot_update_an_application_without_a_name()
     // {
-    //     $user = User::factory()->create();
+    //     $user = User::factory()
+    //         ->hasApplications(1)
+    //         ->create();
+
+    //     $application = $user->applications->first();
+
+    //     $formData = [
+    //         '_method' => 'PUT',
+    //         'name'=> '',
+    //     ];
 
     //     $response = $this->actingAs($user)
-    //         ->post(route('applications.store'), [
-    //             'name' => ''
-    //         ]);
+    //         ->post(route('applications.update', $application), $formData);
 
     //     $response->assertStatus(302)
     //         ->assertSessionHasErrors('name');
