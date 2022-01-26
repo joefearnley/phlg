@@ -44,50 +44,50 @@ class ApplicationEditTest extends TestCase
         $response->assertStatus(403);
     }
 
-    // public function test_cannot_update_an_application_when_not_authorized()
-    // {
-    //     $user = User::factory()
-    //         ->hasApplications(1)
-    //         ->create();
+    public function test_cannot_update_an_application_when_not_authorized()
+    {
+        $user = User::factory()
+            ->hasApplications(1)
+            ->create();
 
-    //     $application = $user->applications->first();
+        $application = $user->applications->first();
 
-    //     $formData = [
-    //         'name'=> 'Test Application Updated',
-    //     ];
+        $formData = [
+            'name'=> 'Test Application Updated',
+        ];
 
-    //     $response = $this->put(route('applications.update', $application), $formData);
+        $response = $this->put(route('applications.update', $application), $formData);
 
-    //     $response->assertStatus(302)
-    //         ->assertRedirect(route('login'));
-    // }
+        $response->assertStatus(302)
+            ->assertRedirect(route('login'));
+    }
 
-    // public function test_cannot_update_an_application_that_user_does_not_own()
-    // {
-    //     $authUser = User::factory()
-    //         ->hasApplications(1)
-    //         ->create();
+    public function test_cannot_update_an_application_that_user_does_not_own()
+    {
+        $authUser = User::factory()
+            ->hasApplications(1)
+            ->create();
 
-    //     $unAuthUser  = User::factory()
-    //         ->hasApplications(1)
-    //         ->create();
+        $unAuthUser  = User::factory()
+            ->hasApplications(1)
+            ->create();
 
-    //     $application = $unAuthUser->applications->first();
+        $application = $unAuthUser->applications->first();
 
-    //     $formData = [
-    //         '_method' => 'PUT',
-    //         'name'=> 'Test Application Updated',
-    //     ];
+        $formData = [
+            '_method' => 'PUT',
+            'name'=> 'Test Application Updated',
+        ];
 
-    //     $response = $this->actingAs($authUser)
-    //         ->post(route('applications.update', $application), $formData);
+        $response = $this->actingAs($authUser)
+            ->post(route('applications.update', $application), $formData);
 
-    //     $response->assertStatus(403);
+        $response->assertStatus(403);
 
-    //     $this->assertDatabaseHas('applications', [
-    //         'name' => $application->name,
-    //     ]);
-    // }
+        $this->assertDatabaseHas('applications', [
+            'name' => $application->name,
+        ]);
+    }
 
     // public function test_cannot_update_an_application_without_a_name()
     // {
