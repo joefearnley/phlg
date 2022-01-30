@@ -47,6 +47,6 @@ class ApplicationCreateTest extends TestCase
         $application = Application::where('name', $applicationName)->first();
 
         $this->assertNotNull($application->app_id);
-        $this->assertEqual(12, strlen($application->app_id));
+        $this->assertEquals(12, strlen($application->app_id));
     }
 }

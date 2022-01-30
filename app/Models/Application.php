@@ -29,7 +29,7 @@ class Application extends Model
     protected static function booted()
     {
         static::created(function ($application) {
-            $hashids = new Hashids('', 6);
+            $hashids = new Hashids('', 12);
             $application->app_id = $hashids->encode($application->id);
             $application->save();
         });
