@@ -35,16 +35,17 @@
                     </div>
                     @endif
 
-                    <form method="POST" action="{{ route('applications.store') }}">
+                    <form method="POST" action="{{ route('applications.update', $application) }}">
                         @csrf
+                        @method('PUT')
                         <div class="grid grid-rows-2 gap-6">
                             <div>
                                 <x-label for="name" :value="__('Name')" />
-                                <x-input id="name" class="block mt-1 w-full" type="text" name="name" value="" required autofocus />
+                                <x-input id="name" class="block mt-1 w-full" type="text" name="name" value="{{ $application->name }}" required autofocus />
                             </div>
                             <div class="flex items-center justify-end mt-4">
                                 <x-button class="ml-4">
-                                    {{ __('Create') }}
+                                    {{ __('Save') }}
                                 </x-button>
 
                                 <x-button class="cancel-create-application-form ml-4">
