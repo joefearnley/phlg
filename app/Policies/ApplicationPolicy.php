@@ -30,6 +30,7 @@ class ApplicationPolicy
      */
     public function view(User $user, Application $application)
     {
+        dd('aslfdjaslkdjfsa');
         //
     }
 
@@ -45,6 +46,18 @@ class ApplicationPolicy
     }
 
     /**
+     * Determine whether the user can edit the model.
+     *
+     * @param  \App\Models\User  $user
+     * @param  \App\Models\Application  $application
+     * @return \Illuminate\Auth\Access\Response|bool
+     */
+    public function edit(User $user, Application $application)
+    {
+        return $user->id === (int) $application->user_id;
+    }
+
+    /**
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
@@ -53,9 +66,7 @@ class ApplicationPolicy
      */
     public function update(User $user, Application $application)
     {
-        dd('aslfdjaslkdjfsa');
-
-        return $user->id === $application->user_id;
+        return $user->id === (int) $application->user_id;
     }
 
     /**

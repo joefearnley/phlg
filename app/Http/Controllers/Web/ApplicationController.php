@@ -68,6 +68,8 @@ class ApplicationController extends Controller
      */
     public function edit(Application $application)
     {
+        $this->authorize('edit', $application);
+
         return view('applications.edit', ['application' => $application]);
     }
 
@@ -80,10 +82,14 @@ class ApplicationController extends Controller
      */
     public function update(UpdateApplicationRequest $request, Application $application)
     {
-        dd($request);
-//        $application = Application(['name' => $request->name]);
+        $this->authorize('update', $application);
 
-        // $application = Auth::user()->createApplication($application);
+        $application->name = $request->name;
+        $application->save();
+
+        return redirect(route('applications.index'))
+            ->with('message_type', 'success')
+            ->with('message', 'Application - ' . $application->name . ' - has been updated!');
     }
 
     /**

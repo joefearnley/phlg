@@ -44,93 +44,96 @@ class ApplicationEditTest extends TestCase
         $response->assertStatus(403);
     }
 
-    // public function test_cannot_update_an_application_when_not_authorized()
-    // {
-    //     $user = User::factory()
-    //         ->hasApplications(1)
-    //         ->create();
+    public function test_cannot_update_an_application_when_not_authorized()
+    {
+        $user = User::factory()
+            ->hasApplications(1)
+            ->create();
 
-    //     $application = $user->applications->first();
+        $application = $user->applications->first();
 
-    //     $formData = [
-    //         'name'=> 'Test Application Updated',
-    //     ];
+        $formData = [
+            'name'=> 'Test Application Updated',
+        ];
 
-    //     $response = $this->put(route('applications.update', $application), $formData);
+        $response = $this->put(route('applications.update', $application), $formData);
 
-    //     $response->assertStatus(302)
-    //         ->assertRedirect(route('login'));
-    // }
+        $response->assertStatus(302)
+            ->assertRedirect(route('login'));
+    }
 
-    // public function test_cannot_update_an_application_that_user_does_not_own()
-    // {
-    //     $authUser = User::factory()
-    //         ->hasApplications(1)
-    //         ->create();
+    public function test_cannot_update_an_application_that_user_does_not_own()
+    {
+        $authUser = User::factory()
+            ->hasApplications(1)
+            ->create();
 
-    //     $unAuthUser  = User::factory()
-    //         ->hasApplications(1)
-    //         ->create();
+        $unAuthUser  = User::factory()
+            ->hasApplications(1)
+            ->create();
 
-    //     $application = $unAuthUser->applications->first();
+        $application = $unAuthUser->applications->first();
 
-    //     $formData = [
-    //         '_method' => 'PUT',
-    //         'name'=> 'Test Application Updated',
-    //     ];
+        $formData = [
+            '_method' => 'PUT',
+            'name'=> 'Test Application Updated',
+        ];
 
-    //     $response = $this->actingAs($authUser)
-    //         ->post(route('applications.update', $application), $formData);
+        $response = $this->actingAs($authUser)
+            ->post(route('applications.update', $application), $formData);
 
-    //     $response->assertStatus(403);
+        $response->assertStatus(403);
 
-    //     $this->assertDatabaseHas('applications', [
-    //         'name' => $application->name,
-    //     ]);
-    // }
+        $this->assertDatabaseHas('applications', [
+            'name' => $application->name,
+        ]);
+    }
 
-    // public function test_cannot_update_an_application_without_a_name()
-    // {
-    //     $user = User::factory()
-    //         ->hasApplications(1)
-    //         ->create();
+    public function test_cannot_update_an_application_without_a_name()
+    {
+        $user = User::factory()
+            ->hasApplications(1)
+            ->create();
 
-    //     $application = $user->applications->first();
+        $application = $user->applications->first();
 
-    //     $formData = [
-    //         '_method' => 'PUT',
-    //         'name'=> '',
-    //     ];
+        $formData = [
+            '_method' => 'PUT',
+            'name'=> '',
+        ];
 
-    //     $response = $this->actingAs($user)
-    //         ->post(route('applications.update', $application), $formData);
+        $response = $this->actingAs($user)
+            ->post(route('applications.update', $application), $formData);
 
-    //     $response->assertStatus(302)
-    //         ->assertSessionHasErrors('name');
-    // }
+        $response->assertStatus(302)
+            ->assertSessionHasErrors('name');
+    }
 
-    // public function test_edit_create_an_application()
-    // {
-    //     $user = User::factory()->create();
+    public function test_can_edit_and_update_an_application()
+    {
+        $user = User::factory()->create();
 
-    //     $application = Application::factory()->create([
-    //         'name'=> 'Test Application',
-    //         'user_id' => $user->id,
-    //     ]);
+        $application = Application::factory()->create([
+            'name' => 'Test Application',
+            'user_id' => $user->id,
+        ]);
 
-    //     $newApplicationName = 'Test Application 1';
+        $newApplicationName = 'Test Application Updated';
 
-    //     $response = $this->actingAs($user)
-    //         ->post(route('applications.store'), [
-    //             'name' => $applicationName
-    //         ]);
+        $formData = [
+            '_method' => 'PUT',
+            'name'=> $newApplicationName,
+        ];
 
-    //     $response->assertStatus(302)
-    //         ->assertSessionHas('message_type', 'success')
-    //         ->assertSessionHas('message', 'Application - ' . $applicationName . ' - has been created!');
+        $response = $this->actingAs($user)
+            ->post(route('applications.update',  $application), $formData);
 
-    //     $this->assertDatabaseHas('applications', [
-    //         'name' => $applicationName,
-    //     ]);
-    // }
+        $response->assertStatus(302)
+            ->assertSessionHas('message_type', 'success')
+            ->assertSessionHas('message', 'Application - ' . $newApplicationName . ' - has been updated!');
+
+        $this->assertDatabaseHas('applications', [
+            'name' => $newApplicationName,
+        ]);
+    }
 }
