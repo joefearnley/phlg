@@ -100,6 +100,12 @@ class ApplicationController extends Controller
      */
     public function destroy(Application $application)
     {
-        //
+        $this->authorize('delete', $application);
+
+        $application->delete();
+
+        return redirect(route('applications.index'))
+            ->with('message_type', 'success')
+            ->with('message', 'Application has been deleted!');
     }
 }

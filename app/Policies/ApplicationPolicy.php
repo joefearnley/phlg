@@ -30,7 +30,6 @@ class ApplicationPolicy
      */
     public function view(User $user, Application $application)
     {
-        dd('aslfdjaslkdjfsa');
         //
     }
 
@@ -78,7 +77,7 @@ class ApplicationPolicy
      */
     public function delete(User $user, Application $application)
     {
-        //
+        return $user->id === (int) $application->user_id;
     }
 
     /**
