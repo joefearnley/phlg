@@ -102,6 +102,8 @@ class ApplicationController extends Controller
     {
         $this->authorize('delete', $application);
 
+        $application->messages()->delete();
+
         $application->delete();
 
         return redirect(route('applications.index'))

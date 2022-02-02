@@ -7,6 +7,10 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\Application;
+use App\Models\Message;
+use App\Models\MessageLevel;
+use Database\Seeders\MessageLevelSeeder;
+use Database\Seeders\ApplicationSeeder;
 
 class ApplicationDeleteTest extends TestCase
 {
@@ -55,6 +59,43 @@ class ApplicationDeleteTest extends TestCase
             ->create();
 
         $application = $user->applications->first();
+
+        $formData = [
+            '_method' => 'DELETE',
+        ];
+
+        $response = $this->actingAs($user)
+            ->post(route('applications.destroy',  $application), $formData);
+
+        $response->assertStatus(302)
+            ->assertSessionHas('message_type', 'success')
+            ->assertSessionHas('message', 'Application has been deleted!');
+
+        $this->assertDatabaseMissing('applications', [
+            'id' => $application->id,
+        ]);
+    }
+
+    public function test_can_delete_an_application_with_messages()
+    {
+        $user = User::factory()->create();
+
+        $this->seed([
+            MessageLevelSeeder::class,
+            ApplicationSeeder::class,
+        ]);
+
+        $application = Application::first();
+
+        $messages = Message::factory()
+            ->count(3)
+            ->create([
+                'level_id' => MessageLevel::first(),
+                'application_id' => $application->id
+            ]);
+
+        $messageIds = $messages->pluck('id');
+
         $applicationName = $application->name;
 
         $formData = [
@@ -70,6 +111,12 @@ class ApplicationDeleteTest extends TestCase
 
         $this->assertDatabaseMissing('applications', [
             'name' => $applicationName,
+        ])->assertDatabaseMissing('messages', [
+            'id' => $messageIds[0],
+        ])->assertDatabaseMissing('messages', [
+            'id' => $messageIds[1],
+        ])->assertDatabaseMissing('messages', [
+            'id' => $messageIds[2],
         ]);
     }
 }
