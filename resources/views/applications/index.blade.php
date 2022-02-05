@@ -43,8 +43,11 @@
                         <p><strong>Last Updated:</strong> {{ $application->lastUpdated() }}</p>
                     </div>
                     <div class="w-1/4">
-                        <a href="/applications/{{ $application->id}}/edit/" class="add-application-button inline-flex items-center px-4 py-2 bg-blue border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest focus:outline-none focus:ring disabled:opacity-25">
+                        <a href="{{ route('applications.edit', $application) }}" class="add-application-button inline-flex items-center mr-4 px-4 py-2 bg-blue border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest focus:outline-none focus:ring disabled:opacity-25">
                             Edit
+                        </a>
+                        <a href="{{ route('applications.destroy', $application) }}" class="add-application-button inline-flex items-center px-4 py-2 bg-amber-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest focus:outline-none focus:ring disabled:opacity-25">
+                            Delete
                         </a>
                     </div>
                 </div>
