@@ -15,7 +15,7 @@
         <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
             <div class="my-6">
                 <div>
-                    <h2 class="font-semi-bold text-lg mb-4">{{ __('Add Application')}}</h2>
+                    <h2 class="font-semi-bold text-lg mb-4">{{ __('Edit Application')}}</h2>
 
                     @if ($errors->any() && $errors->getBag('default')->hasAny(['name', 'email']) )
                     <div class="bg-red-100 rounded-b text-red-900 px-4 py-3 mb-6 shadow-md" role="alert">
