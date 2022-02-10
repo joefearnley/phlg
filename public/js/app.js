@@ -5467,10 +5467,6 @@ __webpack_require__(/*! ./applications */ "./resources/js/applications.js");
   \**************************************/
 /***/ (() => {
 
-var addApplicationButton = document.querySelector('.add-application-button');
-var addApplicationForm = document.querySelector('.add-application-form');
-var editApplicationForm = document.querySelector('.edit-application-form');
-var deleteApplicationButton = document.querySelector('.edit-application-form');
 window.applicationSwal = Swal.mixin({
   showCancelButton: true,
   confirmButtonText: 'Save',
@@ -5487,23 +5483,20 @@ window.applicationSwal = Swal.mixin({
   },
   buttonsStyling: false
 });
-document.addEventListener('click', function (evt) {
-  evt.preventDefault();
-  applicationSwal.fire({
-    title: 'Are you sure?',
-    text: "You won't be able to revert this!",
-    icon: 'warning',
-    showCancelButton: true,
-    // confirmButtonColor: '#3085d6',
-    // cancelButtonColor: '#d33',
-    confirmButtonText: 'Yes, delete it!'
-  }).then(function (result) {
-    console.log(result);
-
-    if (result.isConfirmed) {
-      console.log('firing new one...');
-      applicationSwal.fire('Deleted!', 'Your file has been deleted.', 'success');
-    }
+var deleteApplicationForms = document.querySelectorAll('.delete-application-form');
+deleteApplicationForms.forEach(function (deleteButton) {
+  deleteButton.addEventListener('submit', function (event) {
+    event.preventDefault();
+    var form = event.target;
+    applicationSwal.fire({
+      title: 'Delete Application',
+      text: "Are you sure you want to delete this application?",
+      confirmButtonText: 'Yes, delete it!'
+    }).then(function (result) {
+      if (result.isConfirmed) {
+        form.submit();
+      }
+    });
   });
 });
 
