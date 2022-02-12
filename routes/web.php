@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Web\DashboardController;
 use App\Http\Controllers\Web\AccountController;
 use App\Http\Controllers\Web\ApplicationController;
+use App\Http\Controllers\Web\MessageController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -26,6 +27,9 @@ Route::post('/account/update-password', [AccountController::class, 'updatePasswo
     ->name('account.update-password');
 
 Route::resource('applications', ApplicationController::class)
+    ->middleware(['auth']);
+
+Route::resource('messages', MessageController::class)
     ->middleware(['auth']);
 
 require __DIR__.'/auth.php';

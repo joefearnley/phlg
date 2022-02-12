@@ -15,6 +15,7 @@ class ApplicationPageTest extends TestCase
 {
     use RefreshDatabase;
 
+    
     public function test_cannot_view_applications_page_if_not_authorized()
     {
         $response = $this->get(route('applications.index'));
