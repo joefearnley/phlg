@@ -44,13 +44,24 @@ class User extends Authenticatable
     ];
 
     /**
-     * Get the application owned by the user.
+     * Get the applications owned by the user.
      * 
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function applications()
     {
         return $this->hasMany(Application::class);
+    }
+
+    /**
+     * Get the messages owned by the user.
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function messages()
+    {
+        return $this->hasManyThrough(Message::class, Application::class)
+            ->orderBy('created_at');
     }
 
     /**

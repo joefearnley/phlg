@@ -2,21 +2,22 @@
 
 namespace App\Http\Controllers\Web;
 
-use App\Http\Requests\StoreMessageRequest;
-use App\Http\Requests\UpdateMessageRequest;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\Message;
 
 class MessageController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Main messages page.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
     public function index()
     {
-        //
+        $messages = Auth::user()->messages(20)->get();
+
+        return view('messages.index', ['messages' => $messages]);
     }
 
     /**
