@@ -47,7 +47,7 @@
                                     {{ __('Save') }}
                                 </x-button>
 
-                                <x-button class="cancel-create-application-form ml-4">
+                                <x-button class="cancel-create-application-form ml-4" onclick="window.history.back()">
                                     {{ __('Cancel') }}
                                 </x-button>
                             </div>

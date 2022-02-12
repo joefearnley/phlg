@@ -16,7 +16,13 @@ window.applicationSwal = Swal.mixin({
       buttonsStyling: false
 });
 
+const cancelApplicationForm = document.querySelector('.cancel-create-application-form');
 const deleteApplicationForms = document.querySelectorAll('.delete-application-form');
+
+cancelApplicationForm.addEventListener('click', event => {
+    event.preventDefault();
+    location = '/applications';
+})
 
 deleteApplicationForms.forEach(deleteButton => {
     deleteButton.addEventListener('submit', event => {

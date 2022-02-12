@@ -5483,7 +5483,12 @@ window.applicationSwal = Swal.mixin({
   },
   buttonsStyling: false
 });
+var cancelApplicationForm = document.querySelector('.cancel-create-application-form');
 var deleteApplicationForms = document.querySelectorAll('.delete-application-form');
+cancelApplicationForm.addEventListener('click', function (event) {
+  event.preventDefault();
+  location = '/applications';
+});
 deleteApplicationForms.forEach(function (deleteButton) {
   deleteButton.addEventListener('submit', function (event) {
     event.preventDefault();
