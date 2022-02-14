@@ -44,14 +44,58 @@ class MessagePageTest extends TestCase
             MessageSeeder::class,
         ]);
 
+        $application = $user->applications->first();
         $messages = $user->messages;
 
         $response = $this->actingAs($user)
             ->get(route('messages.index'));
 
         $response->assertStatus(200)
+            ->assertSee($application->name)
             ->assertSee($messages[0]->body)
             ->assertSee($messages[1]->body)
             ->assertSee($messages[2]->body);
+    }
+
+    public function test_can_view_applications_filter()
+    {
+        $user = User::factory()->create();
+
+        $this->seed([
+            MessageLevelSeeder::class,
+            ApplicationSeeder::class,
+            MessageSeeder::class,
+        ]);
+
+        $application = $user->applications->first();
+        $messages = $user->messages;
+
+        $response = $this->actingAs($user)
+            ->get(route('messages.index'));
+
+        $response->assertStatus(200)
+            ->assertSee('Applications')
+            ->assertSee($application->name);
+    }
+
+    public function test_can_filter_by_applications()
+    {
+        $user = User::factory()->create();
+
+        $this->seed([
+            MessageLevelSeeder::class,
+            ApplicationSeeder::class,
+            MessageSeeder::class,
+        ]);
+
+        $application = $user->applications->first();
+        $messages = $user->messages;
+
+        $response = $this->actingAs($user)
+            ->get(route('messages.index'));
+
+        // $response->assertStatus(200)
+        //     ->assertSee('Applications')
+        //     ->assertSee($application->name);
     }
 }

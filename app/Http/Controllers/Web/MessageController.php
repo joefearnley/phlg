@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Web;
 
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
+use App\Models\Application;
 use App\Models\Message;
 
 class MessageController extends Controller
@@ -11,13 +12,20 @@ class MessageController extends Controller
     /**
      * Main messages page.
      *
+     * @param  \App\Models\Application  $application
      * @return \Illuminate\View\View
      */
-    public function index()
+    public function index(Application $application)
     {
+        // dd($application->toArray());
+
+        $applications = Auth::user()->applications;
         $messages = Auth::user()->messages(20)->get();
 
-        return view('messages.index', ['messages' => $messages]);
+        return view('messages.index', [
+            'messages' => $messages,
+            'applications' => $applications
+        ]);
     }
 
     /**

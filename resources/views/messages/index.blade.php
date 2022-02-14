@@ -1,12 +1,28 @@
 <x-app-layout>
     <x-slot name="header">
         <div class="my-3 max-w-7xl mx-auto">
-            <div class="flex flex-row flex-wrap justify-between items-center">
-                <div class="w-1/2">
-                    <h2 class="font-semibold text-xl leading-tight">
-                        {{ __('Messages') }}
-                    </h2>
-                </div>
+            <div class="flex flex-row flex-wrap justify-left items-center">
+
+                <h2 class="font-semibold text-xl leading-tight mr-12">
+                    {{ __('Messages') }}
+                </h2>
+
+                <x-dropdown align="left" width="48">
+                    <x-slot name="trigger">
+                        <button class="flex items-center text-sm font-medium text-blue focus:outline-none focus:text-blue focus:border-blue">
+                            <div>{{ __('Application') }}</div>
+                        </button>
+                    </x-slot>
+
+                    <x-slot name="content">
+                        @foreach ($applications as $application)
+                        <x-dropdown-link :href="route('messages.index', $application)">
+                            {{ $application->name }}
+                        </x-dropdown-link>
+                        @endforeach
+                    </x-slot>
+                </x-dropdown>
+
             </div>
         </div>
     </x-slot>

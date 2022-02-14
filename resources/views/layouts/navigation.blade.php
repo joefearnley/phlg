@@ -18,6 +18,9 @@
                     <x-nav-link :href="route('applications.index')" :active="request()->routeIs('applications.index')">
                         {{ __('Applications') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('messages.index')" :active="request()->routeIs('messages.index')">
+                        {{ __('Messages') }}
+                    </x-nav-link>
                 </div>
             </div>
 
