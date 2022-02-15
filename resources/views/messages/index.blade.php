@@ -1,28 +1,36 @@
 <x-app-layout>
     <x-slot name="header">
         <div class="my-3 max-w-7xl mx-auto">
-            <div class="flex flex-row flex-wrap justify-left items-center">
+            <div class="flex flex-row flex-wrap justify-between items-center">
+                <div class="w-1/2">
+                    <h2 class="font-semibold text-xl leading-tight mr-12">
+                    @if (empty($selectedApplication))
+                        {{ __('All Messages') }}
+                    @else
+                        {{ __('Messages for') }} <strong>{{ $selectedApplication->name }}</strong>
+                    @endif
+                    </h2>
+                </div>
+                <div class="w-1/8">
+                    <x-dropdown align="left" width="48">
+                        <x-slot name="trigger">
+                            <button class="filter-application-button inline-flex items-center px-4 py-2 bg-blue border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest focus:outline-none focus:ring disabled:opacity-25">
+                                <div>{{ __('Application') }}</div>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="ml-3 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </button>
+                        </x-slot>
 
-                <h2 class="font-semibold text-xl leading-tight mr-12">
-                    {{ __('Messages') }}
-                </h2>
-
-                <x-dropdown align="left" width="48">
-                    <x-slot name="trigger">
-                        <button class="flex items-center text-sm font-medium text-blue focus:outline-none focus:text-blue focus:border-blue">
-                            <div>{{ __('Application') }}</div>
-                        </button>
-                    </x-slot>
-
-                    <x-slot name="content">
-                        @foreach ($applications as $application)
-                        <x-dropdown-link :href="route('messages.index', $application)">
-                            {{ $application->name }}
-                        </x-dropdown-link>
-                        @endforeach
-                    </x-slot>
-                </x-dropdown>
-
+                        <x-slot name="content">
+                            @foreach ($applications as $application)
+                            <x-dropdown-link :href="route('messages.index', ['appid' => $application->id])">
+                                {{ $application->name }}
+                            </x-dropdown-link>
+                            @endforeach
+                        </x-slot>
+                    </x-dropdown>
+                </div>
             </div>
         </div>
     </x-slot>

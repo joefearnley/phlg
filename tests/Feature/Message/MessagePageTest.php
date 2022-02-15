@@ -7,6 +7,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\Application;
+use App\Models\Message;
 use Database\Seeders\MessageLevelSeeder;
 use Database\Seeders\MessageSeeder;
 use Database\Seeders\ApplicationSeeder;
@@ -51,6 +52,7 @@ class MessagePageTest extends TestCase
             ->get(route('messages.index'));
 
         $response->assertStatus(200)
+            ->assertSee('All Messages')
             ->assertSee($application->name)
             ->assertSee($messages[0]->body)
             ->assertSee($messages[1]->body)
@@ -91,11 +93,29 @@ class MessagePageTest extends TestCase
         $application = $user->applications->first();
         $messages = $user->messages;
 
-        $response = $this->actingAs($user)
-            ->get(route('messages.index'));
+        $application2 = Application::factory()->create([
+            'user_id' => $user->id
+        ]);
 
-        // $response->assertStatus(200)
-        //     ->assertSee('Applications')
-        //     ->assertSee($application->name);
+        $application2Messages = Message::factory()
+            ->count(3)
+            ->create([
+                'application_id' => $application2,
+                'level_id' => 1,
+            ]);
+
+        $response = $this->actingAs($user)
+            ->get(route('messages.index', ['appid' => $application->id]));
+
+        $response->assertStatus(200);
+
+        $response->assertSeeText('Messages for ' . $application->name)
+            ->assertSee($messages[0]->body)
+            ->assertSee($messages[1]->body)
+            ->assertSee($messages[2]->body);
+
+        $response->assertDontSee($application2Messages[0]->body)
+            ->assertDontSee($application2Messages[1]->body)
+            ->assertDontSee($application2Messages[2]->body);
     }
 }

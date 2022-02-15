@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Web;
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\Application;
@@ -12,19 +13,27 @@ class MessageController extends Controller
     /**
      * Main messages page.
      *
-     * @param  \App\Models\Application  $application
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\View\View
      */
-    public function index(Application $application)
+    public function index(Request  $request)
     {
-        // dd($application->toArray());
+        $selectedApplication = null;
+
+        if ($request->has('appid')) {
+            $appId = $request->query('appid');
+            $messages = Auth::user()->messages->where('application_id', $appId);
+            $selectedApplication = Application::find($appId);
+        } else {
+            $messages = Auth::user()->messages;
+        }
 
         $applications = Auth::user()->applications;
-        $messages = Auth::user()->messages(20)->get();
 
         return view('messages.index', [
             'messages' => $messages,
-            'applications' => $applications
+            'applications' => $applications,
+            'selectedApplication' => $selectedApplication,
         ]);
     }
 
