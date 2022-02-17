@@ -38,6 +38,20 @@ class MessageController extends Controller
     }
 
     /**
+     * Messages search page.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param String  $team
+     * @return \Illuminate\View\View
+     */
+    public function search($term)
+    {
+        echo'<pre>';
+        var_dump($term);
+        die();
+    }
+
+    /**
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\Message  $message

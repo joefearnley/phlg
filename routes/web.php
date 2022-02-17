@@ -32,4 +32,8 @@ Route::resource('applications', ApplicationController::class)
 Route::resource('messages', MessageController::class)
     ->middleware(['auth']);
 
+Route::resource('messages/search/{term}', [MessageController::class, 'search'])
+    ->middleware(['auth'])
+    ->name('message.search');
+
 require __DIR__.'/auth.php';
