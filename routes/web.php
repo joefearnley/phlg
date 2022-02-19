@@ -11,29 +11,16 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', [DashboardController::class, 'index'])
-    ->middleware(['auth'])
     ->name('dashboard');
 
-Route::get('/account', [AccountController::class, 'index'])
-    ->middleware(['auth'])
-    ->name('account');
-
-Route::post('/account/update', [AccountController::class, 'update'])
-    ->middleware(['auth'])
-    ->name('account.update');
-
-Route::post('/account/update-password', [AccountController::class, 'updatePassword'])
-    ->middleware(['auth'])
-    ->name('account.update-password');
-
-Route::resource('applications', ApplicationController::class)
-    ->middleware(['auth']);
-
-Route::resource('messages', MessageController::class)
-    ->middleware(['auth']);
-
-Route::resource('messages/search/{term}', [MessageController::class, 'search'])
-    ->middleware(['auth'])
-    ->name('message.search');
+Route::group(['middleware' => 'auth'], function() {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/account', [AccountController::class, 'index'])->name('account');
+    Route::post('/account/update', [AccountController::class, 'update'])->name('account.update');
+    Route::post('/account/update-password', [AccountController::class, 'updatePassword'])->name('account.update-password');
+    Route::resource('applications', ApplicationController::class);
+    Route::resource('messages', MessageController::class);
+    // Route::resource('messages/search/{term}', [MessageController::class, 'search'])->name('message.search');
+});
 
 require __DIR__.'/auth.php';
