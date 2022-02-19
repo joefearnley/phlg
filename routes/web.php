@@ -1,17 +1,13 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Web\WelcomeController;
 use App\Http\Controllers\Web\DashboardController;
 use App\Http\Controllers\Web\AccountController;
 use App\Http\Controllers\Web\ApplicationController;
 use App\Http\Controllers\Web\MessageController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::get('/dashboard', [DashboardController::class, 'index'])
-    ->name('dashboard');
+Route::get('/', [WelcomeController::class, 'index'])->name('welcome');
 
 Route::group(['middleware' => 'auth'], function() {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
