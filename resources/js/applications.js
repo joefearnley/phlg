@@ -19,24 +19,28 @@ window.applicationSwal = Swal.mixin({
 const cancelApplicationForm = document.querySelector('.cancel-create-application-form');
 const deleteApplicationForms = document.querySelectorAll('.delete-application-form');
 
-cancelApplicationForm.addEventListener('click', event => {
-    event.preventDefault();
-    location = '/applications';
-})
-
-deleteApplicationForms.forEach(deleteButton => {
-    deleteButton.addEventListener('submit', event => {
+if (cancelApplicationForm !== null) {
+    cancelApplicationForm.addEventListener('click', event => {
         event.preventDefault();
-        let form = event.target;
+        location = '/applications';
+    });
+}
 
-        applicationSwal.fire({
-            title: 'Delete Application',
-            text: "Are you sure you want to delete this application?",
-            confirmButtonText: 'Yes, delete it!'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                form.submit();
-            }
+if (deleteApplicationForms !== null) {
+    deleteApplicationForms.forEach(deleteButton => {
+        deleteButton.addEventListener('submit', event => {
+            event.preventDefault();
+            let form = event.target;
+
+            applicationSwal.fire({
+                title: 'Delete Application',
+                text: "Are you sure you want to delete this application?",
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit();
+                }
+            });
         });
     });
-});
+}

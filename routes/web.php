@@ -16,7 +16,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::post('/account/update-password', [AccountController::class, 'updatePassword'])->name('account.update-password');
     Route::resource('applications', ApplicationController::class);
     Route::resource('messages', MessageController::class);
-    // Route::resource('messages/search/{term}', [MessageController::class, 'search'])->name('message.search');
+    Route::get('messages/search/{term}', [MessageController::class, 'search'])->name('message.search');
 });
 
 require __DIR__.'/auth.php';

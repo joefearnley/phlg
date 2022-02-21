@@ -5485,25 +5485,31 @@ window.applicationSwal = Swal.mixin({
 });
 var cancelApplicationForm = document.querySelector('.cancel-create-application-form');
 var deleteApplicationForms = document.querySelectorAll('.delete-application-form');
-cancelApplicationForm.addEventListener('click', function (event) {
-  event.preventDefault();
-  location = '/applications';
-});
-deleteApplicationForms.forEach(function (deleteButton) {
-  deleteButton.addEventListener('submit', function (event) {
+
+if (cancelApplicationForm !== null) {
+  cancelApplicationForm.addEventListener('click', function (event) {
     event.preventDefault();
-    var form = event.target;
-    applicationSwal.fire({
-      title: 'Delete Application',
-      text: "Are you sure you want to delete this application?",
-      confirmButtonText: 'Yes, delete it!'
-    }).then(function (result) {
-      if (result.isConfirmed) {
-        form.submit();
-      }
+    location = '/applications';
+  });
+}
+
+if (deleteApplicationForms !== null) {
+  deleteApplicationForms.forEach(function (deleteButton) {
+    deleteButton.addEventListener('submit', function (event) {
+      event.preventDefault();
+      var form = event.target;
+      applicationSwal.fire({
+        title: 'Delete Application',
+        text: "Are you sure you want to delete this application?",
+        confirmButtonText: 'Yes, delete it!'
+      }).then(function (result) {
+        if (result.isConfirmed) {
+          form.submit();
+        }
+      });
     });
   });
-});
+}
 
 /***/ }),
 

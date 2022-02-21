@@ -56,7 +56,7 @@ class User extends Authenticatable
     /**
      * Get the messages owned by the user.
      * 
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
      */
     public function messages()
     {
@@ -68,7 +68,7 @@ class User extends Authenticatable
      * Get the latest messages for the user.
      *
      * @param  mixed $amount
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
      */
     public function latestMessages($limit = 10)
     {
@@ -86,5 +86,16 @@ class User extends Authenticatable
     public function createApplication(Application $application)
     {
         return $this->applications()->save($application);
+    }
+
+    /**
+     * Search user's messages for a given search term.
+     * 
+     * @return \Illuminate\Database\Eloquent\Model
+     */
+    public function searchMessages($term)
+    {
+        return $this->messages()
+            ->where('body', 'like', "%$term%");
     }
 }

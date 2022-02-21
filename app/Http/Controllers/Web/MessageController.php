@@ -16,7 +16,7 @@ class MessageController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\View\View
      */
-    public function index(Request  $request)
+    public function index(Request $request)
     {
         $selectedApplication = null;
 
@@ -41,14 +41,17 @@ class MessageController extends Controller
      * Messages search page.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param String  $team
+     * @param String  $term
      * @return \Illuminate\View\View
      */
     public function search($term)
     {
-        echo'<pre>';
-        var_dump($term);
-        die();
+        $messages = Auth::user()->searchMessages($term)->get();
+
+        return view('messages.search-results', [
+            'messages' => $messages,
+            'searchTerm' => $term,
+        ]);
     }
 
     /**
