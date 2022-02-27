@@ -5459,6 +5459,8 @@ alpinejs__WEBPACK_IMPORTED_MODULE_1__["default"].start();
 
 __webpack_require__(/*! ./applications */ "./resources/js/applications.js");
 
+__webpack_require__(/*! ./messages */ "./resources/js/messages.js");
+
 /***/ }),
 
 /***/ "./resources/js/applications.js":
@@ -5541,6 +5543,27 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     forceTLS: true
 // });
+
+/***/ }),
+
+/***/ "./resources/js/messages.js":
+/*!**********************************!*\
+  !*** ./resources/js/messages.js ***!
+  \**********************************/
+/***/ (() => {
+
+var searchForm = document.querySelector('#search-form');
+var searchTeam = document.querySelector('#search-term');
+
+if (searchForm !== null) {
+  searchForm.addEventListener('submit', function (event) {
+    event.preventDefault();
+
+    if (searchTeam.value.trim() !== '') {
+      window.location = "/messages/search/".concat(searchTeam.value);
+    }
+  });
+}
 
 /***/ }),
 
