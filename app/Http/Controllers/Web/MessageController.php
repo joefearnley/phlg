@@ -18,15 +18,12 @@ class MessageController extends Controller
      */
     public function index(Request $request)
     {
-        $selectedApplication = null;
+        $appId = $request->has('appid') ? $request->query('appid') : null;
+        $searchTerm = $request->has('term')? $request->query('term') : null;
 
-        if ($request->has('appid')) {
-            $appId = $request->query('appid');
-            $messages = Auth::user()->messages->where('application_id', $appId);
-            $selectedApplication = Application::find($appId);
-        } else {
-            $messages = Auth::user()->messages;
-        }
+        $messages = Auth::user()->searchMessages($searchTerm, $appId)->get();
+
+        $selectedApplication = $appId ? Application::find($appId) : null;
 
         $applications = Auth::user()->applications;
 
