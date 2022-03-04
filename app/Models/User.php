@@ -91,11 +91,16 @@ class User extends Authenticatable
     /**
      * Search user's messages for a given search term.
      * 
+     * @param string $term
+     * @param int $appID
      * @return \Illuminate\Database\Eloquent\Model
      */
-    public function searchMessages($term)
+    public function searchMessages($term = null, $appID = null)
     {
         return $this->messages()
+            ->where('application_id', $appId)
             ->where('body', 'like', "%$term%");
+
+
     }
 }
