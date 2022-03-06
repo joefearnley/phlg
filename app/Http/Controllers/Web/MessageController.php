@@ -21,7 +21,7 @@ class MessageController extends Controller
         $appId = $request->has('appid') ? $request->query('appid') : null;
         $searchTerm = $request->has('term') ? $request->query('term') : null;
 
-        $messages = Auth::user()->searchMessages($searchTerm, $appId)->get();
+        $messages = Auth::user()->searchMessages($appId, $searchTerm)->get();
 
         $selectedApplication = $appId ? Application::find($appId) : null;
 

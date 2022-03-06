@@ -4,11 +4,13 @@
             <div class="flex flex-row flex-wrap justify-between items-center">
                 <div class="w-1/2">
                     <h2 class="font-semibold text-xl leading-tight mr-12">
-                    @if (empty($selectedApplication))
-                        {{ __('All Messages') }}
-                    @else
-                        {{ __('Messages for') }} <strong>{{ $selectedApplication->name }}</strong>
-                    @endif
+                        {{ __('Messages') }}
+                        @if (!empty($selectedApplication))
+                            {{ __('Application') }} <strong>{{ $selectedApplication->name }}</strong>
+                        @endif
+                        @if (!empty($searchTerm))
+                        {{ __('Search Terrm') }} <strong>{{ $selectedApplication->name }}</strong>
+                        @endif
                     </h2>
                 </div>
                 <div class="w-1/8 relative">
