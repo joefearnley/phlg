@@ -5553,17 +5553,14 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 /***/ (() => {
 
 var searchForm = document.querySelector('#search-form');
-var searchTeam = document.querySelector('#search-term');
-
-if (searchForm !== null) {
-  searchForm.addEventListener('submit', function (event) {
-    event.preventDefault();
-
-    if (searchTeam.value.trim() !== '') {
-      window.location = "/messages/search/".concat(searchTeam.value);
-    }
-  });
-}
+var searchTeam = document.querySelector('#search-term'); // if (searchForm !== null) {
+//     searchForm.addEventListener('submit', event => {
+//         event.preventDefault();
+//         if (searchTeam.value.trim() !== '') {
+//             window.location = `/messages/${searchTeam.value}`;
+//         }
+//     });
+// }
 
 /***/ }),
 
