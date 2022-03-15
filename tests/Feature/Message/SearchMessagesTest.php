@@ -25,8 +25,17 @@ class SearchMessagesTest extends TestCase
         $response = $this->actingAs($this->user)
             ->get(route('messages.index'));
 
-        $response->assertStatus(200);;
+        $response->assertStatus(200);
     }
 
 
+    public function test_search_by_application()
+    {
+        
+
+        $response = $this->actingAs($this->user)
+            ->get(route('messages.index') . 'appid=' . $application->id);
+
+
+    }
 }
