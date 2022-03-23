@@ -6,6 +6,8 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use App\Models\User;
+use App\Models\Application;
+use App\Models\Message;
 
 class SearchMessagesTest extends TestCase
 {
@@ -31,11 +33,7 @@ class SearchMessagesTest extends TestCase
 
     public function test_search_by_application()
     {
-        
-
         $response = $this->actingAs($this->user)
             ->get(route('messages.index') . 'appid=' . $application->id);
-
-
     }
 }
