@@ -15,8 +15,8 @@
                 </div>
                 <div class="w-1/8 relative">
                     <form id="search-form">
-                        <input class="form-control bg-white bg-clip-padding border-2 border-blue-300 pl-4 pr-2 py-2 mr-3 rounded-lg focus:outline-none focus:bg-white focus:border-blue-300 focus:outline-none" type="search" id="term" name="term" placeholder="Search" value="{{ $searchTerm ?? '' }}">
-                        <select name="appid"{''( id="application" class="appearance-none border-2 border-blue-300 rounded-lg">
+                        <input class="form-control bg-white bg-clip-padding border-2 border-blue-300 pl-4 pr-2 py-2 mr-3 my-2 rounded-lg focus:outline-none focus:bg-white focus:border-blue-300 focus:outline-none" type="search" id="term" name="term" placeholder="Search" value="{{ $searchTerm ?? '' }}">
+                        <select name="appid"{''( id="application" class="appearance-none border-2 border-blue-300 rounded-lg my-2">
                             <option value="">{{ __('Application') }}</option>
                         @foreach ($applications as $application)
                             <option value="{{ $application->id }}" {{ ($selectedApplication && $selectedApplication->id === $application->id) ? 'selected' : '' }} >{{ $application->name }}</option>
@@ -34,18 +34,21 @@
     @if (!$messages->isEmpty())
         @foreach ($messages as $message)
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="my-6 p-3 border-l-4 border-solid border-{{ $message->level->color() }}-600">
+            <div class="my-3 p-3 border-l-4 border-solid border-{{ $message->level->color() }}-600">
                 <div class="flex flex-row flex-wrap">
-                    <div class="w-full md:w-1/4">
+                    <div class="w-full md:w-1/6">
                         <p class="font-bold text-blue">{{ $message->application->name }}</p>
                         <p>{{ $message->formattedCreationTime() }}</p>
+                    </div>
+                    <div class="w-full md:w-1/6">
                         <p class="font-bold text-{{ $message->level->color() }}-600">{{ $message->level->name }}</p>
                     </div>
-                    <div class="w-full md:w-3/4 mt-6 md:mt-0">
+                    <div class="w-full md:w-2/3 mt-6 md:mt-0">
                         <p>{{ $message->body }}</p>
                     </div>
                 </div>
             </div>
+            <!-- <hr> -->
         </div>
         @endforeach
     @else

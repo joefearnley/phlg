@@ -173,4 +173,27 @@ class SearchMessagesTest extends TestCase
             ->assertDontSeeText($application3Messages[1]->body)
             ->assertDontSeeText($application3Messages[2]->body);
     }
+
+    public function test_search_term_should_not_be_case_sensitive()
+    {
+        $caseSensitiveMessage = Message::factory([
+            'application_id' => $this->application->id,
+            'level_id' => 1,
+            'body' => 'This is an ERROR message.',
+        ])->create();
+
+        $searchTerm = 'ERROR';
+
+        $response = $this->actingAs($this->user)
+            ->get(route('messages.index', [
+                'term' => $searchTerm
+            ]));
+
+        $responseData = $response->getOriginalContent()->getData();
+        $this->assertEquals(1, $responseData['messages']->count());
+
+        $response->assertStatus(200)
+            ->assertSeeText('Search Term: ' . $searchTerm)
+            ->assertSee($caseSensitiveMessage->body);
+    }
 }
