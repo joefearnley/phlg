@@ -23,6 +23,7 @@ class MessageController extends Controller
 
         $selectedApplication = Application::find($appId);
         $messages = Auth::user()->searchMessages($appId, $searchTerm)->get();
+
         $applications = Auth::user()->applications;
 
         return view('messages.index', [

@@ -99,7 +99,7 @@ class User extends Authenticatable
     {
         $query = $this->messages();
 
-        if (!empty($term)) {
+        if (!empty($appId)) {
             $query->where('application_id', $appId);
         }
 
