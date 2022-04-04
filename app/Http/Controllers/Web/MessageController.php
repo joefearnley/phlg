@@ -30,6 +30,7 @@ class MessageController extends Controller
             'messages' => $messages,
             'applications' => $applications,
             'selectedApplication' => $selectedApplication,
+            'searchTerm' => $searchTerm,
         ]);
     }
 

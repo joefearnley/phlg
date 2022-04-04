@@ -104,7 +104,7 @@ class User extends Authenticatable
         }
 
         if (!empty($searchTerm)) {
-            $query->where('body', 'like', "%$term%");
+            $query->where('body', 'like', "%$searchTerm%");
         }
 
         return $query;

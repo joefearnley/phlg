@@ -74,7 +74,7 @@ class SearchMessagesTest extends TestCase
 
         // should show 3 messages from selected application
         $responseData = $response->getOriginalContent()->getData();
-        $this->assertEquals(3, count($responseData));
+        $this->assertEquals($this->messages->count(), $responseData['messages']->count());
 
         $response->assertStatus(200)
             ->assertSeeText($this->messages[0]->body)
@@ -87,20 +87,31 @@ class SearchMessagesTest extends TestCase
             ->assertDontSeeText($application2Messages[2]->body);
     }
 
-    // public function test_search_for_message_shows_search_text_in_results()
-    // {
-    //     $searchTerm = $this->messages[0]->body;
+    public function test_search_for_message_shows_search_term()
+    {
+        $searchTerm = $this->messages[0]->body;
 
-    //     $response = $this->actingAs($this->user)
-    //         ->get(route('messages.index') . '?search=' . $searchTerm);
+        $response = $this->actingAs($this->user)
+            ->get(route('messages.index') . '?term=' . $searchTerm);
 
-    //     $responseData = $response->getOriginalContent()->getData();
-    //     $this->assertEquals(3, count($responseData));
+        $response->assertStatus(200)
+            ->assertSeeText('Search Term: ' . $searchTerm);
+    }
 
-    //     $response->assertStatus(200)
-    //         ->assertSeeText('Search Term: ' . $searchTerm);
-    //     //     ->assert;
+    public function test_search_for_message_shows_messages_that_match_term()
+    {
+        $searchTerm = $this->messages[0]->body;
 
-        
-    // }
+        $response = $this->actingAs($this->user)
+            ->get(route('messages.index') . '?term=' . $searchTerm);
+
+        $responseData = $response->getOriginalContent()->getData();
+        $this->assertEquals(1, $responseData['messages']->count());
+
+        $response->assertStatus(200)
+            ->assertSeeText('Search Term: ' . $searchTerm)
+            ->assertSee($this->messages[0]->body)
+            ->assertDontSeeText($this->messages[1]->body)
+            ->assertDontSeeText($this->messages[2]->body);
+    }
 }

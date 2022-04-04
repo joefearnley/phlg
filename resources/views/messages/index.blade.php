@@ -15,7 +15,7 @@
                 </div>
                 <div class="w-1/8 relative">
                     <form id="search-form">
-                        <input class="form-control bg-white bg-clip-padding border-2 border-blue-300 pl-4 pr-2 py-2 mr-3 rounded-lg focus:outline-none focus:bg-white focus:border-blue-300 focus:outline-none" type="search" id="search-term" name="search" placeholder="Search" value="{{ $searchTerm ?? '' }}">
+                        <input class="form-control bg-white bg-clip-padding border-2 border-blue-300 pl-4 pr-2 py-2 mr-3 rounded-lg focus:outline-none focus:bg-white focus:border-blue-300 focus:outline-none" type="search" id="term" name="term" placeholder="Search" value="{{ $searchTerm ?? '' }}">
                         <select name="appid"{''( id="application" class="appearance-none border-2 border-blue-300 rounded-lg">
                             <option value="">{{ __('Application') }}</option>
                         @foreach ($applications as $application)
