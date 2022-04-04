@@ -72,9 +72,9 @@ class SearchMessagesTest extends TestCase
             ->create();
 
         $response = $this->actingAs($this->user)
-        ->get(route('messages.index', [
-            'appid' => $this->application->id
-        ]));
+            ->get(route('messages.index', [
+                'appid' => $this->application->id
+            ]));
 
         // should show 3 messages from selected application
         $responseData = $response->getOriginalContent()->getData();
@@ -95,7 +95,9 @@ class SearchMessagesTest extends TestCase
         $searchTerm = $this->messages[0]->body;
 
         $response = $this->actingAs($this->user)
-            ->get(route('messages.index') . '?term=' . $searchTerm);
+            ->get(route('messages.index', [
+                'term' => $searchTerm
+            ]));
 
         $response->assertStatus(200)
             ->assertSeeText('Search Term: ' . $searchTerm);
@@ -106,9 +108,9 @@ class SearchMessagesTest extends TestCase
         $searchTerm = $this->messages[0]->body;
 
         $response = $this->actingAs($this->user)
-        ->get(route('messages.index', [
-            'term' => $searchTerm
-        ]));
+            ->get(route('messages.index', [
+                'term' => $searchTerm
+            ]));
 
         $responseData = $response->getOriginalContent()->getData();
         $this->assertEquals(1, $responseData['messages']->count());
