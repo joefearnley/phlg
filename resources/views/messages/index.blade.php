@@ -3,14 +3,14 @@
         <div class="my-3 max-w-7xl mx-auto">
             <div class="flex flex-row flex-wrap justify-between items-center">
                 <div class="w-1/2">
-                    <h2 class="font-semibold text-xl leading-tight mr-12">
+                    <h2 class="font-semibold text-xl leading-tight mr-12 mb-2">
                         {{ __('Messages') }}
                     </h2>
                     @if (!empty($selectedApplication))
-                    <p class="mt-2">{{ __('Application') }}: <strong>{{ $selectedApplication->name }}</strong></p>
+                    <p class="my-4">{{ __('Application') }}: <strong>{{ $selectedApplication->name }}</strong></p>
                     @endif
                     @if (!empty($searchTerm))
-                    <p class="">{{ __('Search Term') }}: <strong>{{ $searchTerm }}</strong></p>
+                    <p class="mt-2">{{ __('Search Term') }}: <strong>{{ $searchTerm }}</strong></p>
                     @endif
                 </div>
                 <div class="w-1/8 relative">
