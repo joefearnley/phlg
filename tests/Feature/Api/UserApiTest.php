@@ -28,19 +28,8 @@ class UserApiTest extends TestCase
 
         $response = $this->get(route('api.user'));
 
-        $response->assertStatus(200);
-
-        $response->dump();
+        $response->assertStatus(200)
+            ->assertSee($user->id)
+            ->assertSee($user->name);
     }
-
-    // public function test_see_user_information()
-    // {
-    //     $user = User::factory()->create();
-
-    //     Sanctum::actingAs($user, ['view-user']);
-
-    //     $response = $this->get('/api/user');
-
-    //     $response->assertOk();
-    // }
 }

@@ -18,7 +18,7 @@ class ApplicationPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return true;
     }
 
     /**
@@ -30,7 +30,9 @@ class ApplicationPolicy
      */
     public function view(User $user, Application $application)
     {
-        //
+        dd('sadflkasdljfalksdf');
+
+        return $user->id === (int) $application->user_id;
     }
 
     /**
