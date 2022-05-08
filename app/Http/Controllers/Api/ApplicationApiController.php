@@ -2,24 +2,66 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Models\Application;
-use Orion\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 
 class ApplicationApiController extends Controller
 {
     /**
-     * Fully-qualified model class name
+     * Display a listing of applications.
+     *
+     * @return \Illuminate\Http\Response
      */
-    protected $model = Application::class;
+    public function index()
+    {
+        $applications = Auth::user()->applications;
+
+        return response()->json(['applications' => $applications]);
+    }
 
     /**
-     * Retrieves currently authenticated user based on the guard.
+     * Store a newly created resource in storage.
      *
-     * @return \Illuminate\Contracts\Auth\Authenticatable|null
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
      */
-    public function resolveUser()
+    public function store(Request $request)
     {
-        return Auth::guard('sanctum')->user();
+        //
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        //
     }
 }
