@@ -9,15 +9,9 @@ use App\Http\Controllers\Api\ApplicationApiController;
 //     return $request->user();
 // })->name('api.user');
 
-Route::group(['as' => 'api.'], function() {
-    Route::apiResource('applications', ApplicationApiController::class);
+Route::group([
+        'as' => 'api.',
+        'middleware' => ['auth:sanctum']
+    ], function() {
+        Route::apiResource('applications', ApplicationApiController::class);
 });
-
-// Route::group([
-//     'as' => 'api.',
-//     'middleware' => 'auth:sanctum'
-//     ], function() {
-//         // Orion::resource('users', UserApiController::class);
-//         Orion::hasManyResource('users', 'application', UserApplicationsController::class);
-//         // Route::resource('applications', ApplicationApiController::class);
-// });
