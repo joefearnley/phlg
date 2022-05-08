@@ -40,7 +40,7 @@ class AccountController extends Controller
             'email' => $request->email,
         ]);
 
-        return redirect('/account')
+        return redirect(route('account'))
             ->with('message_type', 'success')
             ->with('message', 'Your account has been updated!');
     }
@@ -62,8 +62,24 @@ class AccountController extends Controller
             'password' => Hash::make($request->new_password)
         ])->save();
 
-        return redirect('/account')
+        return redirect(route('account'))
             ->with('message_type', 'success')
             ->with('message', 'Your password has been updated!');
+    }
+
+    /**
+     * Create an access token for the account.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function createToken(Request $request)
+    {
+        $token = $request->user()->createToken('lp_access_token')->plainTextToken;
+
+        return redirect(route('account'))
+            ->with('access_token', $token)
+            ->with('message_type', 'success')
+            ->with('message', 'Token has been created.');
     }
 }

@@ -7,13 +7,10 @@
         </div>
     </x-slot>
 
-    
-    
-
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="my-6 py-3 grid md:grid-cols-2 gap-16">
             <div>
-                <h2 class="font-semi-bold text-l mb-4">Update Account Information</h2>
+                <h2 class="font-semi-bold text-l mb-4">{{ __('Update Account Information') }}</h2>
 
                 @if ($errors->any() && $errors->getBag('default')->hasAny(['name', 'email']) )
                 <div class="bg-red-100 rounded-b text-red-900 px-4 py-3 mb-6 shadow-md" role="alert">
@@ -95,6 +92,26 @@
                         </div>
                     </div>
                 </form>
+            </div>
+        </div>
+    </div>
+    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div class="my-6 py-3 grid md:grid-cols-2 gap-16">
+            <div>
+                <h2 class="font-semi-bold text-l mb-4">{{ __('Create Access Token') }}</h2>
+
+                <form method="POST" action="{{ route('account.create-token') }}">
+                    @csrf
+                    <div class="grid grid-rows-2 gap-6">
+                        <div class="flex items-center justify-end mt-4">
+                            <x-button class="ml-4">
+                                {{ __('Generate Token') }}
+                            </x-button>
+                        </div>
+                    </div>
+                </form>
+                <div class="token-results">
+                </div>
             </div>
         </div>
     </div>

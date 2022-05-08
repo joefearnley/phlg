@@ -27,6 +27,9 @@ class AccountPageTest extends TestCase
             ->get('/account');
 
         $response->assertStatus(200)
-            ->assertSee('Account');
+            ->assertSee('Account')
+            ->assertSee('Update Account Information')
+            ->assertSee('Update Password')
+            ->assertSee('Create Access Token');
     }
 }
