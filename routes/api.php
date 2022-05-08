@@ -2,16 +2,13 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use Orion\Facades\Orion;
+use App\Http\Controllers\Api\UserApiController;
 use App\Http\Controllers\Api\ApplicationApiController;
-
-// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//     return $request->user();
-// })->name('api.user');
 
 Route::group([
         'as' => 'api.',
         'middleware' => ['auth:sanctum']
     ], function() {
+        Route::get('user', [UserApiController::class, 'index'])->name('user');
         Route::apiResource('applications', ApplicationApiController::class);
 });
