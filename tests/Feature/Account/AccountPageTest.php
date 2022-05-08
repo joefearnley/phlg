@@ -13,10 +13,10 @@ class AccountPageTest extends TestCase
 
     public function test_cannot_view_account_page_if_not_authorized()
     {
-        $response = $this->get('/account');
+        $response = $this->get(route('account'));
 
         $response->assertStatus(302)
-            ->assertRedirect('/login');
+            ->assertRedirect(route('login'));
     }
 
     public function test_can_view_account_page()
@@ -24,7 +24,7 @@ class AccountPageTest extends TestCase
         $user = User::factory()->create();
 
         $response = $this->actingAs($user)
-            ->get('/account');
+            ->get(route('account'));
 
         $response->assertStatus(200)
             ->assertSee('Account')

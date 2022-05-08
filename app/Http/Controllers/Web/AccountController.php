@@ -80,6 +80,6 @@ class AccountController extends Controller
         return redirect(route('account'))
             ->with('access_token', $token)
             ->with('message_type', 'success')
-            ->with('message', 'Token has been created.');
+            ->with('message', 'A new access token has been created. Make sure to copy your now as you will not be able to see it again.');
     }
 }

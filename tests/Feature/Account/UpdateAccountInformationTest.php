@@ -11,6 +11,14 @@ class UpdateAccountInformationTest extends TestCase
 {
     use RefreshDatabase;
 
+    public function test_cannot_access_update_account_route_when_user_is_not_authenticated()
+    {
+        $response = $this->post(route('account.update'));
+
+        $response->assertStatus(302)
+            ->assertRedirect(route('login'));
+    }
+
     public function test_name_is_required_to_update_account_information()
     {
         $user = User::factory()->create();
@@ -55,7 +63,7 @@ class UpdateAccountInformationTest extends TestCase
         ]);
 
         $response = $this->actingAs($user)
-            ->post('/account/update', [
+            ->post(route('account.update'), [
                 'name' => $updatedUserName,
                 'email' => $updatedUserEmail
             ]);

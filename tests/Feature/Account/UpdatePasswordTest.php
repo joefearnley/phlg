@@ -12,6 +12,14 @@ class UpdatePasswordTest extends TestCase
 {
     use RefreshDatabase;
 
+    public function test_cannot_access_update_account_route_when_user_is_not_authenticated()
+    {
+        $response = $this->post(route('account.update-password'));
+
+        $response->assertStatus(302)
+            ->assertRedirect(route('login'));
+    }
+
     public function test_new_password_field_is_required_to_update_password()
     {
         $user = User::factory()->create();
