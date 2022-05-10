@@ -13,10 +13,13 @@ Route::group(['middleware' => 'auth'], function() {
     Route::resource('applications', ApplicationController::class);
     Route::resource('messages', MessageController::class);
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
     Route::get('/account', [AccountController::class, 'index'])->name('account');
     Route::post('/account/update', [AccountController::class, 'update'])->name('account.update');
     Route::post('/account/update-password', [AccountController::class, 'updatePassword'])->name('account.update-password');
-    Route::post('/account/create-token', [AccountController::class, 'createToken'])->name('account.create-token');
+
+    Route::get('/account/access-tokens', [AccountController::class, 'showAccessTokens'])->name('account.access-tokens');
+    Route::post('/account/create-access-token', [AccountController::class, 'createAccessToken'])->name('account.create-access-token');
 });
 
 require __DIR__.'/auth.php';

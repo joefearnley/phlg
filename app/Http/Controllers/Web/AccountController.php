@@ -18,7 +18,7 @@ class AccountController extends Controller
      */
     public function index()
     {
-        return view('account');
+        return view('account.index');
     }
 
     /**
@@ -67,13 +67,27 @@ class AccountController extends Controller
             ->with('message', 'Your password has been updated!');
     }
 
+     /**
+     * Show create access token page.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function showAccessTokens()
+    {
+        $accessTokens = Auth::user()->tokens->all();
+
+        return view('account.access-tokens', [
+            'accessTokens' => $accessTokens,
+        ]);
+    }
+
     /**
      * Create an access token for the account.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function createToken(Request $request)
+    public function createAccessToken(Request $request)
     {
         $token = $request->user()->createToken('lp_access_token')->plainTextToken;
 

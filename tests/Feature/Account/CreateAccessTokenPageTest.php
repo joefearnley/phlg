@@ -13,8 +13,22 @@ class CreateAccessTokenPageTest extends TestCase
 
     public function test_cannot_access_token_page_when_user_is_not_authenticated()
     {
-        $response = $this->post('account.create-token');
+        $response = $this->get(route('account.access-tokens'));
 
-        $response->assertStatus(404);
+        $response->assertStatus(302)
+            ->assertRedirect(route('login'));
+    }
+
+    public function test_can_view_access_tokens_page()
+    {
+        $user = User::factory()->create();
+
+        $response = $this->actingAs($user)
+            ->get(route('account.access-tokens'));
+
+        $response->assertStatus(200)
+            ->assertSee('Access Tokens')
+            ->assertSee('Generate New Token');
+
     }
 }
