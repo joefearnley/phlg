@@ -1,10 +1,15 @@
 <x-app-layout>
     <x-slot name="header">
+        <div>
+            <h2 class="font-semibold text-xl leading-tight">
+                {{ __('Account') }}
+            </h2>
+        </div>
         <div class="flex justify-between h-16">
             <div class="flex">
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                <div class="space-x-8 sm:-my-px sm:flex">
                     <x-nav-link :href="route('account')" :active="request()->routeIs('account')">
-                        {{ __('Account') }}
+                        {{ __('Account Information') }}
                     </x-nav-link>
                     <x-nav-link :href="route('account.access-tokens')" :active="request()->routeIs('account.access-tokens')">
                         {{ __('Access Tokens') }}

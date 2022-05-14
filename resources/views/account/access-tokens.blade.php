@@ -1,10 +1,15 @@
 <x-app-layout>
 <x-slot name="header">
+        <div>
+            <h2 class="font-semibold text-xl leading-tight">
+                {{ __('Account') }}
+            </h2>
+        </div>
         <div class="flex justify-between h-16">
             <div class="flex">
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                <div class="space-x-8 sm:-my-px md:flex">
                     <x-nav-link :href="route('account')" :active="request()->routeIs('account')">
-                        {{ __('Account') }}
+                        {{ __('Account Information') }}
                     </x-nav-link>
                     <x-nav-link :href="route('account.access-tokens')" :active="request()->routeIs('account.access-tokens')">
                         {{ __('Access Tokens') }}
@@ -42,10 +47,11 @@
             </div>
             <div>
                 <h2 class="font-semi-bold text-l mb-4">{{ __('Previous Issued Tokens') }}</h2>
-
+                <ul>
                 @foreach ($accessTokens as $accessToken) 
-                <div>{{ $accessToken->name }}</div>
+                <li>{{ $accessToken->name }}</li>
                 @endforeach
+                </ul>
             </div>
         </div>
     </div>
