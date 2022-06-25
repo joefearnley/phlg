@@ -19,7 +19,7 @@ class AccountPageTest extends TestCase
             ->assertRedirect(route('login'));
     }
 
-    public function test_can_view_account_page()
+    public function test_can_view_main_account_page()
     {
         $user = User::factory()->create();
 
@@ -29,7 +29,6 @@ class AccountPageTest extends TestCase
         $response->assertStatus(200)
             ->assertSee('Account')
             ->assertSee('Update Account Information')
-            ->assertSee('Update Password')
-            ->assertSee('Create Access Token');
+            ->assertSee('Update Password');
     }
 }
