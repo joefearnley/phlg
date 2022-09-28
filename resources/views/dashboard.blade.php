@@ -5,11 +5,44 @@
         </h2>
     </x-slot>
 
-    <div class="py-12">
+    <div class="py-3">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-                <x-jet-welcome />
+                <div class="p-6 sm:px-20 bg-white border-b border-gray-200">
+                    <div class="mt-1 text-lg font-medium">
+                        {{ __('Latest Messages') }}
+                    </div>
+                </div>
             </div>
+
+            @if (!$messages->isEmpty())
+                @foreach ($messages as $message)
+                <div class="mt-3 bg-white overflow-hidden shadow-xl sm:rounded-lg">
+                    <div class="p-6 sm:px-20 bg-white border-b border-gray-200">
+                        <div class="text-gray-500 text-1xl">
+                            <div class="flex flex-row flex-wrap">
+                                <div class="w-full md:w-1/4">
+                                    <p class="font-bold text-blue">{{ $message->application->name }}</p>
+                                    <p>{{ $message->formattedCreationTime() }}</p>
+                                    <p class="font-bold text-{{ $message->level->color() }}-600">{{ $message->level->name }}</p>
+                                </div>
+                                <div class="w-full md:w-3/4 mt-6 md:mt-0">
+                                    <p>{{ $message->body }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @endforeach
+            @else
+                <div class="mt-3 bg-white overflow-hidden shadow-xl sm:rounded-lg">
+                    <div class="p-6 sm:px-20 bg-white border-b border-gray-200">
+                        <div class="text-gray-500 text-1xl">
+                            {{ __('No Messages Yet!') }}
+                        </div>
+                    </div>
+                </div>
+            @endif
         </div>
     </div>
 </x-app-layout>

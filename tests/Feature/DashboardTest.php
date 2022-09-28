@@ -21,7 +21,7 @@ class DashboardTest extends TestCase
         $response = $this->get('/dashboard');
 
         $response->assertStatus(302)
-            ->assertRedirect('/login');
+            ->assertRedirect(route('login'));
     }
 
     public function test_can_view_dashboard()
@@ -34,6 +34,19 @@ class DashboardTest extends TestCase
         $response->assertStatus(200)
             ->assertSee('Dashboard')
             ->assertSee('Latest Messages');
+    }
+
+    public function test_can_view_with_no_messages()
+    {
+        $user = User::factory()->create();
+
+        $response = $this->actingAs($user)
+            ->get('/dashboard');
+
+        $response->assertStatus(200)
+            ->assertSee('Dashboard')
+            ->assertSee('Latest Messages')
+            ->assertSee('No Messages Yet!');
     }
 
     public function test_should_see_latest_messages_on_dashboard()
