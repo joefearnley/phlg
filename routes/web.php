@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Web\WelcomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,10 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
-Route::get('/', function () {
-    return view('welcome');
-})->middleware(['guest']);
+Route::get('/', [WelcomeController::class, 'index'])->name('welcome');
 
 Route::middleware([
     'auth:sanctum',
