@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>{{ config('app.name', 'Lowphashion') }}</title>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
-        <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
 
     <body class="antialiased">
@@ -14,7 +14,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-1">
                     <div class="p-6">
                         <div class="mt-2">
-                            <img src="@/resources/images/logo.png" alt="Lowphasion Logo" class="w-80" />
+                            <img src="/img/logo.png" alt="Lowphasion Logo" class="w-80">
                             <div class="flex items-top justify-around">
                                 <a href="{{ route('login') }}" class="text-blue-100">Log in</a>
                                 <a href="{{ route('register') }}" class="text-blue-100">Sign up</a>
@@ -26,6 +26,3 @@
         </div>
     </body>
 </html>
-
-
-

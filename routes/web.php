@@ -1,25 +1,28 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Web\WelcomeController;
-use App\Http\Controllers\Web\DashboardController;
-use App\Http\Controllers\Web\AccountController;
-use App\Http\Controllers\Web\ApplicationController;
-use App\Http\Controllers\Web\MessageController;
 
-Route::get('/', [WelcomeController::class, 'index'])->name('welcome');
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
+|
+*/
 
-Route::group(['middleware' => 'auth'], function() {
-    Route::resource('applications', ApplicationController::class);
-    Route::resource('messages', MessageController::class);
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-
-    Route::get('/account', [AccountController::class, 'index'])->name('account');
-    Route::post('/account/update', [AccountController::class, 'update'])->name('account.update');
-    Route::post('/account/update-password', [AccountController::class, 'updatePassword'])->name('account.update-password');
-
-    Route::get('/account/access-tokens', [AccountController::class, 'showAccessTokens'])->name('account.access-tokens');
-    Route::post('/account/create-access-token', [AccountController::class, 'createAccessToken'])->name('account.create-access-token');
+Route::get('/', function () {
+    return view('welcome');
 });
 
-require __DIR__.'/auth.php';
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified'
+])->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
+});

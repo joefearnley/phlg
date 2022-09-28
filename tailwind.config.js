@@ -1,9 +1,11 @@
 const defaultTheme = require('tailwindcss/defaultTheme');
 const colors = require('tailwindcss/colors');
 
+/** @type {import('tailwindcss').Config} */
 module.exports = {
-    purge: [
+    content: [
         './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
+        './vendor/laravel/jetstream/**/*.blade.php',
         './storage/framework/views/*.php',
         './resources/views/**/*.blade.php',
     ],
@@ -20,7 +22,8 @@ module.exports = {
             emerald: colors.emerald,
             cyan: colors.cyan,
             white: colors.white,
-            indigo:  colors.indigo
+            indigo: colors.indigo,
+            gray: colors.gray,
         },
         extend: {
             fontFamily: {
@@ -29,11 +32,5 @@ module.exports = {
         },
     },
 
-    variants: {
-        extend: {
-            opacity: ['disabled'],
-        },
-    },
-
-    plugins: [require('@tailwindcss/forms')],
+    plugins: [require('@tailwindcss/forms'), require('@tailwindcss/typography')],
 };

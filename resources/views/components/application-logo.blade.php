@@ -1,1 +1,0 @@
-<img src="/img/lowphashion-logo.png" alt="Lowphasion Logo" class="w-12 fill-current text-blue-500">
