@@ -25,6 +25,6 @@ Route::middleware([
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-    // Route::resource('applications', ApplicationController::class);
+    Route::resource('applications', ApplicationController::class);
     // Route::resource('messages', MessageController::class);
 });
