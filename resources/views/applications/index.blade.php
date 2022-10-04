@@ -27,7 +27,7 @@
                 <div class="mt-6 bg-white overflow-hidden shadow-xl sm:rounded-lg">
                     <div class="p-4 sm:px-10">
                         <div class="text-gray-500 text-1xl">
-                            <div class="flex flex-row flex-wrap">
+                            <div class="flex flex-row flex-wrap items-center">
                                 <div class="w-full md:w-3/4">
                                     <h3 class="font-bold text-xl mb-3">
                                         {{ $application->name }}
@@ -44,7 +44,7 @@
                                     </p>
                                     <p><strong>Last Updated:</strong> {{ $application->lastUpdated() }}</p>
                                 </div>
-                                <div class="w-1/4">
+                                <div class="w-1/4 flex mt-4 md:mt-0">
                                     <a href="{{ route('applications.edit', $application) }}" class="add-application-button inline-flex items-center mr-4 px-4 py-2 bg-blue border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest focus:outline-none focus:ring disabled:opacity-25">
                                         Edit
                                     </a>
