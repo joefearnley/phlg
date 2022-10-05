@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Web\WelcomeController;
 use App\Http\Controllers\Web\DashboardController;
 use App\Http\Controllers\Web\ApplicationController;
+use App\Http\Controllers\Web\MessageController;
 
 Route::get('/', [WelcomeController::class, 'index'])->name('welcome');
 
@@ -16,5 +17,5 @@ Route::middleware([
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::resource('applications', ApplicationController::class);
-    // Route::resource('messages', MessageController::class);
+    Route::resource('messages', MessageController::class);
 });
