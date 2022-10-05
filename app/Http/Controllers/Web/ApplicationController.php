@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Web;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Application;
+use App\Http\Requests\StoreApplicationRequest;
+use App\Http\Requests\UpdateApplicationRequest;
 
 class ApplicationController extends Controller
 {
@@ -41,7 +43,7 @@ class ApplicationController extends Controller
     {
         $application = new Application(['name' => $request->name]);
 
-        $application = Auth::user()->createApplication($application);
+        $application = $request->user()->createApplication($application);
 
         return redirect(route('applications.index'))
             ->with('message_type', 'success')

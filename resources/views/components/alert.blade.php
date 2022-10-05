@@ -1,4 +1,4 @@
-@if (session('message'))
+@if ($message)
 
 <div class="max-w-3xl mx-auto sm:px-6 lg:px-8">
     <div class="my-3 py-3 gap-16">

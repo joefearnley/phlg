@@ -20,6 +20,7 @@
     </x-slot>
 
     <x-alert :type="session('message_type') ?? ''" :message="session('message') ?? ''"/>
+
     <div class="py-3">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             @if (!$applications->isEmpty())
