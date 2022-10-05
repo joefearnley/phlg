@@ -39,17 +39,17 @@
                         @method('PUT')
                         <div class="grid grid-rows-2 gap-6">
                             <div>
-                                <x-label for="name" :value="__('Name')" />
-                                <x-input id="name" class="block mt-1 w-full" type="text" name="name" value="{{ $application->name }}" required autofocus />
+                                <x-jet-label for="name" :value="__('Name')" />
+                                <x-jet-input id="name" class="block mt-1 w-full" type="text" name="name" value="{{ $application->name }}" required autofocus />
                             </div>
                             <div class="flex items-center justify-end mt-4">
-                                <x-button class="ml-4">
+                                <x-jet-button class="ml-4">
                                     {{ __('Save') }}
-                                </x-button>
+                                </x-jet-button>
 
-                                <x-button class="cancel-create-application-form ml-4" onclick="window.history.back()">
+                                <x-jet-button class="cancel-create-application-form ml-4" onclick="window.history.back()">
                                     {{ __('Cancel') }}
-                                </x-button>
+                                </x-jet-button>
                             </div>
                         </div>
                     </form>
