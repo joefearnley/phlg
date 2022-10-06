@@ -52,7 +52,7 @@ class MessageController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified message from storage.
      *
      * @param  \App\Models\Message  $message
      * @return \Illuminate\Http\Response
