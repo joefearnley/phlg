@@ -49,7 +49,7 @@ class MessageApiController extends Controller
             'body' => $request->body
         ]);
 
-        return response()->toJson([
+        return response()->json([
             'success' => true,
             'message' => $message
         ]);
