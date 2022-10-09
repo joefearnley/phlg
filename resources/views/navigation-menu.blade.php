@@ -146,6 +146,12 @@
             <x-jet-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-jet-responsive-nav-link>
+            <x-jet-responsive-nav-link  href="{{ route('applications.index') }}" :active="request()->routeIs('applications.index')">
+                {{ __('Applications') }}
+            </x-jet-responsive-nav-link >
+            <x-jet-responsive-nav-link  href="{{ route('messages.index') }}" :active="request()->routeIs('messages.index')">
+                {{ __('Messages') }}
+            </x-jet-responsive-nav-link >
         </div>
 
         <!-- Responsive Settings Options -->
