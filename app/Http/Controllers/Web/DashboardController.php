@@ -15,7 +15,7 @@ class DashboardController extends Controller
      */
     public function index(Request $request)
     {
-        $messages = $request->user()->latestMessages(10)->get();
+        $messages = $request->user()->latestMessages(20)->get();
 
         return view('dashboard', ['messages' => $messages]);
     }

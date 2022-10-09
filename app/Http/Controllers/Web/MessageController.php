@@ -22,7 +22,7 @@ class MessageController extends Controller
         $searchTerm = $request->query('term');
 
         $selectedApplication = Application::find($appId);
-        $messages = Auth::user()->searchMessages($appId, $searchTerm)->get();
+        $messages = Auth::user()->searchMessages($appId, $searchTerm)->paginate(20);
 
         $applications = Auth::user()->applications;
 
