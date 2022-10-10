@@ -7,7 +7,7 @@
 
     <div class="py-3">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
+            <div class="mb-6 bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="p-4 sm:px-10 bg-white border-b border-gray-200">
                     <div class="mt-1 text-lg font-medium">
                         {{ __('Latest Messages') }}
@@ -36,7 +36,7 @@
                 @endforeach
             @else
                 <div class="mt-3 bg-white overflow-hidden shadow-xl sm:rounded-lg">
-                    <div class="p-6 sm:px-20 bg-white border-b border-gray-200">
+                    <div class="p-6 sm:px-10 bg-white border-b border-gray-200">
                         <div class="text-gray-500 text-1xl">
                             {{ __('No Messages Yet!') }}
                         </div>

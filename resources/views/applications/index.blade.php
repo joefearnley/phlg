@@ -8,10 +8,10 @@
                     </h2>
                 </div>
                 <div class="w-1/8">
-                    <a href="{{ route('applications.create') }}" class="add-application-button inline-flex items-center px-4 py-2 bg-blue border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest focus:outline-none focus:ring disabled:opacity-25">
+                    <a href="{{ route('applications.create') }}" class="add-application-button inline-flex items-center px-4 py-2 bg-blue border border-transparent rounded-md font-semibold text-sm text-white uppercase tracking-widest focus:outline-none focus:ring disabled:opacity-25">
                         {{ __('Add New ') }}
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5">
+                            <path d="M10.75 4.75a.75.75 0 00-1.5 0v4.5h-4.5a.75.75 0 000 1.5h4.5v4.5a.75.75 0 001.5 0v-4.5h4.5a.75.75 0 000-1.5h-4.5v-4.5z" />
                         </svg>
                     </a>
                 </div>
@@ -46,16 +46,15 @@
                                     <p><strong>Last Updated:</strong> {{ $application->lastUpdated() }}</p>
                                 </div>
                                 <div class="w-1/4 flex mt-4 md:mt-0">
-                                    <a href="{{ route('applications.edit', $application) }}" class="add-application-button inline-flex items-center mr-4 px-4 py-2 bg-blue border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest focus:outline-none focus:ring disabled:opacity-25">
-                                        Edit
+                                    <a href="{{ route('applications.edit', $application) }}" class="add-application-button flex items-center mr-4 px-3 bg-blue border border-transparent rounded-md font-semibold text-sm text-white uppercase tracking-widest focus:outline-none focus:ring disabled:opacity-25">
+                                        {{ __('Edit') }}
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4 ml-1">
+                                            <path d="M5.433 13.917l1.262-3.155A4 4 0 017.58 9.42l6.92-6.918a2.121 2.121 0 013 3l-6.92 6.918c-.383.383-.84.685-1.343.886l-3.154 1.262a.5.5 0 01-.65-.65z" />
+                                            <path d="M3.5 5.75c0-.69.56-1.25 1.25-1.25H10A.75.75 0 0010 3H4.75A2.75 2.75 0 002 5.75v9.5A2.75 2.75 0 004.75 18h9.5A2.75 2.75 0 0017 15.25V10a.75.75 0 00-1.5 0v5.25c0 .69-.56 1.25-1.25 1.25h-9.5c-.69 0-1.25-.56-1.25-1.25v-9.5z" />
+                                        </svg>
                                     </a>
-                                    <form method="POST" action="{{ route('applications.destroy', $application) }}" class="delete-application-form inline-flex items-center">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" href="{{ route('applications.destroy', $application) }}" class="delete-application-button px-4 py-2 bg-amber-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest focus:outline-none focus:ring disabled:opacity-25">
-                                            Delete
-                                        </button>
-                                    </form>
+
+                                    <livewire:delete-application :application="$application"/>
                                 </div>
                             </div>
                         </div>
@@ -63,32 +62,15 @@
                 </div>
                 @endforeach
             @else
-            <div class="max-w-7xl mx-auto my-6 sm:px-6 lg:px-8">
-                <h3 class="font-semibold text-lg leading-tight">
-                    {{ __('No Applications found. Click the Add New button to create one.') }}
-                </h3>
+            <div class="mt-3 bg-white overflow-hidden shadow-xl sm:rounded-lg">
+                <div class="p-6 sm:px-10 bg-white border-b border-gray-200">
+                    <div class="text-gray-500 text-1xl">
+                        {{ __('No Applications found. Click the Add New button to create one.') }}
+                    </div>
+                </div>
             </div>
+
             @endif
         </div>
-    </div>
-
-    <div class="add-application-form hidden">
-        <form method="POST" action="{{ route('applications.store') }}" class="mt-6">
-            @csrf
-            <div>
-                <x-jet-label for="name" :value="__('Name')" />
-                <x-jet-input id="name" class="block mt-1 w-full" type="text" name="name" required autofocus />
-            </div>
-        </form>
-    </div>
-
-    <div class="edit-application-form hidden">
-        <form method="POST" action="{{ route('applications.store') }}" class="mt-6">
-            @csrf
-            <div>
-                <x-jet-label for="name" :value="__('Name')" />
-                <x-jet-input id="name" class="block mt-1 w-full" type="text" name="name" required autofocus />
-            </div>
-        </form>
     </div>
 </x-app-layout>
