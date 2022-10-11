@@ -66,7 +66,8 @@ class User extends Authenticatable
      */
     public function applications()
     {
-        return $this->hasMany(Application::class);
+        return $this->hasMany(Application::class)
+            ->orderByDesc('created_at');
     }
 
     /**
@@ -77,7 +78,7 @@ class User extends Authenticatable
     public function messages()
     {
         return $this->hasManyThrough(Message::class, Application::class)
-            ->orderBy('created_at');
+            ->orderByDesc('created_at');
     }
 
     /**

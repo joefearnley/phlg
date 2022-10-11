@@ -21,7 +21,7 @@
 
     <x-alert :type="session('message_type') ?? ''" :message="session('message') ?? ''"/>
 
-    <div class="py-3">
+    <div class="pt-3 pb-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             @if (!$applications->isEmpty())
                 @foreach ($applications as $application)
