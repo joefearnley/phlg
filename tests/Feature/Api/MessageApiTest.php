@@ -94,11 +94,11 @@ class MessageApiTest extends TestCase
 
         $response = $this->postJson(route('api.messages.store'), $postData);
 
-        $response->assertStatus(404)
+        $response->assertStatus(422)
             ->assertJsonFragment([
-                'message' => 'Application not found.',
+                'message' => 'The selected application id is invalid.',
                 'errors' => [
-                    'application_id' => [ 'The application id field is invalid.' ]
+                    'application_id' => [ 'The selected application id is invalid.' ]
                 ],
             ]);
     }
@@ -132,11 +132,11 @@ class MessageApiTest extends TestCase
 
         $response = $this->postJson(route('api.messages.store'), $postData);
 
-        $response->assertStatus(404)
+        $response->assertStatus(422)
             ->assertJsonFragment([
-                'message' => 'Message Level not found.',
+                'message' => 'The selected level id is invalid.',
                 'errors' => [
-                    'level_id' => [ 'The level id field is invalid.' ]
+                    'level_id' => [ 'The selected level id is invalid.' ]
                 ],
             ]);
     }
@@ -157,10 +157,6 @@ class MessageApiTest extends TestCase
                 'body' => [ 'The body field is required.' ],
             ]);
     }
-
-    // test successful post
-    //  saved to database
-    //  correct json is returned
 
     public function test_can_store_message()
     {

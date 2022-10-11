@@ -19,33 +19,9 @@ class MessageApiController extends Controller
      */
     public function store(StoreMessageRequest $request)
     {
-        $application = Application::find($request->application_id);
-        if (!$application) {
-            return response()->json([
-                'message' => 'Application not found.',
-                'errors' => [
-                    'application_id' => [
-                        'The application id field is invalid.'
-                    ]
-                ]
-            ], 404);
-        }
-
-        $messageLevel = MessageLevel::find($request->level_id);
-        if (!$messageLevel) {
-            return response()->json([
-                'message' => 'Message Level not found.',
-                'errors' => [
-                    'level_id' => [
-                        'The level id field is invalid.'
-                    ]
-                ]
-            ], 404);
-        }
-
         $message = Message::create([
-            'application_id' => $application->id,
-            'level_id' => $messageLevel->id,
+            'application_id' => $request->application_id,
+            'level_id' => $request->level_id,
             'body' => $request->body
         ]);
 

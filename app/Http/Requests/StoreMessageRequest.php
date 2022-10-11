@@ -24,8 +24,8 @@ class StoreMessageRequest extends FormRequest
     public function rules()
     {
         return [
-            'application_id' =>'required',
-            'level_id' =>'required',
+            'application_id' =>'required|exists:App\Models\Application,id',
+            'level_id' =>'required|exists:App\Models\MessageLevel,id',
             'body' =>'required',
         ];
     }
