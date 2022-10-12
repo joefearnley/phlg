@@ -52,7 +52,8 @@ class DeleteApplicationTest extends TestCase
 
         $component = Livewire::actingAs($user)
             ->test(DeleteApplication::class, ['application'=> $application])
-            ->call('delete');
+            ->call('delete')
+            ->assertSet('confirmingDeletion', false);
 
         $this->assertDatabaseMissing('applications', [
             'id' => $application->id,
