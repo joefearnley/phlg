@@ -50,15 +50,4 @@ class MessageController extends Controller
             'searchTerm' => $term,
         ]);
     }
-
-    /**
-     * Remove the specified message from storage.
-     *
-     * @param  \App\Models\Message  $message
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Message $message)
-    {
-        //
-    }
 }

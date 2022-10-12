@@ -15,7 +15,7 @@ class MessageApiController extends Controller
      * Store a newly created message in storage.
      *
      * @param  \App\Http\Requests\StoreMessageRequest  $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(StoreMessageRequest $request)
     {

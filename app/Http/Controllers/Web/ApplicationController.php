@@ -26,7 +26,7 @@ class ApplicationController extends Controller
     /**
      * Show the form for creating a new application.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
     public function create()
     {
@@ -51,21 +51,10 @@ class ApplicationController extends Controller
     }
 
     /**
-     * Display the specified application.
-     *
-     * @param  \App\Models\Application  $application
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Application $application)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified application.
      *
      * @param  \App\Models\Application  $application
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
     public function edit(Application $application)
     {
@@ -97,7 +86,7 @@ class ApplicationController extends Controller
      * Remove the specified application from storage.
      *
      * @param  \App\Models\Application  $application
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(Application $application)
     {
