@@ -45,8 +45,11 @@
                                     <p>{{ $message->formattedCreationTime() }}</p>
                                     <p class="font-bold text-{{ $message->level->color() }}-500">{{ $message->level->name }}</p>
                                 </div>
-                                <div class="w-full md:w-3/4 mt-6 md:mt-0 flex items-center">
+                                <div class="w-full md:w-1/2 mt-6 md:mt-0 flex items-center">
                                     <p class="md:pl-6">{{ $message->body }}</p>
+                                </div>
+                                <div class="w-full md:w-1/4 mt-6 md:mt-0 flex md:justify-end items-center">
+                                    <livewire:delete-message :message="$message"/>
                                 </div>
                             </div>
                         </div>

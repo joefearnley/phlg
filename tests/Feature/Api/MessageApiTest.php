@@ -26,8 +26,8 @@ class MessageApiTest extends TestCase
         $this->user = User::factory()->create();
 
         $this->application = Application::factory()->create([
+            'user_id' => $this->user->id,
             'name' => 'Test Application',
-            'user_id' => $this->user->id
         ]);
 
         $this->messageLevel = MessageLevel::factory()->create([
