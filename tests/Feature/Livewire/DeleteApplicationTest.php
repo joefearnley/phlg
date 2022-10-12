@@ -7,11 +7,14 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Livewire\Livewire;
 use Tests\TestCase;
+use App\Models\User;
+use App\Models\Application;
 
 class DeleteApplicationTest extends TestCase
 {
-    /** @test */
-    public function the_component_can_render()
+    use RefreshDatabase;
+
+    public function test_the_component_can_render()
     {
         $component = Livewire::test(DeleteApplication::class);
 

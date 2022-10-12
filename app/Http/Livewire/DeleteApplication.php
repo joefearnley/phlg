@@ -23,25 +23,12 @@ class DeleteApplication extends Component
     public function delete()
     {
         $this->application->messages()->delete();
-
         $this->application->delete();
 
         $this->confirmingDeletion = false;
 
-        // return redirect(route('applications.index'))
-        //     ->with('message_type', 'success')
-        //     ->with('message', 'Application has been deleted!');
-
-        // $this->banner('Application has been deleted!');
-
-        request()->session()->flash('flash.banner', 'Application has been deleted!');
-        request()->session()->flash('flash.bannerStyle', 'success');
-        return redirect()->route('applications.index');
-    }
-
-    public function banner(string $message, string $style = 'success')
-    {
-        request()->session()->flash('flash.banner', $message);
-        request()->session()->flash('flash.bannerStyle', $style);
+        return redirect()->route('applications.index')
+            ->with('message_type', 'success')
+            ->with('message', 'Application has been deleted!');
     }
 }
