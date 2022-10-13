@@ -32,7 +32,8 @@ class MessagePageTest extends TestCase
             ->get(route('messages.index'));
 
         $response->assertStatus(200)
-            ->assertSee('Messages');
+            ->assertSee('Messages')
+            ->assertSee('Search');
     }
 
     public function test_can_view_users_messages()
@@ -57,6 +58,34 @@ class MessagePageTest extends TestCase
             ->assertSee($messages[0]->body)
             ->assertSee($messages[1]->body)
             ->assertSee($messages[2]->body);
+    }
+
+    public function test_cannot_view_other_users_messages()
+    {
+        $user = User::factory()
+            ->hasApplications(1)
+            ->create();
+
+        $otherUser  = User::factory()
+            ->hasApplications(1)
+            ->create();
+
+        $otherUserApplication = $otherUser->applications->first();
+
+        $otherUserMessages = Message::factory()->count(3)->make([
+            'application_id' => $otherUserApplication,
+            'level_id' => 1,
+        ]);
+
+        $response = $this->actingAs($user)
+            ->get(route('messages.index'));
+
+        $response->assertStatus(200)
+            ->assertSee('Messages')
+            ->assertDontSeeText($otherUserApplication)
+            ->assertDontSeeText($otherUserMessages[0]->body)
+            ->assertDontSeeText($otherUserMessages[1]->body)
+            ->assertDontSeeText($otherUserMessages[2]->body);
     }
 
     public function test_can_view_applications_filter()
