@@ -8,9 +8,9 @@
                     </h2>
                 </div>
                 <div class="w-1/8">
-                    <a href="{{ route('applications.create') }}" class="add-application-button inline-flex items-center px-4 py-2 bg-blue border border-transparent rounded-md font-semibold text-sm text-white uppercase tracking-widest focus:outline-none focus:ring disabled:opacity-25">
+                    <a href="{{ route('applications.create') }}" class="add-application-button inline-flex items-center px-4 py-2 bg-blue border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest focus:outline-none focus:ring disabled:opacity-25">
                         {{ __('Add New ') }}
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4">
                             <path d="M10.75 4.75a.75.75 0 00-1.5 0v4.5h-4.5a.75.75 0 000 1.5h4.5v4.5a.75.75 0 001.5 0v-4.5h4.5a.75.75 0 000-1.5h-4.5v-4.5z" />
                         </svg>
                     </a>
@@ -45,7 +45,7 @@
                                     <p><strong>Last Updated:</strong> {{ $application->lastUpdated() }}</p>
                                 </div>
                                 <div class="w-1/4 flex mt-4 md:mt-0">
-                                    <a href="{{ route('applications.edit', $application) }}" class="add-application-button flex items-center mr-4 px-3 bg-blue border border-transparent rounded-md font-semibold text-sm text-white uppercase tracking-widest focus:outline-none focus:ring disabled:opacity-25">
+                                    <a href="{{ route('applications.edit', $application) }}" class="add-application-button flex items-center mr-4 px-3 bg-blue border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest focus:outline-none focus:ring disabled:opacity-25">
                                         {{ __('Edit') }}
                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4 ml-1">
                                             <path d="M5.433 13.917l1.262-3.155A4 4 0 017.58 9.42l6.92-6.918a2.121 2.121 0 013 3l-6.92 6.918c-.383.383-.84.685-1.343.886l-3.154 1.262a.5.5 0 01-.65-.65z" />

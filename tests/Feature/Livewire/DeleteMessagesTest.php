@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Livewire;
 
-use App\Http\Livewire\DeleteMessage;
+use App\Http\Livewire\DeleteMessages;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Livewire\Livewire;
@@ -14,13 +14,13 @@ use Database\Seeders\MessageLevelSeeder;
 use Database\Seeders\MessageSeeder;
 use Database\Seeders\ApplicationSeeder;
 
-class DeleteMessageTest extends TestCase
+class DeleteMessagesTest extends TestCase
 {
     use RefreshDatabase;
 
     public function test_the_component_can_render()
     {
-        $component = Livewire::test(DeleteMessage::class);
+        $component = Livewire::test(DeleteMessages::class);
 
         $component->assertStatus(200);
     }
@@ -36,30 +36,41 @@ class DeleteMessageTest extends TestCase
         ]);
 
         $this->actingAs($user)
-            ->get(route('applications.index'))
-            ->assertSeeLivewire('delete-application');
+            ->get(route('messages.index'))
+            ->assertSeeLivewire('delete-messages');
     }
 
-    public function test_messages_can_be_deleted()
+    public function test_all_messages_can_be_deleted()
     {
         $user = User::factory()->create();
 
         $this->seed([
             MessageLevelSeeder::class,
             ApplicationSeeder::class,
-            MessageSeeder::class,
         ]);
 
         $application = $user->applications->first();
-        $message = $user->messages->first();
+
+        $messages = Message::factory()->count(3)->make([
+            'application_id' => $application->id,
+            'level_id' => 1,
+        ]);
 
         $component = Livewire::actingAs($user)
-            ->test(DeleteMessage::class, ['message'=> $message])
+            ->test(DeleteMessages::class)
             ->call('delete')
             ->assertSet('confirmingDeletion', false);
 
         $this->assertDatabaseMissing('messages', [
-            'id' => $message->id,
+            'id' => $messages[0]->id,
+        ])
+        ->assertDatabaseMissing('messages', [
+            'id' => $messages[1]->id,
+        ])
+        ->assertDatabaseMissing('messages', [
+            'id' => $messages[2]->id,
         ]);
+
+        $this->assertEquals(0, $user->messages->count());
     }
 }

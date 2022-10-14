@@ -73,7 +73,7 @@ class MessagePageTest extends TestCase
         $otherUserApplication = $otherUser->applications->first();
 
         $otherUserMessages = Message::factory()->count(3)->make([
-            'application_id' => $otherUserApplication,
+            'application_id' => $otherUserApplication->id,
             'level_id' => 1,
         ]);
 
