@@ -34,6 +34,16 @@
                     </div>
                 </div>
                 @endforeach
+
+                <div class="mt-6 mb-6 bg-white sm:rounded-lg">
+                    <div class="p-2 px-10">
+                        <div class="text-gray-500 text-1xl">
+                            <div class="flex flex-row flex-wrap">
+                                <p><a class="font-bold underline" href="/messages">View all messages</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             @else
                 <div class="mt-3 bg-white overflow-hidden sm:rounded-lg">
                     <div class="p-6 sm:px-10 bg-white border-b border-gray-200">
