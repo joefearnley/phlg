@@ -1,5 +1,7 @@
 const defaultTheme = require('tailwindcss/defaultTheme');
-const colors = require('tailwindcss/colors');
+const tailwindColors = require('tailwindcss/colors');
+
+// console.log(tailwindColors);
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -9,21 +11,29 @@ module.exports = {
         './storage/framework/views/*.php',
         './resources/views/**/*.blade.php',
     ],
-
+    safelist: [
+        'border-red-500',
+        'border-emerald-500',
+        'border-amber-500',
+        'text-red-500',
+        'text-emerald-500',
+        'text-amber-500',
+    ],
     theme: {
         colors: {
             blue: '#2d4053',
             transparent: 'transparent',
             current: 'currentColor',
-            black: colors.black,
-            red: colors.red,
-            orange: colors.orange,
-            amber: colors.amber,
-            emerald: colors.emerald,
-            cyan: colors.cyan,
-            white: colors.white,
-            indigo: colors.indigo,
-            gray: colors.gray,
+            black: tailwindColors.black,
+            red: tailwindColors.red,
+            // red: '#ef4444',
+            orange: tailwindColors.orange,
+            amber: tailwindColors.amber,
+            emerald: tailwindColors.emerald,
+            cyan: tailwindColors.cyan,
+            white: tailwindColors.white,
+            indigo: tailwindColors.indigo,
+            gray: tailwindColors.gray,
         },
         extend: {
             fontFamily: {
@@ -32,5 +42,8 @@ module.exports = {
         },
     },
 
-    plugins: [require('@tailwindcss/forms'), require('@tailwindcss/typography')],
+    plugins: [
+        require('@tailwindcss/forms'),
+        require('@tailwindcss/typography')
+    ],
 };
