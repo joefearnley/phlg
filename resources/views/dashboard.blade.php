@@ -35,7 +35,7 @@
                 </div>
                 @endforeach
             @else
-                <div class="mt-3 bg-white overflow-hidden shadow-xl sm:rounded-lg">
+                <div class="mt-3 bg-white overflow-hidden sm:rounded-lg">
                     <div class="p-6 sm:px-10 bg-white border-b border-gray-200">
                         <div class="text-gray-500 text-1xl">
                             {{ __('No Messages Yet!') }}

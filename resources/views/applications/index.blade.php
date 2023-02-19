@@ -24,7 +24,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             @if (!$applications->isEmpty())
                 @foreach ($applications as $application)
-                <div class="mt-6 bg-white overflow-hidden shadow-xl sm:rounded-lg">
+                <div class="mt-6 bg-white overflow-hidden sm:rounded-lg">
                     <div class="p-4 sm:px-10">
                         <div class="text-gray-500 text-1xl">
                             <div class="flex flex-row flex-wrap items-center">
@@ -61,7 +61,7 @@
                 </div>
                 @endforeach
             @else
-            <div class="mt-3 bg-white overflow-hidden shadow-xl sm:rounded-lg">
+            <div class="mt-3 bg-white overflow-hidden sm:rounded-lg">
                 <div class="p-6 sm:px-10 bg-white border-b border-gray-200">
                     <div class="text-gray-500 text-1xl">
                         {{ __('No Applications found. Click the Add New button to create one.') }}
