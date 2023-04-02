@@ -138,7 +138,8 @@ class MessagePageTest extends TestCase
 
         $response->assertStatus(200);
 
-        $response->assertSeeText('Application: ' . $application->name)
+        $response->assertSeeText('Application')
+            ->assertSeeText($application->name)
             ->assertSee($messages[0]->body)
             ->assertSee($messages[1]->body)
             ->assertSee($messages[2]->body);

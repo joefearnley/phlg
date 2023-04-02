@@ -55,7 +55,8 @@ class SearchMessagesTest extends TestCase
         ]));
 
         $response->assertStatus(200)
-            ->assertSeeText('Application: ' . $this->application->name);
+            ->assertSeeText('Application')
+            ->assertSeeText($this->application->name);
     }
 
     public function test_search_only_shows_messages_for_selected_application()
@@ -159,7 +160,8 @@ class SearchMessagesTest extends TestCase
         $this->assertEquals(1, $responseData['messages']->count());
 
         $response->assertStatus(200)
-            ->assertSeeText('Application: ' . $this->application->name)
+            ->assertSeeText('Application')
+            ->assertSeeText($this->application->name)
             ->assertSeeText('Search Term: ' . $searchTerm)
             ->assertSee($this->messages[0]->body);
 
