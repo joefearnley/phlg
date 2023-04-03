@@ -130,7 +130,7 @@ class ApplicationEditTest extends TestCase
 
         $response->assertStatus(302)
             ->assertSessionHas('message_type', 'success')
-            ->assertSessionHas('message', 'Application - ' . $newApplicationName . ' - has been updated!');
+            ->assertSessionHas('message', '<strong>' . $newApplicationName . '</strong> has been updated!');
 
         $this->assertDatabaseHas('applications', [
             'name' => $newApplicationName,

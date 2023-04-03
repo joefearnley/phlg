@@ -13,7 +13,7 @@
                     </div>
                     <div>
                         <p class="font-bold">Success!</p>
-                        <p class="text-sm">{{ $message }}</p>
+                        <p class="text-sm">{!! $message !!}</p>
                     </div>
                 </div>
                 <button class="py-1" x-on:click="show = false">

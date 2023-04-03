@@ -79,7 +79,7 @@ class ApplicationController extends Controller
 
         return redirect(route('applications.index'))
             ->with('message_type', 'success')
-            ->with('message', 'Application - ' . $application->name . ' - has been updated!');
+            ->with('message', '<strong>' . $application->name . '</strong> has been updated!');
     }
 
     /**
