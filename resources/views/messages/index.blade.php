@@ -45,20 +45,20 @@
             @if (!$messages->isEmpty())
                 @foreach ($messages as $message)
                 <div class="mt-3 bg-white sm:rounded-lg">
-                    <div class="p-3 sm:px-10 border-l-4 border-solid border-{{ $message->level->color() }}-500">
+                    <div class="border-l-4 border-solid border-{{ $message->level->color() }}-500">
                         <div class="text-gray-500 text-1xl">
-                            <div class="flex flex-row flex-wrap">
+                            <div class="py-3 sm:px-10 flex flex-row flex-wrap">
                                 <div class="w-full md:w-1/4">
                                     <p class="font-bold text-blue">{{ $message->application->name }}</p>
                                     <p>{{ $message->formattedCreationTime() }}</p>
                                     <p class="font-bold text-{{ $message->level->color() }}-500">{{ $message->level->name }}</p>
                                 </div>
-                                <div class="w-full md:w-1/2 mt-6 md:mt-0 flex items-center">
+                                <div class="w-full md:w-3/4 mt-6 md:mt-0 flex items-center">
                                     <p class="md:pl-6">{{ $message->body }}</p>
                                 </div>
-                                <div class="w-full md:w-1/4 mt-6 md:mt-0 flex md:justify-end items-center">
-                                    <livewire:delete-message :message="$message"/>
-                                </div>
+                            </div>
+                            <div class="py-1 sm:px-10 w-full mt-6 md:mt-0 border">
+                                <livewire:delete-message :message="$message"/>
                             </div>
                         </div>
                     </div>
