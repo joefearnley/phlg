@@ -30,13 +30,13 @@
                             <h3 class="font-bold text-xl mb-3">
                                 {{ $application->name }}
                             </h3>
+                            <p><strong>Latest Message:</strong> {{ $application->lastUpdated() }}</p>
                             <div class="my-4">
-                                <a href="/messages/?appid={{ $application->id }}" class="inline-flex items-center px-3 py-2 text-xs text-center text-slate-800 bg-slate-300 rounded-md uppercase focus:outline-none focus:ring-slate-300">
+                                <a href="/messages/?appid={{ $application->id }}" class="inline-flex items-center px-3 py-2 text-xs text-center text-slate-800 tracking-widest bg-slate-300 rounded-md uppercase focus:outline-none focus:ring-slate-300">
                                     Messages
                                     <span class="inline-flex items-center justify-center w-5 h-5 ml-2 text-xs text-slate-800 bg-slate-100 rounded-full">{{ $application->messages->count() }}</span>
                                 </a>
                             </div>
-                            <p><strong>Latest Message:</strong> {{ $application->lastUpdated() }}</p>
                             <div class="flex mt-4">
                                 <a href="{{ route('applications.edit', $application) }}" class="add-application-button flex items-center mr-4 px-3 bg-blue border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest focus:outline-none focus:ring disabled:opacity-25">
                                     {{ __('Edit') }}
