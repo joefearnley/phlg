@@ -21,28 +21,22 @@
     <div class="pt-3 pb-12">
         <x-alert :type="session('message_type') ?? ''" :message="session('message') ?? ''"/>
 
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-row flex-wrap space-x-4">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-3 gap-4">
             @if (!$applications->isEmpty())
                 @foreach ($applications as $application)
-                <div class="w-1/3 mt-6 bg-white overflow-hidden sm:rounded-lg">
+                <div class="mt-6 bg-white overflow-hidden sm:rounded-lg">
                     <div class="p-4">
-                        <div class="text-gray-500 text-1xl">
-                            <div>
-                                <h3 class="font-bold text-xl mb-3">
-                                    {{ $application->name }}
-                                </h3>
-                                <p>
-                                    <strong>Message Count:</strong>
-                                    @if ($application->messages->isNotEmpty())
-                                        <a href="/messages/application/{{ $application->id }}">
-                                            {{ $application->messages->count() }}
-                                        </a>
-                                    @else
-                                        {{ $application->messages->count() }}
-                                    @endif
-                                </p>
-                                <p><strong>Last Updated:</strong> {{ $application->lastUpdated() }}</p>
+                        <div class="text-slate-500 text-1xl">
+                            <h3 class="font-bold text-xl mb-3">
+                                {{ $application->name }}
+                            </h3>
+                            <div class="my-4">
+                                <a href="/messages/?appid={{ $application->id }}" class="inline-flex items-center px-3 py-2 text-xs text-center text-slate-800 bg-slate-300 rounded-md uppercase focus:outline-none focus:ring-slate-300">
+                                    Messages
+                                    <span class="inline-flex items-center justify-center w-5 h-5 ml-2 text-xs text-slate-800 bg-slate-100 rounded-full">{{ $application->messages->count() }}</span>
+                                </a>
                             </div>
+                            <p><strong>Latest Message:</strong> {{ $application->lastUpdated() }}</p>
                             <div class="flex mt-4">
                                 <a href="{{ route('applications.edit', $application) }}" class="add-application-button flex items-center mr-4 px-3 bg-blue border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest focus:outline-none focus:ring disabled:opacity-25">
                                     {{ __('Edit') }}
@@ -60,8 +54,8 @@
                 @endforeach
             @else
             <div class="mt-3 bg-white overflow-hidden sm:rounded-lg">
-                <div class="p-6 sm:px-10 bg-white border-b border-gray-200">
-                    <div class="text-gray-500 text-1xl">
+                <div class="p-6 sm:px-10 bg-white border-b border-slate-200">
+                    <div class="text-slate-500 text-1xl">
                         {{ __('No Applications found. Click the Add New button to create one.') }}
                     </div>
                 </div>

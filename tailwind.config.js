@@ -4,6 +4,7 @@ const tailwindColors = require('tailwindcss/colors');
 // console.log(tailwindColors);
 
 /** @type {import('tailwindcss').Config} */
+
 module.exports = {
     content: [
         './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
@@ -18,6 +19,12 @@ module.exports = {
         'text-red-500',
         'text-emerald-500',
         'text-amber-500',
+        'bg-slate-500',
+        'bg-slate-600',
+        'bg-slate-700',
+        'bg-slate-800',
+        'ring-slate-300',
+        'ring-slate-800',
     ],
     theme: {
         colors: {
@@ -26,7 +33,6 @@ module.exports = {
             current: 'currentColor',
             black: tailwindColors.black,
             red: tailwindColors.red,
-            // red: '#ef4444',
             orange: tailwindColors.orange,
             amber: tailwindColors.amber,
             emerald: tailwindColors.emerald,
@@ -34,6 +40,7 @@ module.exports = {
             white: tailwindColors.white,
             indigo: tailwindColors.indigo,
             gray: tailwindColors.gray,
+            slate: tailwindColors.slate,
         },
         extend: {
             fontFamily: {
