@@ -42,7 +42,13 @@
                                 <x-jet-label for="name" :value="__('Name')" />
                                 <x-jet-input id="name" class="block mt-1 w-full" type="text" name="name" value="{{ $application->name }}" required autofocus />
                             </div>
-                            <div class="flex items-center justify-end mt-4">
+                            <div class="block mt-4">
+                                <label for="active" class="flex items-center">
+                                    <input type="checkbox" name="active" id="active" checked="{{ $application->active ? 'checked' : '' }}" class="rounded border-gray-300 text-blue shadow-sm focus:border-blue focus:ring focus:ring-blue focus:ring-opacity-50">
+                                    <span class="ml-2 text-sm text-gray-600">{{ __('Active') }}</span>
+                                </label>
+                            </div>
+                            <div class="flex items-center justify-end">
                                 <x-jet-button class="ml-4">
                                     {{ __('Save') }}
                                 </x-jet-button>

@@ -42,6 +42,7 @@ class ApplicationCreateTest extends TestCase
 
         $this->assertDatabaseHas('applications', [
             'name' => $applicationName,
+            'active' => true
         ]);
 
         $application = Application::where('name', $applicationName)->first();

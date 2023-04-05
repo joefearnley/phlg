@@ -54,6 +54,7 @@ class ApplicationEditTest extends TestCase
 
         $formData = [
             'name'=> 'Test Application Updated',
+            'active'=> '1',
         ];
 
         $response = $this->put(route('applications.update', $application), $formData);
@@ -77,6 +78,7 @@ class ApplicationEditTest extends TestCase
         $formData = [
             '_method' => 'PUT',
             'name'=> 'Test Application Updated',
+            'active'=> '1',
         ];
 
         $response = $this->actingAs($authUser)
@@ -100,6 +102,7 @@ class ApplicationEditTest extends TestCase
         $formData = [
             '_method' => 'PUT',
             'name'=> '',
+            'active'=> '1',
         ];
 
         $response = $this->actingAs($user)
@@ -123,6 +126,7 @@ class ApplicationEditTest extends TestCase
         $formData = [
             '_method' => 'PUT',
             'name'=> $newApplicationName,
+            'active'=> '1',
         ];
 
         $response = $this->actingAs($user)
@@ -134,6 +138,69 @@ class ApplicationEditTest extends TestCase
 
         $this->assertDatabaseHas('applications', [
             'name' => $newApplicationName,
+        ]);
+    }
+
+    public function test_can_disable_an_application()
+    {
+        $user = User::factory()->create();
+
+        $applicationName = 'Test Application';
+        $applicationActive = '0';
+
+        $application = Application::factory()->create([
+            'name' => $applicationName,
+            'user_id' => $user->id,
+        ]);
+
+        $formData = [
+            '_method' => 'PUT',
+            'name'=> $applicationName,
+            'active' => $applicationActive,
+        ];
+
+        $response = $this->actingAs($user)
+            ->post(route('applications.update',  $application), $formData);
+
+        $response->assertStatus(302)
+            ->assertSessionHas('message_type', 'success')
+            ->assertSessionHas('message', '<strong>' . $applicationName . '</strong> has been updated!');
+
+        $this->assertDatabaseHas('applications', [
+            'name' => $applicationName,
+            'active' => $applicationActive,
+        ]);
+    }
+
+    public function test_can_enable_an_application()
+    {
+        $user = User::factory()->create();
+
+        $applicationName = 'Test Application';
+        $applicationActive = '1';
+
+        $application = Application::factory()->create([
+            'name' => $applicationName,
+            'user_id' => $user->id,
+            'active' => '0',
+        ]);
+
+        $formData = [
+            '_method' => 'PUT',
+            'name'=> $applicationName,
+            'active' => $applicationActive,
+        ];
+
+        $response = $this->actingAs($user)
+            ->post(route('applications.update',  $application), $formData);
+
+        $response->assertStatus(302)
+            ->assertSessionHas('message_type', 'success')
+            ->assertSessionHas('message', '<strong>' . $applicationName . '</strong> has been updated!');
+
+        $this->assertDatabaseHas('applications', [
+            'name' => $applicationName,
+            'active' => $applicationActive,
         ]);
     }
 }

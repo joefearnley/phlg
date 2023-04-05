@@ -21,6 +21,7 @@ class Application extends Authenticatable
     protected $fillable = [
         'name',
         'app_id',
+        'active',
     ];
 
     /**
