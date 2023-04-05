@@ -31,7 +31,7 @@
             <div class="mt-3 bg-white sm:rounded-lg">
                 <div class="my-2 py-3 px-3 sm:px-10 flex flex-col md:flex-row md:items-center justify-between">
                     @if (!empty($selectedApplication))
-                    <div>
+                    <div class="my-1 md:mx-0">
                         <a href="{{ route('applications.index') }}">{{ __('Applications') }}</a>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 inline stroke-2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
@@ -40,11 +40,13 @@
                     </div>
                     @endif
                     @if (!empty($searchTerm))
-                    <div class="mt-4 md:mt-0">{{ __('Results for') }} <strong>"{{ $searchTerm }}"</strong></div>
+                    <div class="my-1 md:mx-0">{{ __('Results for') }} <strong>&quot;{{ $searchTerm }}&quot;</strong></div>
                     @endif
-                    <div class="mt-4 md:mt-0">
+                    @if (!$messages->isEmpty())
+                    <div class="my-1 md:mx-0">
                         <livewire:delete-messages />
                     </div>
+                    @endif
                 </div>
             </div>
 

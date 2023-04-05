@@ -21,7 +21,7 @@
     <div class="pt-3 pb-12">
         <x-alert :type="session('message_type') ?? ''" :message="session('message') ?? ''"/>
 
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-3 gap-4">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 md:grid md:grid-cols-3 gap-4">
             @if (!$applications->isEmpty())
                 @foreach ($applications as $application)
                 <div class="mt-6 bg-white overflow-hidden sm:rounded-lg">

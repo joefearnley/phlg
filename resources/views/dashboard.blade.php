@@ -18,7 +18,7 @@
             @if (!$messages->isEmpty())
                 @foreach ($messages as $message)
                 <div class="mt-3 bg-white sm:rounded-lg">
-                    <div class="p-2 px-10 border-l-4 border-solid border-{{ $message->level->color() }}-500">
+                    <div class="p-2 px-2 sm:px-10 border-l-4 border-solid border-{{ $message->level->color() }}-500">
                         <div class="text-gray-500 text-1xl">
                             <div class="flex flex-row flex-wrap">
                                 <div class="w-full md:w-1/4">
