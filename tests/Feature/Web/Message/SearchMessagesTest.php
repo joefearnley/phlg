@@ -101,7 +101,8 @@ class SearchMessagesTest extends TestCase
             ]));
 
         $response->assertStatus(200)
-            ->assertSeeText('Search Term: ' . $searchTerm);
+            ->assertSeeText('Results for')
+            ->assertSeeText($searchTerm);
     }
 
     public function test_search_for_message_shows_messages_that_match_term()
@@ -117,7 +118,8 @@ class SearchMessagesTest extends TestCase
         $this->assertEquals(1, $responseData['messages']->count());
 
         $response->assertStatus(200)
-            ->assertSeeText('Search Term: ' . $searchTerm)
+            ->assertSeeText('Results for')
+            ->assertSeeText($searchTerm)
             ->assertSee($this->messages[0]->body)
             ->assertDontSeeText($this->messages[1]->body)
             ->assertDontSeeText($this->messages[2]->body);
@@ -162,7 +164,8 @@ class SearchMessagesTest extends TestCase
         $response->assertStatus(200)
             ->assertSeeText('Application')
             ->assertSeeText($this->application->name)
-            ->assertSeeText('Search Term: ' . $searchTerm)
+            ->assertSeeText('Results for')
+            ->assertSeeText($searchTerm)
             ->assertSee($this->messages[0]->body);
 
         // should not see second application's messages
@@ -195,7 +198,8 @@ class SearchMessagesTest extends TestCase
         $this->assertEquals(1, $responseData['messages']->count());
 
         $response->assertStatus(200)
-            ->assertSeeText('Search Term: ' . $searchTerm)
+            ->assertSeeText('Results for')
+            ->assertSeeText($searchTerm)
             ->assertSee($caseSensitiveMessage->body);
     }
 }
