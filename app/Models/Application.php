@@ -59,7 +59,8 @@ class Application extends Authenticatable
     }
 
     /**
-     * Get the time of the last message that was created.
+     * Get the time of the last message that was created or the last time the 
+     * application model was updated.
      * 
      * @return string
      */
@@ -90,5 +91,15 @@ class Application extends Authenticatable
     public function formattedUpdateTime()
     {
         return Carbon::parse($this->updated_at)->format('m/d/Y h:i a');
+    }
+
+    /**
+     * Get the formatted status.
+     *
+     * @return string
+     */
+    public function status()
+    {
+        return $this->active ? 'Active' : 'Not Active';
     }
 }

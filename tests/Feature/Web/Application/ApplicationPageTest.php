@@ -38,10 +38,10 @@ class ApplicationPageTest extends TestCase
     {
         $user = User::factory()->create();
 
-        $this->seed([
-            MessageLevelSeeder::class,
-            ApplicationSeeder::class,
-            MessageSeeder::class,
+        $application = Application::factory()->create([
+            'name' => $applicationName,
+            'user_id' => $user->id,
+            'active' => '0',
         ]);
 
         $application = Application::first();
@@ -56,7 +56,7 @@ class ApplicationPageTest extends TestCase
             ->assertSee($application->lastUpdated());
     }
 
-    public function test_applications_page_data_application_last_updated_when_it_does_not_have_any_messages()
+    public function test_applications_page_data_shows_application_last_updated_when_it_does_not_have_any_messages()
     {
         $user = User::factory()->create();
 
@@ -74,6 +74,23 @@ class ApplicationPageTest extends TestCase
             ->assertSee('Applications')
             ->assertSee($application->name)
             ->assertSee($application->messages->count())
-            ->assertSee($application->lastUpdated());
+            ->assertSee($application->formattedUpdateTime());
+    }
+
+    public function test_applications_page_data_shows_enabled_status()
+    {
+        $user = User::factory()->create();
+
+        $application = Application::factory()->create([
+            'name' => $applicationName,
+            'user_id' => $user->id,
+            'active' => '',
+        ]);
+
+        $response = $this->actingAs($user)
+            ->get(route('applications.index'));
+
+        $response->assertStatus(200)
+            ->assertSee('Active');
     }
 }

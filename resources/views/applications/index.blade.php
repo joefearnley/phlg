@@ -30,6 +30,7 @@
                             <h3 class="font-bold text-xl mb-3">
                                 {{ $application->name }}
                             </h3>
+                            <p class="text-{{ $application->active ? 'emerald' : 'grey' }}-500 text-bold">{{ $application->status() }}</p>
                             <p><strong>Latest Message:</strong> {{ $application->lastUpdated() }}</p>
                             <div class="my-4">
                                 <a href="/messages/?appid={{ $application->id }}" class="inline-flex items-center px-3 py-2 text-xs text-center text-slate-800 tracking-widest bg-slate-300 rounded-md uppercase focus:outline-none focus:ring-slate-300">
