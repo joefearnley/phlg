@@ -38,10 +38,10 @@ class ApplicationPageTest extends TestCase
     {
         $user = User::factory()->create();
 
-        $application = Application::factory()->create([
-            'name' => $applicationName,
-            'user_id' => $user->id,
-            'active' => '0',
+        $this->seed([
+            MessageLevelSeeder::class,
+            ApplicationSeeder::class,
+            MessageSeeder::class,
         ]);
 
         $application = Application::first();
@@ -82,7 +82,7 @@ class ApplicationPageTest extends TestCase
         $user = User::factory()->create();
 
         $application = Application::factory()->create([
-            'name' => $applicationName,
+            'name' => 'Test Application',
             'user_id' => $user->id,
             'active' => '',
         ]);
