@@ -146,7 +146,6 @@ class ApplicationEditTest extends TestCase
         $user = User::factory()->create();
 
         $applicationName = 'Test Application';
-        $applicationActive = '0';
 
         $application = Application::factory()->create([
             'name' => $applicationName,
@@ -156,7 +155,6 @@ class ApplicationEditTest extends TestCase
         $formData = [
             '_method' => 'PUT',
             'name'=> $applicationName,
-            'active' => $applicationActive,
         ];
 
         $response = $this->actingAs($user)
@@ -168,7 +166,7 @@ class ApplicationEditTest extends TestCase
 
         $this->assertDatabaseHas('applications', [
             'name' => $applicationName,
-            'active' => $applicationActive,
+            'active' => '0',
         ]);
     }
 
@@ -177,18 +175,16 @@ class ApplicationEditTest extends TestCase
         $user = User::factory()->create();
 
         $applicationName = 'Test Application';
-        $applicationActive = '1';
 
         $application = Application::factory()->create([
             'name' => $applicationName,
             'user_id' => $user->id,
-            'active' => '0',
         ]);
 
         $formData = [
             '_method' => 'PUT',
             'name'=> $applicationName,
-            'active' => $applicationActive,
+            'active' => 'on',
         ];
 
         $response = $this->actingAs($user)
@@ -200,7 +196,7 @@ class ApplicationEditTest extends TestCase
 
         $this->assertDatabaseHas('applications', [
             'name' => $applicationName,
-            'active' => $applicationActive,
+            'active' => '1',
         ]);
     }
 }
