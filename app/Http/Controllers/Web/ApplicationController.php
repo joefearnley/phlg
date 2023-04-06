@@ -75,7 +75,7 @@ class ApplicationController extends Controller
         $this->authorize('update', $application);
 
         $application->name = $request->name;
-        $application->active = $request->active;
+        $application->active = $request->has('active');
         $application->save();
 
         return redirect(route('applications.index'))
