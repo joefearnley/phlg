@@ -141,7 +141,7 @@ class ApplicationEditTest extends TestCase
         ]);
     }
 
-    public function test_can_disable_an_application()
+    public function test_can_deactivate_an_application()
     {
         $user = User::factory()->create();
 
@@ -170,7 +170,7 @@ class ApplicationEditTest extends TestCase
         ]);
     }
 
-    public function test_can_enable_an_application()
+    public function test_can_activate_an_application()
     {
         $user = User::factory()->create();
 

@@ -8,6 +8,7 @@ use Tests\TestCase;
 use App\Models\User;
 use App\Models\Application;
 use App\Models\Message;
+use App\Models\MessageLevel;
 use Database\Seeders\MessageLevelSeeder;
 use Database\Seeders\MessageSeeder;
 use Database\Seeders\ApplicationSeeder;
@@ -15,6 +16,7 @@ use Database\Seeders\ApplicationSeeder;
 class MessagePageTest extends TestCase
 {
     use RefreshDatabase;
+    use WithFaker;
 
     public function test_cannot_view_messages_page_if_not_authorized()
     {
@@ -147,5 +149,45 @@ class MessagePageTest extends TestCase
         $response->assertDontSee($application2Messages[0]->body)
             ->assertDontSee($application2Messages[1]->body)
             ->assertDontSee($application2Messages[2]->body);
+    }
+
+    public function test_messages_page_does_not_show_messages_from_inactive_application()
+    {
+        $user = User::factory()->create();
+
+        $activeApplication = Application::factory()->create([
+            'name' => 'Active Application',
+            'user_id' => $user->id,
+        ]);
+
+        $inactiveApplication = Application::factory()->create([
+            'name' => 'Inactive Application',
+            'user_id' => $user->id,
+            'active' => '0'
+        ]);
+
+        $activeMessages = Message::factory()->count(2)
+            ->create([
+                'application_id' => $activeApplication->id,
+                'level_id' => MessageLevel::whereName('INFO')->first()->id,
+                'body' => $faker->realText(),
+            ]);
+
+        $inactiveMessages = Message::factory()->count(2)
+            ->create([
+                'application_id' => activeApplication->id,
+                'level_id' => MessageLevel::whereName('INFO')->first()->id,
+                'body' => $faker->realText(),
+            ]);
+
+        $response = $this->actingAs($user)
+            ->assertStatus(200)
+            ->assertSeeText('Application')
+            ->assertSeeText($activeApplication->name)
+            ->assertSee($activeMessages[0]->body)
+            ->assertSee($activeMessages[1]->body)
+            ->assertDontSeeText($activeApplication->name)
+            ->assertDontSee($inactiveMessages[0]->body)
+            ->assertDontSee($inactiveMessages[1]->body);
     }
 }

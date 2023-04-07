@@ -77,14 +77,13 @@ class ApplicationPageTest extends TestCase
             ->assertSee($application->formattedUpdateTime());
     }
 
-    public function test_applications_page_data_shows_enabled_status()
+    public function test_applications_page_data_shows_active_status()
     {
         $user = User::factory()->create();
 
         $application = Application::factory()->create([
             'name' => 'Test Application',
             'user_id' => $user->id,
-            'active' => '',
         ]);
 
         $response = $this->actingAs($user)
@@ -93,4 +92,21 @@ class ApplicationPageTest extends TestCase
         $response->assertStatus(200)
             ->assertSee('Active');
     }
+
+    // public function test_applications_page_data_shows_not_active_status()
+    // {
+    //     $user = User::factory()->create();
+
+    //     $application = Application::factory()->create([
+    //         'name' => 'Test Application',
+    //         'user_id' => $user->id,
+    //         'active' => '0',
+    //     ]);
+
+    //     $response = $this->actingAs($user)
+    //         ->get(route('applications.index'));
+
+    //     $response->assertStatus(200)
+    //         ->assertSee('Not Active');
+    // }
 }

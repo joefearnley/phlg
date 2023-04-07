@@ -14,7 +14,8 @@ class ApplicationFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->realText(10)
+            'name' => $this->faker->realText(10),
+            'active' => 1,
         ];
     }
 }
