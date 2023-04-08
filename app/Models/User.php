@@ -67,6 +67,7 @@ class User extends Authenticatable
     public function applications()
     {
         return $this->hasMany(Application::class)
+            ->active()
             ->orderByDesc('created_at');
     }
 

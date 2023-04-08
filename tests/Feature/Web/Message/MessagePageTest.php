@@ -155,6 +155,8 @@ class MessagePageTest extends TestCase
     {
         $user = User::factory()->create();
 
+        $this->seed([ MessageLevelSeeder::class, ]);
+
         $activeApplication = Application::factory()->create([
             'name' => 'Active Application',
             'user_id' => $user->id,
@@ -170,18 +172,20 @@ class MessagePageTest extends TestCase
             ->create([
                 'application_id' => $activeApplication->id,
                 'level_id' => MessageLevel::whereName('INFO')->first()->id,
-                'body' => $faker->realText(),
+                'body' => $this->faker->realText(),
             ]);
 
         $inactiveMessages = Message::factory()->count(2)
             ->create([
-                'application_id' => activeApplication->id,
+                'application_id' => $activeApplication->id,
                 'level_id' => MessageLevel::whereName('INFO')->first()->id,
-                'body' => $faker->realText(),
+                'body' => $this->faker->realText(),
             ]);
 
         $response = $this->actingAs($user)
-            ->assertStatus(200)
+            ->get(route('messages.index'));
+
+        $response->assertStatus(200)
             ->assertSeeText('Application')
             ->assertSeeText($activeApplication->name)
             ->assertSee($activeMessages[0]->body)

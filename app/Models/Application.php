@@ -38,6 +38,11 @@ class Application extends Authenticatable
         });
     }
 
+    public function scopeActive($query)
+    {
+        return $query->where('active', 1);
+    }
+
     /**
      * Get the user that owns the application.
      * 
