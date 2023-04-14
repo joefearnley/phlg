@@ -115,7 +115,7 @@ class User extends Authenticatable
      */
     public function searchMessages($appId = null, $searchTerm = null)
     {
-        $query = $this->messages();
+        $query = $this->messages()->active();
 
         if (!empty($appId)) {
             $query->where('application_id', $appId);
