@@ -61,19 +61,18 @@ class User extends Authenticatable
 
     /**
      * Get the applications owned by the user.
-     * 
+     *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function applications()
     {
         return $this->hasMany(Application::class)
-            ->active()
             ->orderByDesc('created_at');
     }
 
     /**
      * Get the messages owned by the user.
-     * 
+     *
      * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
      */
     public function messages()
@@ -108,7 +107,7 @@ class User extends Authenticatable
 
     /**
      * Search user's messages for a given search term.
-     * 
+     *
      * @param int $appID
      * @param string $term
      * @return \Illuminate\Database\Eloquent\Model

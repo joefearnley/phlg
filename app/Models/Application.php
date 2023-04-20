@@ -45,7 +45,7 @@ class Application extends Authenticatable
 
     /**
      * Get the user that owns the application.
-     * 
+     *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function user()
@@ -55,7 +55,7 @@ class Application extends Authenticatable
 
     /**
      * Get the message owned by the application.
-     * 
+     *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function messages()
@@ -64,9 +64,9 @@ class Application extends Authenticatable
     }
 
     /**
-     * Get the time of the last message that was created or the last time the 
+     * Get the time of the last message that was created or the last time the
      * application model was updated.
-     * 
+     *
      * @return string
      */
     public function lastUpdated()
