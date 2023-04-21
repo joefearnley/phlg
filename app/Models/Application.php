@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Scopes\ActiveScope;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laravel\Sanctum\HasApiTokens;
@@ -36,8 +37,13 @@ class Application extends Authenticatable
             $application->app_id = $hashids->encode($application->id);
             $application->save();
         });
+
+        static::addGlobalScope(new ActiveScope);
     }
 
+    /**
+     * Scope a query to only include active users.
+     */
     public function scopeActive($query)
     {
         return $query->where('active', 1);
