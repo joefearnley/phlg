@@ -22,9 +22,9 @@ class MessageController extends Controller
         $searchTerm = $request->query('term');
 
         $selectedApplication = Application::find($appId);
-        $messages = Auth::user()->searchMessages($appId, $searchTerm)->paginate(20);
+        $messages = $request->user()->searchMessages($appId, $searchTerm)->paginate(20);
 
-        $applications = Auth::user()->applications;
+        $applications = $request->user()->applications;
 
         return view('messages.index', [
             'messages' => $messages,
@@ -41,9 +41,9 @@ class MessageController extends Controller
      * @param String  $term
      * @return \Illuminate\View\View
      */
-    public function search($term)
+    public function search(Request  $request, $term)
     {
-        $messages = Auth::user()->searchMessages($term)->get();
+        $messages = $request->user()->searchMessages($term)->get();
 
         return view('messages.search-results', [
             'messages' => $messages,

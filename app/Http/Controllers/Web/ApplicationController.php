@@ -18,7 +18,7 @@ class ApplicationController extends Controller
      */
     public function index(Request $request)
     {
-        $applications = $request->user()->applications;
+        $applications = $request->user()->allApplications;
 
         return view('applications.index', ['applications' => $applications]);
     }

@@ -71,6 +71,18 @@ class User extends Authenticatable
     }
 
     /**
+     * Get all of the applications owned by the user including inactive.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function allApplications()
+    {
+        return $this->hasMany(Application::class)
+            ->withoutGlobalScopes()
+            ->orderByDesc('created_at');
+    }
+
+    /**
      * Get the messages owned by the user.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough

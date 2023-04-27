@@ -93,20 +93,20 @@ class ApplicationPageTest extends TestCase
             ->assertSee('Active');
     }
 
-    // public function test_applications_page_data_shows_not_active_status()
-    // {
-    //     $user = User::factory()->create();
+    public function test_applications_page_data_shows_not_active_status()
+    {
+        $user = User::factory()->create();
 
-    //     $application = Application::factory()->create([
-    //         'name' => 'Test Application',
-    //         'user_id' => $user->id,
-    //         'active' => '0',
-    //     ]);
+        $application = Application::factory()->create([
+            'name' => 'Test Application',
+            'user_id' => $user->id,
+            'active' => '0',
+        ]);
 
-    //     $response = $this->actingAs($user)
-    //         ->get(route('applications.index'));
+        $response = $this->actingAs($user)
+            ->get(route('applications.index'));
 
-    //     $response->assertStatus(200)
-    //         ->assertSee('Not Active');
-    // }
+        $response->assertStatus(200)
+            ->assertSee('Not Active');
+    }
 }
