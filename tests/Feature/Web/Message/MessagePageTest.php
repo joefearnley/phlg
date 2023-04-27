@@ -190,7 +190,7 @@ class MessagePageTest extends TestCase
             ->assertSeeText($activeApplication->name)
             ->assertSee($activeMessages[0]->body)
             ->assertSee($activeMessages[1]->body)
-            ->assertDontSeeText($activeApplication->name)
+            ->assertDontSeeText($activeApplication->name) // shouldn't see this
             ->assertDontSee($inactiveMessages[0]->body)
             ->assertDontSee($inactiveMessages[1]->body);
     }
