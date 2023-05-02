@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Models\Scopes\ActiveScope;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laravel\Sanctum\HasApiTokens;
 use Carbon\Carbon;
@@ -38,7 +37,7 @@ class Application extends Authenticatable
             $application->save();
         });
 
-        static::addGlobalScope(new ActiveScope);
+        static::addGlobalScope(new ActiveScope());
     }
 
     /**

@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
+use App\Models\Scopes\ActiveScope;
 
 class User extends Authenticatable
 {
@@ -102,6 +103,7 @@ class User extends Authenticatable
     public function latestMessages($limit = 10)
     {
         return $this->hasManyThrough(Message::class, Application::class)
+            ->withGlobalScope(new ActiveScope())
             ->orderBy('created_at')
             ->take($limit);
     }
