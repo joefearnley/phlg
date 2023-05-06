@@ -177,7 +177,7 @@ class MessagePageTest extends TestCase
 
         $inactiveMessages = Message::factory()->count(2)
             ->create([
-                'application_id' => $activeApplication->id,
+                'application_id' => $inactiveApplication->id,
                 'level_id' => MessageLevel::whereName('INFO')->first()->id,
                 'body' => $this->faker->realText(),
             ]);

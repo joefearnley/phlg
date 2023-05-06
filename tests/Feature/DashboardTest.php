@@ -99,18 +99,18 @@ class DashboardTest extends TestCase
         ]);
 
         $activeMessages = Message::factory()->count(2)
-        ->create([
-            'application_id' => $activeApplication->id,
-            'level_id' => MessageLevel::whereName('INFO')->first()->id,
-            'body' => $this->faker->realText(),
-        ]);
+            ->create([
+                'application_id' => $activeApplication->id,
+                'level_id' => MessageLevel::whereName('INFO')->first()->id,
+                'body' => $this->faker->realText(),
+            ]);
 
-    $inactiveMessages = Message::factory()->count(2)
-        ->create([
-            'application_id' => $activeApplication->id,
-            'level_id' => MessageLevel::whereName('INFO')->first()->id,
-            'body' => $this->faker->realText(),
-        ]);
+        $inactiveMessages = Message::factory()->count(2)
+            ->create([
+                'application_id' => $inactiveApplication->id,
+                'level_id' => MessageLevel::whereName('INFO')->first()->id,
+                'body' => $this->faker->realText(),
+            ]);
 
         $response = $this->actingAs($user)
             ->get('/dashboard');

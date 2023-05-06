@@ -91,7 +91,8 @@ class User extends Authenticatable
     public function messages()
     {
         return $this->hasManyThrough(Message::class, Application::class)
-            ->orderByDesc('created_at');
+            ->withGlobalScope('active', new ActiveScope())
+            ->orderByDesc('created_at', 'desc');
     }
 
     /**
@@ -103,8 +104,8 @@ class User extends Authenticatable
     public function latestMessages($limit = 10)
     {
         return $this->hasManyThrough(Message::class, Application::class)
-            ->withGlobalScope(new ActiveScope())
-            ->orderBy('created_at')
+            ->withGlobalScope('active', new ActiveScope())
+            ->orderBy('created_at', 'desc')
             ->take($limit);
     }
 
