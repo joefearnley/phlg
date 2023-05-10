@@ -81,7 +81,7 @@ class ApplicationPageTest extends TestCase
     {
         $user = User::factory()->create();
 
-        $application = Application::factory()->create([
+        Application::factory()->create([
             'name' => 'Test Application',
             'user_id' => $user->id,
         ]);
@@ -97,7 +97,7 @@ class ApplicationPageTest extends TestCase
     {
         $user = User::factory()->create();
 
-        $application = Application::factory()->create([
+        Application::factory()->create([
             'name' => 'Test Application',
             'user_id' => $user->id,
             'active' => '0',

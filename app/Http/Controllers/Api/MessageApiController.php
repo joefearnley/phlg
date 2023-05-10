@@ -19,15 +19,30 @@ class MessageApiController extends Controller
      */
     public function store(StoreMessageRequest $request)
     {
+        $applications = Application::all();
+
+        // dd($applications->toArray());
+
+        $application = Application::find($request->application_id);
+
+        dd($application);
+
+        if (!$application->active) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Application Inactive.',
+            ],  401);
+        }
+
         $message = Message::create([
             'application_id' => $request->application_id,
             'level_id' => $request->level_id,
-            'body' => $request->body
+            'body' => $request->body,
         ]);
 
         return response()->json([
             'success' => true,
-            'message' => $message
+            'message' => $message,
         ]);
     }
 }
