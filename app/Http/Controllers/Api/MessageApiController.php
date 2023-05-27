@@ -21,7 +21,11 @@ class MessageApiController extends Controller
     {
         $applications = Application::all();
 
-        // dd($applications->toArray());
+        var_dump($request->application_id);
+        var_dump($applications->toArray());
+        die();
+
+        dd($applications->toArray());
 
         $application = Application::find($request->application_id);
 

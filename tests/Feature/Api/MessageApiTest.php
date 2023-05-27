@@ -184,19 +184,19 @@ class MessageApiTest extends TestCase
     //     ]);
     // }
 
-    public function test_cannot_store_message_for_inacticate_application()
+    public function test_cannot_store_message_for_inactive_application()
     {
         Sanctum::actingAs($this->user, ['*']);
 
         $inactiveApplication = Application::factory()->create([
             'name' => 'Inactive Application',
             'user_id' => $this->user->id,
-            'active' => '0'
+            'active' => '0',
         ]);
 
-        // dd($inactiveApplication->toArray());
+        $inactiveApplication->save();
 
-        dd(Application::all()->toArray());
+        dd($inactiveApplication->id, Application::all()->toArray());
 
         $postData = [
             'application_id' => $inactiveApplication->id,
