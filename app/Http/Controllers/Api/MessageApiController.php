@@ -19,19 +19,9 @@ class MessageApiController extends Controller
      */
     public function store(StoreMessageRequest $request)
     {
-        $applications = Application::all();
-
-        var_dump($request->application_id);
-        var_dump($applications->toArray());
-        die();
-
-        dd($applications->toArray());
-
         $application = Application::find($request->application_id);
 
-        dd($application);
-
-        if (!$application->active) {
+        if (is_null($application)) {
             return response()->json([
                 'success' => false,
                 'message' => 'Application Inactive.',
