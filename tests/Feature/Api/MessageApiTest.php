@@ -37,7 +37,6 @@ class MessageApiTest extends TestCase
 
     public function test_cannot_store_messages_page_if_not_authorized()
     {
-        $message = 'This is a message';
         $postData = [
             'application_id' => null,
             'message_lavel' => $this->messageLevel->id,
