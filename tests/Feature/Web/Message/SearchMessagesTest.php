@@ -3,14 +3,11 @@
 namespace Tests\Feature\Web\Message;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\Application;
 use App\Models\Message;
 use Database\Seeders\MessageLevelSeeder;
-use Database\Seeders\MessageSeeder;
-use Database\Seeders\ApplicationSeeder;
 
 class SearchMessagesTest extends TestCase
 {
@@ -50,9 +47,9 @@ class SearchMessagesTest extends TestCase
     public function test_search_by_application_shows_application_name()
     {
         $response = $this->actingAs($this->user)
-        ->get(route('messages.index', [
-            'appid' => $this->application->id
-        ]));
+            ->get(route('messages.index', [
+                'appid' => $this->application->id
+            ]));
 
         $response->assertStatus(200)
             ->assertSeeText('Application')
